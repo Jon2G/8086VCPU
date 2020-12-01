@@ -12,13 +12,16 @@ namespace Pruebas
         static void Main(string[] args)
         {
             ALU alu = new ALU();
-            alu.SetOperadores(new int[] { 1, 0, 0, 1 }, new int[] { 1, 1, 1, 1 });
-            alu.ADD();
-            alu.Imprimir();
-            alu.AND();
-            alu.Imprimir();
-            alu.OR();
-            alu.Imprimir();
+            alu.SetOperadores(new int[] { 1, 1, 1, 1 }, new int[] { 1, 1, 1, 1 });
+            alu.ADD();	            //alu.ADD();
+            alu.Imprimir();	            //alu.Imprimir();
+            alu.AND();	            //alu.AND();
+            alu.Imprimir();	            //alu.Imprimir();
+            alu.OR();	            //alu.OR();
+            alu.Imprimir();	            //alu.Imprimir();
+
+            alu.MUL();
+            alu.Imprimir();//10000111
 
             Console.ReadKey(); //Leer una tecla para que no se cierre la consola
 
