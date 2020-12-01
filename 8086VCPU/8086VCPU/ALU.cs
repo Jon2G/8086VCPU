@@ -80,6 +80,37 @@ namespace _8086VCPU
                 }
             }
         }
+        public void NAND()
+        {
+            Acarreo = 0;
+            for (int i = Bits - 1; i >=0; i--)
+            {
+                if (Operador1[i] == 1 && Operador2[i] == 1)
+                {
+                    Resultado[i] = 0;
+                }
+                else
+                {
+                    Resultado[i] = 1;
+                }
+            }
+        }
+        public void NOR()
+        {
+            Acarreo = 0;
+            for (int i = Bits - 1; i >= 0; i--)
+            {
+                if (Operador1[i] == 0 && Operador2[i] == 0)
+                {
+                    Resultado[i] = 1;
+                }
+                else
+                {
+                    Resultado[i] = 0;
+                }
+            }
+        }
+
 
     }
 }
