@@ -13,7 +13,7 @@ namespace _8086VCPU
         public int[] Operador1 = new int[Bits];
         public int[] Operador2 = new int[Bits];
 
-        public int[] Resultado = new int[Bits];
+        public int[] Resultado = new int[Bits * 2];
         public int Acarreo;
         public void SetOperadores(int[] Op1, int[] Op2)
         {
@@ -24,7 +24,7 @@ namespace _8086VCPU
         {
             Console.Write(Acarreo);
             Console.Write("-");
-            for (int i = 0; i < Bits; i++)
+            for (int i = 0; i < Bits * 2; i++)
             {
                 Console.Write(Resultado[i]);
                 Console.Write(",");
@@ -80,37 +80,6 @@ namespace _8086VCPU
                 }
             }
         }
-        public void NAND()
-        {
-            Acarreo = 0;
-            for (int i = Bits - 1; i >=0; i--)
-            {
-                if (Operador1[i] == 1 && Operador2[i] == 1)
-                {
-                    Resultado[i] = 0;
-                }
-                else
-                {
-                    Resultado[i] = 1;
-                }
-            }
-        }
-        public void NOR()
-        {
-            Acarreo = 0;
-            for (int i = Bits - 1; i >= 0; i--)
-            {
-                if (Operador1[i] == 0 && Operador2[i] == 0)
-                {
-                    Resultado[i] = 1;
-                }
-                else
-                {
-                    Resultado[i] = 0;
-                }
-            }
-        }
-
 
     }
 }
