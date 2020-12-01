@@ -110,6 +110,36 @@ namespace _8086VCPU
                 }
             }
         }
+        public void MUL()
+        {
+            int offset;
+            for (int i = Bits - 1; i >= 0; i--)
+            {
+                offset = Bits - i - 1;
+                int op1 = Operador2[i];
+                for (int j = Bits - 1; j >= 0; j--)
+                {
+                    int op2 = Operador1[j];
+                    Resultado[(Bits * 2) - 1 - offset] += op1 * op2;
+                    offset++;
+                }
+
+            }
+            for (int k = Resultado.Length - 1; k >= 0; k--)
+            {
+                if (Resultado[k] % 2 == 0 && Resultado[k] > 1)
+                {
+
+                    Resultado[k - 1] += (int)Math.Round(Resultado[k] / 2f, 0);
+                    Resultado[k] = 0;
+                }
+                if (Resultado[k] % 2 != 0 && Resultado[k] > 1)
+                {
+                    Resultado[k - 1] += (int)Math.Truncate(Resultado[k] / 2f);
+                    Resultado[k] = 1;
+                }
+            }
+        }
 
     }
 }
