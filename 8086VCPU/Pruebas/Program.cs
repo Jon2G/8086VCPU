@@ -18,7 +18,10 @@ namespace Pruebas
             alu.AND();
             alu.Imprimir();
             alu.OR();
-            alu.Imprimir();
+            alu.Imprimir()
+            alu.NAND();
+            alu.Imprimir(); 
+            alu.NOR();
 
             Console.ReadKey(); //Leer una tecla para que no se cierre la consola
 
