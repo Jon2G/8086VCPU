@@ -79,6 +79,8 @@ namespace Pruebas
             Registros.AX.HabilitarLeectura(false);
 
             CPU.Alu.OR(operador1, operador2);
+            //CPU.Alu.XOR(operador1, operador2);
+            //CPU.Alu.NOR(operador1, operador2);
             //alu.NOR(operador1, operador2);
             //alu.AND(operador1, operador2);
             //alu.NOT(operador1);

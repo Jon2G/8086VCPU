@@ -181,5 +181,37 @@ namespace _8086VCPU.Alu
             }
 
         }
+        public void XOR(byte[] Operador1, byte[] Operador2)
+        {
+            Resultado = new byte[Operador1.Length];
+            Acarreo = 0;
+            for (int i = Operador1.Length - 1; i >= 0; i--)
+            {
+                if (Operador1[i] == Operador2[i])
+                {
+                    Resultado[i] = 0;
+                }
+                else
+                {
+                    Resultado[i] = 1;
+                }
+            }
+        }
+        public void XNOR(byte[] Operador1, byte[] Operador2)
+        {
+            Resultado = new byte[Operador1.Length];
+            Acarreo = 0;
+            for (int i = Operador1.Length - 1; i >= 0; i--)
+            {
+                if (Operador1[i] != Operador2[i])
+                {
+                    Resultado[i] = 0;
+                }
+                else
+                {
+                    Resultado[i] = 1;
+                }
+            }
+        }
     }
 }
