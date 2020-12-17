@@ -6,18 +6,18 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace _8086VCPU
+namespace _8086VCPU.Alu
 {
     public class ALU
     {
         public const int Bits = 4;
 
 
-        public byte[] Resultado = new byte[((Bits) * 2) + 1];
+        public byte[] Resultado = new byte[Bits * 2 + 1];
         public byte Acarreo;
         public void ADD(byte[] Operador1, byte[] Operador2)
         {
-            this.Resultado = new byte[Operador1.Length];
+            Resultado = new byte[Operador1.Length];
             for (int i = Operador1.Length - 1; i > 0; i--)
             {
                 Resultado[i] = (byte)(Operador1[i] + Operador2[i] + Acarreo);
@@ -36,7 +36,7 @@ namespace _8086VCPU
         }
         public void AND(byte[] Operador1, byte[] Operador2)
         {
-            this.Resultado = new byte[Operador1.Length];
+            Resultado = new byte[Operador1.Length];
             Acarreo = 0;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
@@ -52,7 +52,7 @@ namespace _8086VCPU
         }
         public void OR(byte[] Operador1, byte[] Operador2)
         {
-            this.Resultado = new byte[Operador1.Length];
+            Resultado = new byte[Operador1.Length];
             Acarreo = 0;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
@@ -68,7 +68,7 @@ namespace _8086VCPU
         }
         public void NAND(byte[] Operador1, byte[] Operador2)
         {
-            this.Resultado = new byte[Operador1.Length];
+            Resultado = new byte[Operador1.Length];
             Acarreo = 0;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
@@ -84,7 +84,7 @@ namespace _8086VCPU
         }
         public void NOR(byte[] Operador1, byte[] Operador2)
         {
-            this.Resultado = new byte[Operador1.Length];
+            Resultado = new byte[Operador1.Length];
             Acarreo = 0;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
@@ -101,19 +101,19 @@ namespace _8086VCPU
         public void MUL(byte[] Operador2)
         {
             byte[] Operador1;
-            if (Operador2.Length == ALU.Bits)
+            if (Operador2.Length == Bits)
             {
                 Registros.Registros.AX.HabilitarLeectura(true);
                 Operador1 = Registros.Registros.AX.GetLow();
                 Registros.Registros.AX.HabilitarLeectura(false);
-                this.Resultado = new byte[ALU.Bits * 2];
+                Resultado = new byte[Bits * 2];
             }
             else
             {
                 Registros.Registros.AX.HabilitarLeectura(true);
                 Operador1 = Registros.Registros.AX.Get();
                 Registros.Registros.AX.HabilitarLeectura(false);
-                this.Resultado = new byte[ALU.Bits * 4];
+                Resultado = new byte[Bits * 4];
             }
 
             int offset;
@@ -124,7 +124,7 @@ namespace _8086VCPU
                 for (int j = Operador2.Length - 1; j > 0; j--)
                 {
                     byte op2 = Operador1[j];
-                    Resultado[(Operador2.Length * 2) - 1 - offset] += (byte)(op1 * op2);
+                    Resultado[Operador2.Length * 2 - 1 - offset] += (byte)(op1 * op2);
                     offset++;
                 }
 
@@ -144,7 +144,7 @@ namespace _8086VCPU
                 }
             }
 
-            if (Operador2.Length == ALU.Bits)
+            if (Operador2.Length == Bits)
             {
                 Registros.Registros.AX.HabilitarEscritura(true);
                 Registros.Registros.AX.Set(Resultado);
@@ -152,14 +152,14 @@ namespace _8086VCPU
             }
             else
             {
-                byte[] temporal = new byte[ALU.Bits * 2];
-                Array.Copy(Resultado, temporal, ALU.Bits * 2);
+                byte[] temporal = new byte[Bits * 2];
+                Array.Copy(Resultado, temporal, Bits * 2);
                 Registros.Registros.DX.HabilitarEscritura(true);
                 Registros.Registros.DX.Set(temporal);
                 Registros.Registros.DX.HabilitarEscritura(false);
 
-                temporal = new byte[ALU.Bits * 2];
-                Array.Copy(Resultado, ALU.Bits * 2, temporal, 0, ALU.Bits * 2);
+                temporal = new byte[Bits * 2];
+                Array.Copy(Resultado, Bits * 2, temporal, 0, Bits * 2);
                 Registros.Registros.AX.HabilitarEscritura(true);
                 Registros.Registros.AX.Set(temporal);
                 Registros.Registros.AX.HabilitarEscritura(false);
@@ -176,7 +176,7 @@ namespace _8086VCPU
                 }
                 else
                 {
-                    Operador1[i] =1;
+                    Operador1[i] = 1;
                 }
             }
 

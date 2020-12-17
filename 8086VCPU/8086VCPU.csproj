@@ -41,17 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ALU.cs" />
-    <Compile Include="Banderas.cs" />
-    <Compile Include="ConversorBinario.cs" />
+    <Compile Include="Alu\ALU.cs" />
+    <Compile Include="Alu\Banderas.cs" />
     <Compile Include="CPU.cs" />
-    <Compile Include="IDireccion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registros\Memoria.cs" />
     <Compile Include="Registros\Registro.cs" />
     <Compile Include="Registros\Registros.cs" />
     <Compile Include="Registros\Variable.cs" />
-    <Compile Include="_8086VCPU\Registros\AX.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,17 +1,16 @@
 org 100h
-a dw 12       
-b dw 14 
-c dw 15 
-d dw 16
 
 
-MOV AX,OFFSET a   
 
-MOV BX,OFFSET b  
+MOV AX,00011B
+MOV CX,10010B
+   
+AND AX,CX
+   
 
-MOV CX,OFFSET c 
+MUL CX
 
-MOV DX,OFFSET d
+
   
 MOV AL,6
 CMP AL,6 
@@ -34,7 +33,7 @@ ADD CL,DL
 
  
 
-ADD <Registro/Variable>,CX
+
 
 ADD CL,DL
 
