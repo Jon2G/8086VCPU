@@ -1,42 +1,26 @@
-﻿using System;
+﻿using _8086VCPU.Registros;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace _8086VCPU
 {
     public class ALU
     {
-        const int Bits = 4;
+        public const int Bits = 4;
 
-        public int[] Operador1 = new int[Bits];
-        public int[] Operador2 = new int[Bits];
 
-        public int[] Resultado = new int[Bits * 2];
-        public int Acarreo;
-        public void SetOperadores(int[] Op1, int[] Op2)
+        public byte[] Resultado = new byte[((Bits) * 2) + 1];
+        public byte Acarreo;
+        public void ADD(byte[] Operador1, byte[] Operador2)
         {
-            Operador1 = Op1;
-            Operador2 = Op2;
-        }
-        public void Imprimir()
-        {
-            Console.Write(Acarreo);
-            Console.Write("-");
-            for (int i = 0; i < Bits * 2; i++)
+            this.Resultado = new byte[Operador1.Length];
+            for (int i = Operador1.Length - 1; i > 0; i--)
             {
-                Console.Write(Resultado[i]);
-                Console.Write(",");
-            }
-            Console.Write("\n");
-        }
-
-        public void ADD()
-        {
-            for (int i = Bits - 1; i >= 0; i--)
-            {
-                Resultado[i] = Operador1[i] + Operador2[i] + Acarreo;
+                Resultado[i] = (byte)(Operador1[i] + Operador2[i] + Acarreo);
                 Acarreo = 0;
                 if (Resultado[i] == 2)
                 {
@@ -50,10 +34,11 @@ namespace _8086VCPU
                 }
             }
         }
-        public void AND()
+        public void AND(byte[] Operador1, byte[] Operador2)
         {
+            this.Resultado = new byte[Operador1.Length];
             Acarreo = 0;
-            for (int i = Bits - 1; i >= 0; i--)
+            for (int i = Operador1.Length - 1; i >= 0; i--)
             {
                 if (Operador1[i] == 1 && Operador2[i] == 1)
                 {
@@ -65,10 +50,11 @@ namespace _8086VCPU
                 }
             }
         }
-        public void OR()
+        public void OR(byte[] Operador1, byte[] Operador2)
         {
+            this.Resultado = new byte[Operador1.Length];
             Acarreo = 0;
-            for (int i = Bits - 1; i >= 0; i--)
+            for (int i = Operador1.Length - 1; i >= 0; i--)
             {
                 if (Operador1[i] == 0 && Operador2[i] == 0)
                 {
@@ -80,10 +66,11 @@ namespace _8086VCPU
                 }
             }
         }
-        public void NAND()
+        public void NAND(byte[] Operador1, byte[] Operador2)
         {
+            this.Resultado = new byte[Operador1.Length];
             Acarreo = 0;
-            for (int i = Bits - 1; i >= 0; i--)
+            for (int i = Operador1.Length - 1; i >= 0; i--)
             {
                 if (Operador1[i] == 1 && Operador2[i] == 1)
                 {
@@ -95,10 +82,11 @@ namespace _8086VCPU
                 }
             }
         }
-        public void NOR()
+        public void NOR(byte[] Operador1, byte[] Operador2)
         {
+            this.Resultado = new byte[Operador1.Length];
             Acarreo = 0;
-            for (int i = Bits - 1; i >= 0; i--)
+            for (int i = Operador1.Length - 1; i >= 0; i--)
             {
                 if (Operador1[i] == 0 && Operador2[i] == 0)
                 {
@@ -110,36 +98,88 @@ namespace _8086VCPU
                 }
             }
         }
-        public void MUL()
+        public void MUL(byte[] Operador2)
         {
+            byte[] Operador1;
+            if (Operador2.Length == ALU.Bits)
+            {
+                Registros.Registros.AX.HabilitarLeectura(true);
+                Operador1 = Registros.Registros.AX.GetLow();
+                Registros.Registros.AX.HabilitarLeectura(false);
+                this.Resultado = new byte[ALU.Bits * 2];
+            }
+            else
+            {
+                Registros.Registros.AX.HabilitarLeectura(true);
+                Operador1 = Registros.Registros.AX.Get();
+                Registros.Registros.AX.HabilitarLeectura(false);
+                this.Resultado = new byte[ALU.Bits * 4];
+            }
+
             int offset;
-            for (int i = Bits - 1; i >= 0; i--)
+            for (int i = Operador2.Length - 1; i > 0; i--)
             {
-                offset = Bits - i - 1;
-                int op1 = Operador2[i];
-                for (int j = Bits - 1; j >= 0; j--)
+                offset = Operador2.Length - i - 1;
+                byte op1 = Operador2[i];
+                for (int j = Operador2.Length - 1; j > 0; j--)
                 {
-                    int op2 = Operador1[j];
-                    Resultado[(Bits * 2) - 1 - offset] += op1 * op2;
+                    byte op2 = Operador1[j];
+                    Resultado[(Operador2.Length * 2) - 1 - offset] += (byte)(op1 * op2);
                     offset++;
                 }
 
             }
-            for (int k = Resultado.Length - 1; k >= 0; k--)
+            for (int k = Resultado.Length - 1; k > 0; k--)
             {
                 if (Resultado[k] % 2 == 0 && Resultado[k] > 1)
                 {
 
-                    Resultado[k - 1] += (int)Math.Round(Resultado[k] / 2f, 0);
+                    Resultado[k - 1] += (byte)Math.Round(Resultado[k] / 2f, 0);
                     Resultado[k] = 0;
                 }
                 if (Resultado[k] % 2 != 0 && Resultado[k] > 1)
                 {
-                    Resultado[k - 1] += (int)Math.Truncate(Resultado[k] / 2f);
+                    Resultado[k - 1] += (byte)Math.Truncate(Resultado[k] / 2f);
                     Resultado[k] = 1;
                 }
             }
-        }
 
+            if (Operador2.Length == ALU.Bits)
+            {
+                Registros.Registros.AX.HabilitarEscritura(true);
+                Registros.Registros.AX.Set(Resultado);
+                Registros.Registros.AX.HabilitarEscritura(false);
+            }
+            else
+            {
+                byte[] temporal = new byte[ALU.Bits * 2];
+                Array.Copy(Resultado, temporal, ALU.Bits * 2);
+                Registros.Registros.DX.HabilitarEscritura(true);
+                Registros.Registros.DX.Set(temporal);
+                Registros.Registros.DX.HabilitarEscritura(false);
+
+                temporal = new byte[ALU.Bits * 2];
+                Array.Copy(Resultado, ALU.Bits * 2, temporal, 0, ALU.Bits * 2);
+                Registros.Registros.AX.HabilitarEscritura(true);
+                Registros.Registros.AX.Set(temporal);
+                Registros.Registros.AX.HabilitarEscritura(false);
+
+            }
+        }
+        public void NOT(byte[] Operador1)
+        {
+            for (int i = 0; i < Operador1.Length; i++)
+            {
+                if (Operador1[i] == 1)
+                {
+                    Operador1[i] = 0;
+                }
+                else
+                {
+                    Operador1[i] =1;
+                }
+            }
+
+        }
     }
 }

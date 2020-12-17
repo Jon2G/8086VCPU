@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="Gui.Advertencias.WarningError"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gui.Advertencias"
+             mc:Ignorable="d"  Background="White" HorizontalAlignment="Stretch" FontSize="18" MouseLeftButtonUp="UserControl_MouseLeftButtonUp">
+    <DockPanel VerticalAlignment="Center">
+        <Image MaxHeight="40" x:Name="Img" DockPanel.Dock="Left" Source="/Gui;component/Images/bug.png">
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding EsAdvertencia}" Value="True">
+                            <Setter Property="Source" Value="/Gui;component/Images/StatusWarning_16x.png"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+        <Grid Margin="5,0" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="10*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Linea:" Grid.Column="1"/>
+            <TextBlock x:Name="Error" Grid.Column="0" TextWrapping="NoWrap" Text="Error desconocido"/>
+            <TextBlock x:Name="Linea" Text="-1" Grid.Column="2"/>
+        </Grid>
+    </DockPanel>
+</UserControl>
