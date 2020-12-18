@@ -10,6 +10,8 @@ namespace _8086VCPU.Registros
     {
         protected bool Lecctura { get; set; }
         protected bool Escritura { get; set; }
+        public string Hex => Decimal.ToString("X");
+        public int Decimal => Convert.ToInt32(ToString(),2);
 
         public void EnableLectura(bool valor)
         {
@@ -20,10 +22,10 @@ namespace _8086VCPU.Registros
             this.Escritura = valor;
         }
 
-        protected abstract void _Set(byte[] Valor);
-        protected abstract byte[] _Get();
+        protected abstract void _Set(bool[] Valor);
+        protected abstract bool[] _Get();
 
-        public void Set(byte[] Valor)
+        public void Set(bool[] Valor)
         {
             if (!Escritura)
             {
@@ -31,13 +33,17 @@ namespace _8086VCPU.Registros
             }
             _Set(Valor);
         }
-        public byte[] Get()
+        public bool[] Get()
         {
             if (!Lecctura)
             {
                 throw new AccessViolationException("La Lecctura no esta habilitada");
             }
             return _Get();
+        }
+        public override string ToString()
+        {
+            return string.Join(string.Empty, _Get().Select(x => x ? "1" : "0"));
         }
     }
 }

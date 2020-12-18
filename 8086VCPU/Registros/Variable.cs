@@ -10,17 +10,17 @@ namespace _8086VCPU.Registros
     public class Variable : Memoria
     {
         //Offset?
-        private byte[] Valor { get; set; }
+        private bool[] Valor { get; set; }
         public Variable()
         {
-            this.Valor = new byte[ALU.Bits * 2];
+            this.Valor = new bool[ALU.Bits * 2];
         }
-        protected override byte[] _Get()
+        protected override bool[] _Get()
         {
             return this.Valor;
         }
 
-        protected override void _Set(byte[] Valor)
+        protected override void _Set(bool[] Valor)
         {
             if (Valor.Length != this.Valor.Length)
             {

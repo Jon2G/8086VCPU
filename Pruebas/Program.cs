@@ -16,36 +16,36 @@ namespace Pruebas
             //  MOV AX,[BX]
             //  MOV [BX],AX
 
-            //byte[] operador1 = Registros.CX.GetLow(); //Leer 4 bits CL
-            //byte[] operador1 = Registros.CX.GetHigh(); //   Leer 4 bits CH
-            //byte[] operador1 = Registros.CX.Get(); //   Leer 8 bits CX
+            //bool[] operador1 = Registros.CX.GetLow(); //Leer 4 bits CL
+            //bool[] operador1 = Registros.CX.GetHigh(); //   Leer 4 bits CH
+            //bool[] operador1 = Registros.CX.Get(); //   Leer 8 bits CX
 
             //MOV CL,3d
             Registros.CX.HabilitarEscritura(true);
-            Registros.CX.SetLow(new byte[] { 0, 0, 1, 0 });
+            Registros.CX.SetLow(new bool[] { false, false, true, false });
             Registros.CX.HabilitarEscritura(false);
 
             //MOV AX,6d
             Registros.AX.HabilitarEscritura(true);
-            Registros.AX.Set(new byte[] { 0, 0, 0, 0, 0, 1, 1, 0 });
+            Registros.AX.Set(new bool[] { false, false, false, false, false, true, true, false });
             Registros.AX.HabilitarEscritura(false);
 
             //DIV CL
             Registros.CX.EnableLectura(true);
-            byte[] operador1 = Registros.CX.GetLow();
+            bool[] operador1 = Registros.CX.GetLow();
             Registros.CX.EnableLectura(false);
 
-            CPU.Alu.DIV(operador1);
+            //CPU.Alu.DIV(operador1);
 
 
 
             //MOV CL,5d
             Registros.CX.HabilitarEscritura(true);
-            Registros.CX.SetLow(new byte[] { 0, 1, 1, 1 });
+            Registros.CX.SetLow(new bool[] { true, true, true, true });
             Registros.CX.HabilitarEscritura(false);
             //MOV DL,2d
             Registros.DX.HabilitarEscritura(true);
-            Registros.DX.SetLow(new byte[] { 0, 0, 0, 1 });
+            Registros.DX.SetLow(new bool[] { true, true, true, true });
             Registros.DX.HabilitarEscritura(false);
             //ADD CL,DL
             Registros.CX.EnableLectura(true);
@@ -53,7 +53,7 @@ namespace Pruebas
             Registros.CX.EnableLectura(false);
 
             Registros.DX.EnableLectura(true);
-            byte[] operador2 = Registros.DX.GetLow();
+            bool[] operador2 = Registros.DX.GetLow();
             Registros.DX.EnableLectura(false);
 
             CPU.Alu.ADD(operador1, operador2);
@@ -77,11 +77,11 @@ namespace Pruebas
 
             //MUL Cl
             Registros.CX.HabilitarEscritura(true);
-            Registros.CX.SetLow(new byte[] { 0, 0, 1, 1 });
+            Registros.CX.SetLow(new bool[] { false, false, true, true });
             Registros.CX.HabilitarEscritura(true);
 
             Registros.AX.HabilitarEscritura(true);
-            Registros.AX.SetLow(new byte[] { 0, 0, 1, 0 });
+            Registros.AX.SetLow(new bool[] { false, false, true, false });
             Registros.AX.HabilitarEscritura(true);
 
             Registros.CX.EnableLectura(true);

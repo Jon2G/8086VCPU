@@ -13,7 +13,7 @@ namespace _8086VCPU.Alu
         public const int Bits = 4;
 
 
-        public byte[] Resultado = new byte[Bits * 2 + 1];
+        public bool[] Resultado = new bool[Bits * 2 + 1];
 
 
         private byte _Acarreo;
@@ -35,168 +35,166 @@ namespace _8086VCPU.Alu
         }
 
 
-        public void ADD(byte[] Operador1, byte[] Operador2)
+        public void ADD(bool[] Operador1, bool[] Operador2)
         {
-            Resultado = new byte[Operador1.Length];
-            for (int i = Operador1.Length - 1; i >= 0; i--)
-            {
-                Resultado[i] = (byte)(Operador1[i] + Operador2[i] + Acarreo);
-                Acarreo = 0;
-                if (Resultado[i] == 2)
-                {
-                    Resultado[i] = 0;
-                    Acarreo = 1;
-                }
-                else if (Resultado[i] == 3)
-                {
-                    Resultado[i] = 1;
-                    Acarreo = 1;
-                }
-            }
+            Operador1 = Operador1.Reverse().ToArray();
+            Operador2 = Operador2.Reverse().ToArray();
 
-            CPU.Banderas.OverFlow = (Resultado[0] == 1);
+            CPU.Banderas.Carry = false;
+
+            Resultado = new bool[Operador1.Length];
+
+            bool tmp = HALF_ADD(Operador1[0], Operador2[0]);
+            Resultado[0] = tmp;
+
+            for (int i = 1; i < Operador1.Length; ++i)
+            {
+                tmp = FULL_ADD(Operador1[i], Operador2[i]);
+                Resultado[i] = tmp;
+            }
+            Resultado = Resultado.Reverse().ToArray();
+            CPU.Banderas.OverFlow = (CPU.Banderas.Carry && Resultado[0]);
         }
-        public void SUB(byte[] Operador1, byte[] Operador2)
+        private bool HALF_ADD(bool A, bool B)
         {
-            byte[] temporal = new byte[Operador2.Length];
+            CPU.Banderas.Carry = AND(A, B);
+            return XOR(A, B);
+        }
+        private bool FULL_ADD(bool A, bool B)
+        {
+            bool xor = XOR(A, B);
+            bool ret = XOR(CPU.Banderas.Carry, xor);
+            CPU.Banderas.Carry = (CPU.Banderas.Carry & xor) | (A & B);
+            return ret;
+        }
+
+        public void SUB(bool[] Operador1, bool[] Operador2)
+        {
+            bool[] temporal = new bool[Operador2.Length];
             Array.Copy(Operador2, temporal, Operador2.Length);
 
 
             temporal = Complemento2(temporal);
             ADD(Operador1, temporal);
 
-            CPU.Banderas.Signo = (Resultado[0] == 1);
+            CPU.Banderas.Signo = (Resultado[0]);
             if (CPU.Banderas.Signo && CPU.Banderas.OverFlow)
             {
                 CPU.Banderas.OverFlow = false; //falso positivo por suma negativa
             }
 
-            CPU.Banderas.Zero = (!Resultado.Any(x => x == 1));
+            CPU.Banderas.Zero = (!Resultado.Any(x => x));
         }
-        private byte[] Complemento2(byte[] Operador1)
+        private bool[] Complemento2(bool[] Operador1)
         {
-            int i = Array.LastIndexOf(Operador1, (byte)1);
+            int i = Array.LastIndexOf(Operador1, true);
             if (i > 0)
             {
                 i--;
                 for (; i >= 0; i--)
                 {
-                    Operador1[i] = (byte)(Operador1[i] == 1 ? 0 : 1);
+                    Operador1[i] = (!Operador1[i]);
                 }
             }
             return Operador1;
         }
-        public void AND(byte[] Operador1, byte[] Operador2)
+        private bool AND(bool A, bool B)
         {
-            Resultado = new byte[Operador1.Length];
+            return A && B;
+        }
+        public void AND(bool[] Operador1, bool[] Operador2)
+        {
+            Resultado = new bool[Operador1.Length];
             Acarreo = 0;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
-                if (Operador1[i] == 1 && Operador2[i] == 1)
-                {
-                    Resultado[i] = 1;
-                }
-                else
-                {
-                    Resultado[i] = 0;
-                }
+                Resultado[i] = AND(Operador1[i], Operador2[i]);
             }
         }
-        public void OR(byte[] Operador1, byte[] Operador2)
+        public void OR(bool[] Operador1, bool[] Operador2)
         {
-            Resultado = new byte[Operador1.Length];
+            Resultado = new bool[Operador1.Length];
             Acarreo = 0;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
-                if (Operador1[i] == 0 && Operador2[i] == 0)
+                if (!Operador1[i] && !Operador2[i])
                 {
-                    Resultado[i] = 0;
+                    Resultado[i] = false;
                 }
                 else
                 {
-                    Resultado[i] = 1;
+                    Resultado[i] = true;
                 }
             }
         }
-        public void NAND(byte[] Operador1, byte[] Operador2)
+        public void NAND(bool[] Operador1, bool[] Operador2)
         {
-            Resultado = new byte[Operador1.Length];
+            Resultado = new bool[Operador1.Length];
             Acarreo = 0;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
-                if (Operador1[i] == 1 && Operador2[i] == 1)
-                {
-                    Resultado[i] = 0;
-                }
-                else
-                {
-                    Resultado[i] = 1;
-                }
+                Resultado[i] = !(Operador1[i] && Operador2[i]);
             }
         }
-        public void NOR(byte[] Operador1, byte[] Operador2)
+        public void NOR(bool[] Operador1, bool[] Operador2)
         {
-            Resultado = new byte[Operador1.Length];
+            Resultado = new bool[Operador1.Length];
             Acarreo = 0;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
-                if (Operador1[i] == 0 && Operador2[i] == 0)
-                {
-                    Resultado[i] = 1;
-                }
-                else
-                {
-                    Resultado[i] = 0;
-                }
+                Resultado[i] = (!Operador1[i] && !Operador2[i]);
             }
         }
-        public void MUL(byte[] Operador2)
+        public void MUL(bool[] Operador2)
         {
-            byte[] Operador1;
+            bool[] Operador1;
             if (Operador2.Length == Bits)
             {
                 Registros.Registros.AX.EnableLectura(true);
                 Operador1 = Registros.Registros.AX.GetLow();
                 Registros.Registros.AX.EnableLectura(false);
-                Resultado = new byte[Bits * 2];
+                Resultado = new bool[Bits * 2];
             }
             else
             {
                 Registros.Registros.AX.EnableLectura(true);
                 Operador1 = Registros.Registros.AX.Get();
                 Registros.Registros.AX.EnableLectura(false);
-                Resultado = new byte[Bits * 4];
+                Resultado = new bool[Bits * 4];
             }
 
-            byte signo = (byte)(Operador2[0] * Operador1[0]);
 
+            byte[] TResultado = new byte[Resultado.Length];
             int offset;
-            for (int i = Operador2.Length - 1; i > 0; i--)
+            for (int i = Operador2.Length - 1; i >= 0; i--)
             {
                 offset = Operador2.Length - i - 1;
-                byte op1 = Operador2[i];
+                bool op1 = Operador2[i];
                 for (int j = Operador2.Length - 1; j > 0; j--)
                 {
-                    byte op2 = Operador1[j];
-                    Resultado[Operador2.Length * 2 - 1 - offset] += (byte)(op1 * op2);
+                    bool op2 = Operador1[j];
+                    TResultado[Operador2.Length * 2 - 1 - offset] += AND(op1, op2) ? 1 : 0;
                     offset++;
                 }
 
             }
-            for (int k = Resultado.Length - 1; k > 0; k--)
+            for (int k = Resultado.Length - 1; k >= 0; k--)
             {
-                if (Resultado[k] % 2 == 0 && Resultado[k] > 1)
+                if (TResultado[k] % 2 == 0 && TResultado[k] > 1)
                 {
 
-                    Resultado[k - 1] += (byte)Math.Round(Resultado[k] / 2f, 0);
-                    Resultado[k] = 0;
+                    TResultado[k - 1] += (byte)Math.Round(TResultado[k] / 2f, 0);
+                    TResultado[k] = 0;
                 }
-                if (Resultado[k] % 2 != 0 && Resultado[k] > 1)
+                if (TResultado[k] % 2 != 0 && TResultado[k] > 1)
                 {
-                    Resultado[k - 1] += (byte)Math.Truncate(Resultado[k] / 2f);
-                    Resultado[k] = 1;
+                    TResultado[k - 1] += (byte)Math.Truncate(TResultado[k] / 2f);
+                    TResultado[k] = 1;
                 }
             }
+            Resultado = TResultado.Select(x => x == 1).ToArray();
+
+
             if (Operador2.Length == Bits)
             {
                 Registros.Registros.AX.HabilitarEscritura(true);
@@ -205,96 +203,75 @@ namespace _8086VCPU.Alu
             }
             else
             {
-                byte[] temporal = new byte[Bits * 2];
+                bool[] temporal = new bool[Bits * 2];
                 Array.Copy(Resultado, temporal, Bits * 2);
                 Registros.Registros.DX.HabilitarEscritura(true);
                 Registros.Registros.DX.Set(temporal);
                 Registros.Registros.DX.HabilitarEscritura(false);
 
-                temporal = new byte[Bits * 2];
+                temporal = new bool[Bits * 2];
                 Array.Copy(Resultado, Bits * 2, temporal, 0, Bits * 2);
                 Registros.Registros.AX.HabilitarEscritura(true);
                 Registros.Registros.AX.Set(temporal);
                 Registros.Registros.AX.HabilitarEscritura(false);
 
             }
-
-
-            if (signo == 1)
-            {
-                CPU.Banderas.Signo = true;
-            }
-            if (Resultado[0] == 1 && signo == 0)
+            if (Resultado[0])
             {
                 CPU.Banderas.OverFlow = true;
             }
         }
-        public void NOT(byte[] Operador1)
+        public void NOT(bool[] Operador1)
         {
             for (int i = 0; i < Operador1.Length; i++)
             {
-                if (Operador1[i] == 1)
-                {
-                    Operador1[i] = 0;
-                }
-                else
-                {
-                    Operador1[i] = 1;
-                }
+                Operador1[i] = !Operador1[i];
             }
-
         }
-        public void XOR(byte[] Operador1, byte[] Operador2)
+        private bool XOR(bool Operador1, bool Operador2)
         {
-            Resultado = new byte[Operador1.Length];
+            return !(Operador1 == Operador2);
+        }
+        public void XOR(bool[] Operador1, bool[] Operador2)
+        {
+            Resultado = new bool[Operador1.Length];
             Acarreo = 0;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
-                if (Operador1[i] == Operador2[i])
-                {
-                    Resultado[i] = 0;
-                }
-                else
-                {
-                    Resultado[i] = 1;
-                }
+                Resultado[i] = XOR(Operador1[i], Operador2[i]);
             }
         }
-        public void XNOR(byte[] Operador1, byte[] Operador2)
+        public void XNOR(bool[] Operador1, bool[] Operador2)
         {
-            Resultado = new byte[Operador1.Length];
+            Resultado = new bool[Operador1.Length];
             Acarreo = 0;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
                 if (Operador1[i] != Operador2[i])
                 {
-                    Resultado[i] = 0;
+                    Resultado[i] = false;
                 }
                 else
                 {
-                    Resultado[i] = 1;
+                    Resultado[i] = true;
                 }
             }
         }
-        public void DIV(byte[] Divisor)
+        public void DIV(bool[] Divisor)
         {
+            bool[] Cociente;
+            bool[] Residuo;
 
-
-
-
-            byte[] Cociente;
-            byte[] Residuo;
-
-            byte[] Dividendo;
+            bool[] Dividendo;
             if (Divisor.Length == ALU.Bits)
             {
-                Cociente = new byte[ALU.Bits * 2];
-                Residuo = new byte[ALU.Bits * 2];
+                Cociente = new bool[ALU.Bits * 2];
+                Residuo = new bool[ALU.Bits * 2];
 
-                List<byte> DivisorAumentado = new List<byte>();
+                List<bool> DivisorAumentado = new List<bool>();
                 for (int i = 0; i < ALU.Bits; i++)
                 {
-                    DivisorAumentado.Add(0);
+                    DivisorAumentado.Add(false);
                 }
                 DivisorAumentado.AddRange(Divisor);
 
@@ -306,10 +283,10 @@ namespace _8086VCPU.Alu
             }
             else
             {
-                Cociente = new byte[ALU.Bits * 4];
-                Residuo = new byte[ALU.Bits * 4];
+                Cociente = new bool[ALU.Bits * 4];
+                Residuo = new bool[ALU.Bits * 4];
 
-                List<byte> unidos = new List<byte>();
+                List<bool> unidos = new List<bool>();
                 unidos.AddRange(Registros.Registros.DX.Get());
                 unidos.AddRange(Registros.Registros.AX.Get());
                 Dividendo = unidos.ToArray();
@@ -319,22 +296,22 @@ namespace _8086VCPU.Alu
             //Divisor    =0000 00 11 3
             //Dividendo  =0000 0110 6
             //Resultado  =0000 0010
-            byte[] temporal;
+            bool[] temporal;
             for (int i = 0; i < Dividendo.Length; i++)
             {
                 //
-                temporal = new byte[Dividendo.Length];
+                temporal = new bool[Dividendo.Length];
                 Array.Copy(Dividendo, 0, temporal, temporal.Length - (i + 1), i + 1);
                 //
                 Acarreo = 0;
                 SUB(Divisor, temporal);
                 if (CPU.Banderas.Zero || CPU.Banderas.Signo)
                 {
-                    Cociente[i] = 1;
+                    Cociente[i] = true;
                     //
                     if (CPU.Banderas.Zero)
                     {
-                        if (i == ALU.Bits * 2 - 1 || Dividendo[i + 1] == 0)
+                        if (i == ALU.Bits * 2 - 1 || !Dividendo[i + 1])
                         {
                             Resultado = Cociente;
                             break;
@@ -347,13 +324,13 @@ namespace _8086VCPU.Alu
 
                         if (i < ALU.Bits * 2 - 1)
                         {
-                            List<byte> recorrer = new List<byte>(Residuo);
+                            List<bool> recorrer = new List<bool>(Residuo);
                             recorrer.Add(Dividendo[i + 1]);
 
-                            temporal = new byte[Dividendo.Length];
+                            temporal = new bool[Dividendo.Length];
                             Array.Copy(recorrer.ToArray(), 1, Dividendo, 0, ALU.Bits * 2);
 
-                            Residuo = new byte[ALU.Bits * 2];
+                            Residuo = new bool[ALU.Bits * 2];
                         }
                     }
                     //Resultado[]
@@ -367,14 +344,14 @@ namespace _8086VCPU.Alu
 
             if (Divisor.Length == ALU.Bits * 2)
             {
-                temporal = new byte[ALU.Bits];
+                temporal = new bool[ALU.Bits];
                 Array.Copy(Resultado, ALU.Bits, temporal, 0, ALU.Bits);
 
                 Registros.Registros.AX.HabilitarEscritura(true);
                 Registros.Registros.AX.SetLow(temporal);
                 Registros.Registros.AX.HabilitarEscritura(false);
 
-                temporal = new byte[ALU.Bits];
+                temporal = new bool[ALU.Bits];
                 Array.Copy(Residuo, ALU.Bits, temporal, 0, ALU.Bits);
 
                 Registros.Registros.AX.HabilitarEscritura(true);
