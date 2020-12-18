@@ -10,7 +10,7 @@ namespace _8086VCPU.Alu
     {
         public bool Carry { get; set; }
         public bool Signo { get; set; }
-        public bool Zero { get; set; }
-
+        public bool Zero { get; set; } //?
+        public bool OverFlow { get; internal set; }
     }
 }

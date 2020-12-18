@@ -14,11 +14,31 @@ namespace _8086VCPU.Alu
 
 
         public byte[] Resultado = new byte[Bits * 2 + 1];
-        public byte Acarreo;
+
+
+        private byte _Acarreo;
+        private byte Acarreo
+        {
+            get => _Acarreo;
+            set
+            {
+                if (value > 0)
+                {
+                    CPU.Banderas.Carry = true;
+                }
+                else
+                {
+                    CPU.Banderas.Carry = false;
+                }
+                _Acarreo = value;
+            }
+        }
+
+
         public void ADD(byte[] Operador1, byte[] Operador2)
         {
             Resultado = new byte[Operador1.Length];
-            for (int i = Operador1.Length - 1; i > 0; i--)
+            for (int i = Operador1.Length - 1; i >= 0; i--)
             {
                 Resultado[i] = (byte)(Operador1[i] + Operador2[i] + Acarreo);
                 Acarreo = 0;
@@ -33,6 +53,32 @@ namespace _8086VCPU.Alu
                     Acarreo = 1;
                 }
             }
+
+            CPU.Banderas.OverFlow = (Resultado[0] == 1);
+        }
+        public void SUB(byte[] Operador1, byte[] Operador2)
+        {
+            Operador2 = Complemento2(Operador2);
+            ADD(Operador1, Operador2);
+
+            CPU.Banderas.Signo = (Resultado[0] == 1);
+            if (CPU.Banderas.Signo && CPU.Banderas.OverFlow)
+            {
+                CPU.Banderas.OverFlow = false; //falso positivo por suma negativa
+            }
+        }
+        private byte[] Complemento2(byte[] Operador1)
+        {
+            int i = Array.LastIndexOf(Operador1, (byte)1);
+            if (i > 0)
+            {
+                i--;
+                for (; i >= 0; i--)
+                {
+                    Operador1[i] = (byte)(Operador1[i] == 1 ? 0 : 1);
+                }
+            }
+            return Operador1;
         }
         public void AND(byte[] Operador1, byte[] Operador2)
         {
@@ -116,6 +162,8 @@ namespace _8086VCPU.Alu
                 Resultado = new byte[Bits * 4];
             }
 
+            byte signo = (byte)(Operador2[0] * Operador1[0]);
+
             int offset;
             for (int i = Operador2.Length - 1; i > 0; i--)
             {
@@ -143,7 +191,6 @@ namespace _8086VCPU.Alu
                     Resultado[k] = 1;
                 }
             }
-
             if (Operador2.Length == Bits)
             {
                 Registros.Registros.AX.HabilitarEscritura(true);
@@ -164,6 +211,16 @@ namespace _8086VCPU.Alu
                 Registros.Registros.AX.Set(temporal);
                 Registros.Registros.AX.HabilitarEscritura(false);
 
+            }
+
+
+            if (signo == 1)
+            {
+                CPU.Banderas.Signo = true;
+            }
+            if (Resultado[0] == 1 && signo == 0)
+            {
+                CPU.Banderas.OverFlow = true;
             }
         }
         public void NOT(byte[] Operador1)

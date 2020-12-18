@@ -13,21 +13,53 @@ namespace Pruebas
     {
         static void Main(string[] args)
         {
+            //  MOV AX,[BX]
+            //  MOV [BX],AX
+
+            //byte[] operador1 = Registros.CX.GetLow(); //Leer 4 bits CL
+            //byte[] operador1 = Registros.CX.GetHigh(); //   Leer 4 bits CH
+            //byte[] operador1 = Registros.CX.Get(); //   Leer 8 bits CX
+
             //MOV CL,5d
             Registros.CX.HabilitarEscritura(true);
-            Registros.CX.SetLow(new byte[] { 0, 1, 0, 1 });
+            Registros.CX.SetLow(new byte[] { 0, 0, 1, 0 });
             Registros.CX.HabilitarEscritura(false);
+
             //MOV DL,2d
             Registros.DX.HabilitarEscritura(true);
-            Registros.DX.SetLow(new byte[] { 0, 0, 1, 0 });
+            Registros.DX.SetLow(new byte[] { 0, 1, 0, 1 });
             Registros.DX.HabilitarEscritura(false);
-            //ADD CL,DL
+
+            //SUB CL,DL
             Registros.CX.HabilitarLeectura(true);
             byte[] operador1 = Registros.CX.GetLow();
             Registros.CX.HabilitarLeectura(false);
 
             Registros.DX.HabilitarLeectura(true);
             byte[] operador2 = Registros.DX.GetLow();
+            Registros.DX.HabilitarLeectura(false);
+
+            CPU.Alu.SUB(operador1, operador2);
+            Registros.CX.HabilitarEscritura(true);
+            Registros.CX.SetLow(CPU.Alu.Resultado);
+            Registros.CX.HabilitarEscritura(true);
+
+
+            //MOV CL,5d
+            Registros.CX.HabilitarEscritura(true);
+            Registros.CX.SetLow(new byte[] { 0, 1, 1, 1 });
+            Registros.CX.HabilitarEscritura(false);
+            //MOV DL,2d
+            Registros.DX.HabilitarEscritura(true);
+            Registros.DX.SetLow(new byte[] { 0, 0, 0, 1 });
+            Registros.DX.HabilitarEscritura(false);
+            //ADD CL,DL
+            Registros.CX.HabilitarLeectura(true);
+            operador1 = Registros.CX.GetLow();
+            Registros.CX.HabilitarLeectura(false);
+
+            Registros.DX.HabilitarLeectura(true);
+            operador2 = Registros.DX.GetLow();
             Registros.DX.HabilitarLeectura(false);
 
             CPU.Alu.ADD(operador1, operador2);
