@@ -11,7 +11,7 @@ namespace _8086VCPU.Registros
         protected bool Lecctura { get; set; }
         protected bool Escritura { get; set; }
 
-        public void HabilitarLeectura(bool valor)
+        public void EnableLectura(bool valor)
         {
             this.Lecctura = valor;
         }

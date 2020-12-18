@@ -58,14 +58,20 @@ namespace _8086VCPU.Alu
         }
         public void SUB(byte[] Operador1, byte[] Operador2)
         {
-            Operador2 = Complemento2(Operador2);
-            ADD(Operador1, Operador2);
+            byte[] temporal = new byte[Operador2.Length];
+            Array.Copy(Operador2, temporal, Operador2.Length);
+
+
+            temporal = Complemento2(temporal);
+            ADD(Operador1, temporal);
 
             CPU.Banderas.Signo = (Resultado[0] == 1);
             if (CPU.Banderas.Signo && CPU.Banderas.OverFlow)
             {
                 CPU.Banderas.OverFlow = false; //falso positivo por suma negativa
             }
+
+            CPU.Banderas.Zero = (!Resultado.Any(x => x == 1));
         }
         private byte[] Complemento2(byte[] Operador1)
         {
@@ -149,16 +155,16 @@ namespace _8086VCPU.Alu
             byte[] Operador1;
             if (Operador2.Length == Bits)
             {
-                Registros.Registros.AX.HabilitarLeectura(true);
+                Registros.Registros.AX.EnableLectura(true);
                 Operador1 = Registros.Registros.AX.GetLow();
-                Registros.Registros.AX.HabilitarLeectura(false);
+                Registros.Registros.AX.EnableLectura(false);
                 Resultado = new byte[Bits * 2];
             }
             else
             {
-                Registros.Registros.AX.HabilitarLeectura(true);
+                Registros.Registros.AX.EnableLectura(true);
                 Operador1 = Registros.Registros.AX.Get();
-                Registros.Registros.AX.HabilitarLeectura(false);
+                Registros.Registros.AX.EnableLectura(false);
                 Resultado = new byte[Bits * 4];
             }
 
@@ -269,6 +275,120 @@ namespace _8086VCPU.Alu
                     Resultado[i] = 1;
                 }
             }
+        }
+        public void DIV(byte[] Divisor)
+        {
+
+
+
+
+            byte[] Cociente;
+            byte[] Residuo;
+
+            byte[] Dividendo;
+            if (Divisor.Length == ALU.Bits)
+            {
+                Cociente = new byte[ALU.Bits * 2];
+                Residuo = new byte[ALU.Bits * 2];
+
+                List<byte> DivisorAumentado = new List<byte>();
+                for (int i = 0; i < ALU.Bits; i++)
+                {
+                    DivisorAumentado.Add(0);
+                }
+                DivisorAumentado.AddRange(Divisor);
+
+                Divisor = DivisorAumentado.ToArray();
+
+                Registros.Registros.AX.EnableLectura(true);
+                Dividendo = Registros.Registros.AX.Get();
+                Registros.Registros.AX.EnableLectura(false);
+            }
+            else
+            {
+                Cociente = new byte[ALU.Bits * 4];
+                Residuo = new byte[ALU.Bits * 4];
+
+                List<byte> unidos = new List<byte>();
+                unidos.AddRange(Registros.Registros.DX.Get());
+                unidos.AddRange(Registros.Registros.AX.Get());
+                Dividendo = unidos.ToArray();
+            }
+
+            //si el divisor cabe en el primer numero de izq a derecha
+            //Divisor    =0000 00 11 3
+            //Dividendo  =0000 0110 6
+            //Resultado  =0000 0010
+            byte[] temporal;
+            for (int i = 0; i < Dividendo.Length; i++)
+            {
+                //
+                temporal = new byte[Dividendo.Length];
+                Array.Copy(Dividendo, 0, temporal, temporal.Length - (i + 1), i + 1);
+                //
+                Acarreo = 0;
+                SUB(Divisor, temporal);
+                if (CPU.Banderas.Zero || CPU.Banderas.Signo)
+                {
+                    Cociente[i] = 1;
+                    //
+                    if (CPU.Banderas.Zero)
+                    {
+                        if (i == ALU.Bits * 2 - 1 || Dividendo[i + 1] == 0)
+                        {
+                            Resultado = Cociente;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        SUB(temporal, Divisor);
+                        Residuo = Resultado;
+
+                        if (i < ALU.Bits * 2 - 1)
+                        {
+                            List<byte> recorrer = new List<byte>(Residuo);
+                            recorrer.Add(Dividendo[i + 1]);
+
+                            temporal = new byte[Dividendo.Length];
+                            Array.Copy(recorrer.ToArray(), 1, Dividendo, 0, ALU.Bits * 2);
+
+                            Residuo = new byte[ALU.Bits * 2];
+                        }
+                    }
+                    //Resultado[]
+                    //1 cociente=0
+                    //1
+                    //11 cociente=01
+                    // 11
+                    //-11
+                }
+            }
+
+            if (Divisor.Length == ALU.Bits * 2)
+            {
+                temporal = new byte[ALU.Bits];
+                Array.Copy(Resultado, ALU.Bits, temporal, 0, ALU.Bits);
+
+                Registros.Registros.AX.HabilitarEscritura(true);
+                Registros.Registros.AX.SetLow(temporal);
+                Registros.Registros.AX.HabilitarEscritura(false);
+
+                temporal = new byte[ALU.Bits];
+                Array.Copy(Residuo, ALU.Bits, temporal, 0, ALU.Bits);
+
+                Registros.Registros.AX.HabilitarEscritura(true);
+                Registros.Registros.AX.SetHigh(temporal);
+                Registros.Registros.AX.HabilitarEscritura(false);
+
+            }
+            else
+            {
+
+            }
+            //si CMP==Mayor...
+            //si CMP=Menor..
+
         }
     }
 }
