@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace _8086VCPU.Alu
 {
-    public class ALU
+    public class Alu
     {
         public const int Bits = 4;
 
@@ -263,13 +263,13 @@ namespace _8086VCPU.Alu
             bool[] Residuo;
 
             bool[] Dividendo;
-            if (Divisor.Length == ALU.Bits)
+            if (Divisor.Length == Alu.Bits)
             {
-                Cociente = new bool[ALU.Bits * 2];
-                Residuo = new bool[ALU.Bits * 2];
+                Cociente = new bool[Alu.Bits * 2];
+                Residuo = new bool[Alu.Bits * 2];
 
                 List<bool> DivisorAumentado = new List<bool>();
-                for (int i = 0; i < ALU.Bits; i++)
+                for (int i = 0; i < Alu.Bits; i++)
                 {
                     DivisorAumentado.Add(false);
                 }
@@ -283,8 +283,8 @@ namespace _8086VCPU.Alu
             }
             else
             {
-                Cociente = new bool[ALU.Bits * 4];
-                Residuo = new bool[ALU.Bits * 4];
+                Cociente = new bool[Alu.Bits * 4];
+                Residuo = new bool[Alu.Bits * 4];
 
                 List<bool> unidos = new List<bool>();
                 unidos.AddRange(Registros.Registros.DX.Get());
@@ -311,7 +311,7 @@ namespace _8086VCPU.Alu
                     //
                     if (CPU.Banderas.Zero)
                     {
-                        if (i == ALU.Bits * 2 - 1 || !Dividendo[i + 1])
+                        if (i == Alu.Bits * 2 - 1 || !Dividendo[i + 1])
                         {
                             Resultado = Cociente;
                             break;
@@ -322,15 +322,15 @@ namespace _8086VCPU.Alu
                         SUB(temporal, Divisor);
                         Residuo = Resultado;
 
-                        if (i < ALU.Bits * 2 - 1)
+                        if (i < Alu.Bits * 2 - 1)
                         {
                             List<bool> recorrer = new List<bool>(Residuo);
                             recorrer.Add(Dividendo[i + 1]);
 
                             temporal = new bool[Dividendo.Length];
-                            Array.Copy(recorrer.ToArray(), 1, Dividendo, 0, ALU.Bits * 2);
+                            Array.Copy(recorrer.ToArray(), 1, Dividendo, 0, Alu.Bits * 2);
 
-                            Residuo = new bool[ALU.Bits * 2];
+                            Residuo = new bool[Alu.Bits * 2];
                         }
                     }
                     //Resultado[]
@@ -342,17 +342,17 @@ namespace _8086VCPU.Alu
                 }
             }
 
-            if (Divisor.Length == ALU.Bits * 2)
+            if (Divisor.Length == Alu.Bits * 2)
             {
-                temporal = new bool[ALU.Bits];
-                Array.Copy(Resultado, ALU.Bits, temporal, 0, ALU.Bits);
+                temporal = new bool[Alu.Bits];
+                Array.Copy(Resultado, Alu.Bits, temporal, 0, Alu.Bits);
 
                 Registros.Registros.AX.HabilitarEscritura(true);
                 Registros.Registros.AX.SetLow(temporal);
                 Registros.Registros.AX.HabilitarEscritura(false);
 
-                temporal = new bool[ALU.Bits];
-                Array.Copy(Residuo, ALU.Bits, temporal, 0, ALU.Bits);
+                temporal = new bool[Alu.Bits];
+                Array.Copy(Residuo, Alu.Bits, temporal, 0, Alu.Bits);
 
                 Registros.Registros.AX.HabilitarEscritura(true);
                 Registros.Registros.AX.SetHigh(temporal);

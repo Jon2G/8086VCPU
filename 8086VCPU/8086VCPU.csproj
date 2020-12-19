@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Alu\ALU.cs" />
+    <Compile Include="Alu\Alu.cs" />
     <Compile Include="Alu\Banderas.cs" />
     <Compile Include="CPU.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
