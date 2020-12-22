@@ -67,7 +67,6 @@ namespace _8086VCPU.Alu
             CPU.Banderas.Carry = (CPU.Banderas.Carry & xor) | (A & B);
             return ret;
         }
-
         public void SUB(bool[] Operador1, bool[] Operador2)
         {
             bool[] temporal = new bool[Operador2.Length];

@@ -22,6 +22,7 @@ namespace Pruebas
 
             //MOV CL,3d
             Registros.CX.HabilitarEscritura(true);
+                                            //0010
             Registros.CX.SetLow(new bool[] { false, false, true, false });
             Registros.CX.HabilitarEscritura(false);
 
@@ -34,8 +35,7 @@ namespace Pruebas
             Registros.CX.EnableLectura(true);
             bool[] operador1 = Registros.CX.GetLow();
             Registros.CX.EnableLectura(false);
-
-            //CPU.Alu.DIV(operador1);
+            CPU.Alu.DIV(operador1);
 
 
 
