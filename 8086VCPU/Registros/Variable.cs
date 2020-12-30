@@ -13,7 +13,7 @@ namespace _8086VCPU.Registros
         private bool[] Valor { get; set; }
         public Variable()
         {
-            this.Valor = new bool[Alu.Alu.Bits * 2];
+            this.Valor = new bool[Alu.Alu.Byte * 2];
         }
         protected override bool[] _Get()
         {

@@ -1,0 +1,10 @@
+DIV AX
+DIV BX
+DIV CX
+DIV DX
+
+DIV Ah
+DIV Al
+
+DIV Bh
+DIV Bl

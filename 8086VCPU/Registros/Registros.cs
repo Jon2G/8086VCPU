@@ -12,12 +12,42 @@ namespace _8086VCPU.Registros
         public static Registro BX { get; private set; }
         public static Registro CX { get; private set; }
         public static Registro DX { get; private set; }
+        public static Registro SI { get; private set; }
+        public static Registro DI { get; private set; }
         static Registros()
         {
             Registros.AX = new Registro("AX");
             Registros.BX = new Registro("BX");
-            Registros.CX = new Registro("CX");
-            Registros.DX = new Registro("DX");
+            Registros.SI = new Registro("CX");
+            Registros.DI = new Registro("DX");
+        }
+
+        public static Registro PorNombre(string nombre)
+        {
+            switch (nombre.ToUpper())
+            {
+                case "AX":
+                case "AH":
+                case "AL":
+                    return Registros.AX;
+                case "BX":
+                case "BH":
+                case "BL":
+                    return Registros.BX;
+                case "CX":
+                case "CH":
+                case "CL":
+                    return Registros.CX;
+                case "DX":
+                case "DH":
+                case "DL":
+                    return Registros.DX;
+                case "SI":
+                    return SI;
+                case "DI":
+                    return DI;
+            }
+            return null;
         }
     }
 }

@@ -1,0 +1,10 @@
+MUL AX
+MUL BX
+MUL CX
+MUL DX
+
+MUL Ah
+MUL Al
+
+MUL Bh
+MUL Bl

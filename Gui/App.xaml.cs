@@ -11,6 +11,7 @@ using Prism.DryIoc;
 using HandyControl.Themes;
 using HandyControl.Tools;
 using HandyControl.Data;
+using Gui.Resources;
 
 namespace Gui
 {
@@ -23,6 +24,7 @@ namespace Gui
         {
             Kit.WPF.Tools.Init().InitLoggin(AlertAfterCritical: true);
             SQLHelper.SQLHelper.Init(Kit.Tools.Instance.LibraryPath, Debugger.IsAttached);
+            Highlighting.Init();
             base.OnStartup(e);
         }
 

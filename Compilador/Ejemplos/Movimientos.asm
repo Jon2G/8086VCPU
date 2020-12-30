@@ -1,0 +1,37 @@
+MOV AX,00011B
+MOV CX,10010B
+MOV AL,6d
+MOV AX,-2d
+MOV AL,0111b
+MOV CL,5d
+MOV DL,2D
+MOV CL,7d
+MOV CL,-7d
+mov al,5d
+mov bl,3d
+
+MOV AL,CL
+MOV AH,AL
+MOV CX,AX
+MOV AX,DX
+
+;MOV AH,AX
+;MOV AX,AH
+
+
+MOV AX,[0d]
+MOV AX,[BX]
+MOV AX,[BX+SI]
+MOV AX,[BX+DI]
+
+MOV AX,[BX+ SI]
+MOV AX,[BX + DI]
+
+;MOV AX,[BX]
+;MOV AX,[AX]         
+;MOV AX,[BX]
+;MOV AX,[CX]
+;MOV AX,[DX]
+
+MOV AX,[SI]    
+MOV AX,[DI]

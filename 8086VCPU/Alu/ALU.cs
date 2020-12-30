@@ -10,10 +10,11 @@ namespace _8086VCPU.Alu
 {
     public class Alu
     {
-        public const int Bits = 4;
+        public const int Byte = 4;
+        public const int Palabra = Byte * 2;
 
 
-        public bool[] Resultado = new bool[Bits * 2 + 1];
+        public bool[] Resultado = new bool[Byte * 2 + 1];
 
 
         private byte _Acarreo;
@@ -73,7 +74,7 @@ namespace _8086VCPU.Alu
             Array.Copy(Operador2, temporal, Operador2.Length);
 
 
-            temporal = Complemento2(temporal);
+            temporal = COMPLEMENTO_2(temporal);
             ADD(Operador1, temporal);
 
             CPU.Banderas.Signo = (Resultado[0]);
@@ -84,7 +85,7 @@ namespace _8086VCPU.Alu
 
             CPU.Banderas.Zero = (!Resultado.Any(x => x));
         }
-        private bool[] Complemento2(bool[] Operador1)
+        public bool[] COMPLEMENTO_2(bool[] Operador1)
         {
             int i = Array.LastIndexOf(Operador1, true);
             if (i > 0)
@@ -147,19 +148,19 @@ namespace _8086VCPU.Alu
         public void MUL(bool[] Operador2)
         {
             bool[] Operador1;
-            if (Operador2.Length == Bits)
+            if (Operador2.Length == Byte)
             {
                 Registros.Registros.AX.EnableLectura(true);
                 Operador1 = Registros.Registros.AX.GetLow();
                 Registros.Registros.AX.EnableLectura(false);
-                Resultado = new bool[Bits * 2];
+                Resultado = new bool[Byte * 2];
             }
             else
             {
                 Registros.Registros.AX.EnableLectura(true);
                 Operador1 = Registros.Registros.AX.Get();
                 Registros.Registros.AX.EnableLectura(false);
-                Resultado = new bool[Bits * 4];
+                Resultado = new bool[Byte * 4];
             }
 
 
@@ -194,7 +195,7 @@ namespace _8086VCPU.Alu
             Resultado = TResultado.Select(x => x == 1).ToArray();
 
 
-            if (Operador2.Length == Bits)
+            if (Operador2.Length == Byte)
             {
                 Registros.Registros.AX.HabilitarEscritura(true);
                 Registros.Registros.AX.Set(Resultado);
@@ -202,14 +203,14 @@ namespace _8086VCPU.Alu
             }
             else
             {
-                bool[] temporal = new bool[Bits * 2];
-                Array.Copy(Resultado, temporal, Bits * 2);
+                bool[] temporal = new bool[Byte * 2];
+                Array.Copy(Resultado, temporal, Byte * 2);
                 Registros.Registros.DX.HabilitarEscritura(true);
                 Registros.Registros.DX.Set(temporal);
                 Registros.Registros.DX.HabilitarEscritura(false);
 
-                temporal = new bool[Bits * 2];
-                Array.Copy(Resultado, Bits * 2, temporal, 0, Bits * 2);
+                temporal = new bool[Byte * 2];
+                Array.Copy(Resultado, Byte * 2, temporal, 0, Byte * 2);
                 Registros.Registros.AX.HabilitarEscritura(true);
                 Registros.Registros.AX.Set(temporal);
                 Registros.Registros.AX.HabilitarEscritura(false);
@@ -262,13 +263,13 @@ namespace _8086VCPU.Alu
             bool[] Residuo;
 
             bool[] Dividendo;
-            if (Divisor.Length == Alu.Bits)
+            if (Divisor.Length == Alu.Byte)
             {
-                Cociente = new bool[Alu.Bits * 2];
-                Residuo = new bool[Alu.Bits * 2];
+                Cociente = new bool[Alu.Byte * 2];
+                Residuo = new bool[Alu.Byte * 2];
 
                 List<bool> DivisorAumentado = new List<bool>();
-                for (int i = 0; i < Alu.Bits; i++)
+                for (int i = 0; i < Alu.Byte; i++)
                 {
                     DivisorAumentado.Add(false);
                 }
@@ -282,8 +283,8 @@ namespace _8086VCPU.Alu
             }
             else
             {
-                Cociente = new bool[Alu.Bits * 4];
-                Residuo = new bool[Alu.Bits * 4];
+                Cociente = new bool[Alu.Byte * 4];
+                Residuo = new bool[Alu.Byte * 4];
 
                 List<bool> unidos = new List<bool>();
                 unidos.AddRange(Registros.Registros.DX.Get());
@@ -310,7 +311,7 @@ namespace _8086VCPU.Alu
                     //
                     if (CPU.Banderas.Zero)
                     {
-                        if (i == Alu.Bits * 2 - 1 || !Dividendo[i + 1])
+                        if (i == Alu.Byte * 2 - 1 || !Dividendo[i + 1])
                         {
                             Resultado = Cociente;
                             break;
@@ -321,15 +322,15 @@ namespace _8086VCPU.Alu
                         SUB(temporal, Divisor);
                         Residuo = Resultado;
 
-                        if (i < Alu.Bits * 2 - 1)
+                        if (i < Alu.Byte * 2 - 1)
                         {
                             List<bool> recorrer = new List<bool>(Residuo);
                             recorrer.Add(Dividendo[i + 1]);
 
                             temporal = new bool[Dividendo.Length];
-                            Array.Copy(recorrer.ToArray(), 1, Dividendo, 0, Alu.Bits * 2);
+                            Array.Copy(recorrer.ToArray(), 1, Dividendo, 0, Alu.Byte * 2);
 
-                            Residuo = new bool[Alu.Bits * 2];
+                            Residuo = new bool[Alu.Byte * 2];
                         }
                     }
                     //Resultado[]
@@ -341,17 +342,17 @@ namespace _8086VCPU.Alu
                 }
             }
 
-            if (Divisor.Length == Alu.Bits * 2)
+            if (Divisor.Length == Alu.Byte * 2)
             {
-                temporal = new bool[Alu.Bits];
-                Array.Copy(Resultado, Alu.Bits, temporal, 0, Alu.Bits);
+                temporal = new bool[Alu.Byte];
+                Array.Copy(Resultado, Alu.Byte, temporal, 0, Alu.Byte);
 
                 Registros.Registros.AX.HabilitarEscritura(true);
                 Registros.Registros.AX.SetLow(temporal);
                 Registros.Registros.AX.HabilitarEscritura(false);
 
-                temporal = new bool[Alu.Bits];
-                Array.Copy(Residuo, Alu.Bits, temporal, 0, Alu.Bits);
+                temporal = new bool[Alu.Byte];
+                Array.Copy(Residuo, Alu.Byte, temporal, 0, Alu.Byte);
 
                 Registros.Registros.AX.HabilitarEscritura(true);
                 Registros.Registros.AX.SetHigh(temporal);

@@ -15,8 +15,9 @@ namespace _8086VCPU.Registros
         public Registro(string Nombre)
         {
             this.Nombre = Nombre;
-            this.High = new bool[Alu.Alu.Bits];
-            this.Low = new bool[Alu.Alu.Bits];
+            this.High = new bool[Alu.Alu.Byte];
+            this.Low = new bool[Alu.Alu.Byte];
+            this.Tamaño = Tamaños.Palabra;
         }
         public void SetLow(bool[] Low)
         {
@@ -45,8 +46,8 @@ namespace _8086VCPU.Registros
 
         protected override void _Set(bool[] Valor)
         {
-            Array.Copy(Valor, 0, High, 0, Alu.Alu.Bits);
-            Array.Copy(Valor, Alu.Alu.Bits, Low, 0, Alu.Alu.Bits);
+            Array.Copy(Valor, 0, High, 0, Alu.Alu.Byte);
+            Array.Copy(Valor, Alu.Alu.Byte, Low, 0, Alu.Alu.Byte);
         }
         protected override bool[] _Get()
         {

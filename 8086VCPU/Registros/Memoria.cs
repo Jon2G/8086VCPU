@@ -8,10 +8,17 @@ namespace _8086VCPU.Registros
 {
     public abstract class Memoria
     {
+        public enum Tamaños
+        {
+            Invalido = 0,
+            Byte = 1,
+            Palabra = 2,
+        }
+        public Tamaños Tamaño { get; protected set; }
         protected bool Lecctura { get; set; }
         protected bool Escritura { get; set; }
         public string Hex => Decimal.ToString("X");
-        public int Decimal => Convert.ToInt32(ToString(),2);
+        public int Decimal => Convert.ToInt32(ToString(), 2);
 
         public void EnableLectura(bool valor)
         {

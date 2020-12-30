@@ -55,54 +55,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Vistas\Registros.xaml.cs">
-      <DependentUpon>Registros.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Advertencias\WarningError.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Advertencias\ErrorCompilacion.cs" />
-    <Compile Include="Advertencias\ResultadosCompilacion.cs" />
-    <Compile Include="Advertencias\WarningError.xaml.cs">
-      <DependentUpon>WarningError.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Compilador\Compilador.cs" />
-    <Compile Include="Compilador\Fases\1. Analisis Lexico\AnalizadorLexico.cs" />
-    <Compile Include="Compilador\Fases\1. Analisis Lexico\LineaLexica.cs" />
-    <Compile Include="Compilador\Fases\2. Analisis Sintactico\AnalizadorSintactico.cs" />
-    <Compile Include="Compilador\Fases\3. Analisis Semantico\AnalizadorSemantico.cs" />
-    <Compile Include="Compilador\Fases\4. Sintetizador\Sintesis.cs" />
-    <Compile Include="Compilador\Fases\6. Codigo Intermedio\CodigoMaquina.cs" />
-    <Compile Include="Compilador\Fases\Analizador.cs" />
-    <Compile Include="Compilador\Fases\ExpresionesRegulares.cs" />
-    <Compile Include="Compilador\CodeSegment.cs" />
-    <Compile Include="Compilador\Fases\Token.cs" />
-    <Compile Include="Compilador\Instrucciones\ADD.cs" />
-    <Compile Include="Compilador\Instrucciones\Instruccion.cs" />
-    <Compile Include="Compilador\Instrucciones\MOV.cs" />
-    <Compile Include="Compilador\Instrucciones\SUB.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Vistas\Registros.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -121,7 +87,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EmbeddedResource Include="Resources\CustomHighlightingAsm.xshd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -156,29 +121,14 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\BuildSolution_16x.png" />
-    <Resource Include="Images\CompilarEjecutar.png" />
-    <Resource Include="Images\Copy.png" />
-    <Resource Include="Images\Cut.png" />
-    <Resource Include="Images\Delete.png" />
-    <Resource Include="Images\Open.png" />
-    <Resource Include="Images\Paste.png" />
-    <Resource Include="Images\Redo.png" />
-    <Resource Include="Images\Run_16x.png" />
-    <Resource Include="Images\Save.png" />
-    <Resource Include="Images\Undo.png" />
-    <Resource Include="Images\WordWrap.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\AddVariable_16x.png" />
-    <Resource Include="Images\bug.png" />
-    <Resource Include="Images\Method_left_16x.png" />
-    <Resource Include="Images\Property_16x.png" />
-    <Resource Include="Images\StatusWarning_16x.png" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Ejemplos\Operaciones.asm" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
