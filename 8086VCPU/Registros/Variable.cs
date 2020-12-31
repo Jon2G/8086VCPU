@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _8086VCPU.Registros
 {
-    public class Variable : Memoria
+    public class Variable : Localidad
     {
         //Offset?
         private bool[] Valor { get; set; }

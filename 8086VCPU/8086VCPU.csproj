@@ -44,8 +44,9 @@
     <Compile Include="Alu\Alu.cs" />
     <Compile Include="Alu\Banderas.cs" />
     <Compile Include="CPU.cs" />
+    <Compile Include="Memoria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registros\Memoria.cs" />
+    <Compile Include="Registros\Localidad.cs" />
     <Compile Include="Registros\Registro.cs" />
     <Compile Include="Registros\Registros.cs" />
     <Compile Include="Registros\Variable.cs" />

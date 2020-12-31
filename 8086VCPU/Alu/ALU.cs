@@ -34,8 +34,6 @@ namespace _8086VCPU.Alu
                 _Acarreo = value;
             }
         }
-
-
         public void ADD(bool[] Operador1, bool[] Operador2)
         {
             Operador1 = Operador1.Reverse().ToArray();

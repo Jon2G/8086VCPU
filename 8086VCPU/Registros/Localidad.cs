@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _8086VCPU.Registros
 {
-    public abstract class Memoria
+    public abstract class Localidad
     {
         public enum Tamaños
         {

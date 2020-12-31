@@ -13,6 +13,7 @@ namespace Pruebas
     {
         static void Main(string[] args)
         {
+            CPU.Alu.ToString();
             //  MOV AX,[BX]
             //  MOV [BX],AX
 

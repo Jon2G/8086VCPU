@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _8086VCPU.Registros
 {
-    public class Registro : Memoria
+    public class Registro : Localidad
     {
         public string Nombre { get; private set; }
         private bool[] High { get; set; }
