@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Gui.Compilador.Instrucciones
 {
-    public class Numero : Memoria
+    public class Numero : Localidad
     {
 
         public bool[] Valor { get; private set; }

@@ -1,8 +1,10 @@
 ﻿using Gui.Advertencias;
+using Gui.Resources;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
 using Kit;
 using Microsoft.Win32;
+using Prism.Regions;
 using SQLHelper;
 using System;
 using System.Collections.Generic;
@@ -22,19 +24,16 @@ using System.Windows.Threading;
 
 namespace Gui.Views
 {    /// <summary>
-    /// Lógica de interacción para Editor.xaml
-    /// </summary>
-    public partial class Editor : UserControl
+     /// Lógica de interacción para Editor.xaml
+     /// </summary>
+    public partial class Editor : NavigationUserControl
     {
-        //private readonly AutoCompletado AutoCompletado;
-        readonly FoldingManager FoldingManager;
-        //readonly BraceFoldingStrategy FoldingStrategy;
+        private readonly AutoCompletado AutoCompletado;
         private Gui.Compilador.Compilador Compilador;
         public ResultadosCompilacion Errores { get; set; }
-
-        public Editor()
+        public Editor(IRegionManager RegionManager) : base(RegionManager)
         {
-            //this.FoldingStrategy = new BraceFoldingStrategy();
+
             this.Errores = new ResultadosCompilacion();
 
             InitializeComponent();
@@ -42,15 +41,11 @@ namespace Gui.Views
             this.CmbxEjemplos.SelectedItem = this.CmbxEjemplos.ItemsSource.OfType<Ejemplos.Ejemplo>().Last();
 
 
-            this.FoldingManager = FoldingManager.Install(TxtMy.TextArea);
-
-            //this.FoldingStrategy = new BraceFoldingStrategy();
-            //this.FoldingStrategy.UpdateFoldings(this.FoldingManager, TxtMy.Document);
 
 
-            //this.AutoCompletado = new AutoCompletado(this.TxtMy.TextArea, this.Errores);
-            //this.AutoCompletado.Analizar();
-            //propertyGridComboBox.SelectedIndex = 2;
+            this.AutoCompletado = new AutoCompletado(this.TxtMy.TextArea, this.Errores);
+            this.AutoCompletado.Analizar();
+
 
             //TxtMy.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("My8086");
             //TxtAsm.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("ASM");
@@ -72,13 +67,11 @@ namespace Gui.Views
             foldingUpdateTimer.Tick += FoldingUpdateTimer_Tick;
             foldingUpdateTimer.Start();
             ///
-            //TxtMy.TextArea.TextView.BackgroundRenderers.Add(new HighLight(TxtMy));
+            TxtMy.TextArea.TextView.BackgroundRenderers.Add(new HighLight(TxtMy));
             /////
 
             this.Compilador = new Gui.Compilador.Compilador(TxtMy.TextArea.Document, this.Errores);
         }
-
-
         private void VerLinea(object sender, EventArgs e)
         {
             int linea = (sender as DocumentLine)?.LineNumber ?? -1;
@@ -128,50 +121,44 @@ namespace Gui.Views
             }
             catch (Exception ex)
             {
-                //Log.LogMe(ex);
+                Log.LogMe(ex);
             }
         }
         void TextEditor_TextArea_TextEntered(object sender, TextCompositionEventArgs e)
         {
             this.Compilador.Compilado = false;
-            //if (e.Text == "(" || e.Text == "*" || e.Text == "/" || e.Text == "+" || e.Text == "-" || e.Text == "=")
-            //{
-            //    this.AutoCompletado.AutoCompletar();
-            //}
-            //else
-            //{
-            //    this.AutoCompletado.AutoCompletarPalabrasReservadas();
-            //}
+            if (e.Text == "\n")
+            {
+                return;
+            }
+            this.AutoCompletado.AutoCompletar();
+            AutoCompletado.DeberiaAnalizar = true;
         }
         void TextEditor_TextArea_TextEntering(object sender, TextCompositionEventArgs e)
         {
-            //if (e.Text.Length > 0 && AutoCompletado.CompletionWindow != null)
-            //{
-            //    if (!char.IsLetterOrDigit(e.Text[0]))
-            //    {
-            //        // Whenever a non-letter is typed while the completion window is open,
-            //        // insert the currently selected element.
-            //        AutoCompletado.CompletionWindow.CompletionList.RequestInsertion(e);
-            //    }
-            //}
+            if (e.Text.Length > 0 && AutoCompletado.CompletionWindow != null)
+            {
+                if (!char.IsLetterOrDigit(e.Text[0]))
+                {
+                    // Whenever a non-letter is typed while the completion window is open,
+                    // insert the currently selected element.
+                    AutoCompletado.CompletionWindow.CompletionList.RequestInsertion(e);
+                    AutoCompletado.DeberiaAnalizar = true;
+                }
+            }
             // do not set e.Handled=true - we still want to insert the character that was typed
         }
-        void FoldingUpdateTimer_Tick(object sender, EventArgs e)
+        async void FoldingUpdateTimer_Tick(object sender, EventArgs e)
         {
             if (TxtMy.Document != null)
             {
-                this.ProgresoCompilacion.IsIndeterminate = true;
-                //    FoldingStrategy.UpdateFoldings(FoldingManager, TxtMy.Document);
-                //    if (!this.AutoCompletado.Analizando)
-                //    {
-                //        //Dispatcher.BeginInvoke(new Action(() =>
-                //        //{
-                //        this.AutoCompletado.Analizar();
-                //        this.ErroresList.ItemsSource = this.Errores.Resultados;
-                //        this.ErroresList.Items.Refresh();
-                //        //}));
-                //        this.ProgresoCompilacion.IsIndeterminate = false;
-                //    }
+                if (!this.AutoCompletado.Analizando && this.AutoCompletado.DeberiaAnalizar)
+                {
+                    this.ProgresoCompilacion.IsIndeterminate = true;
+                    await this.AutoCompletado.Analizar();
+                    this.ProgresoCompilacion.IsIndeterminate = false;
+                    AutoCompletado.DeberiaAnalizar = false;
+                }
             }
 
         }
@@ -192,23 +179,23 @@ namespace Gui.Views
             else
             {
                 this.ProgresoCompilacion.IsIndeterminate = true;
-                Salida.Text = Compilador.Ejecutar();
+                this.Push<Ejecutar>(new NavigationParameters
+                {
+                    { "Compilador", this.Compilador }
+                });
             }
         }
 
-        private void Compilar(object sender, RoutedEventArgs e)
+        private async void Compilar(object sender, RoutedEventArgs e)
         {
             if (TxtMy.Document.FileName != null)
             {
                 SaveFileClick(sender, e);
             }
-
+            this.ProgresoCompilacion.IsIndeterminate = true;
             this.Compilador = new Gui.Compilador.Compilador(this.TxtMy.TextArea.Document, this.Errores);
-            Compilador.OnProgreso += (o, i) =>
-            {
-                //this.ProgresoCompilacion.SetPercent(Compilador.Progreso);
-            };
-            this.Salida.Text = Compilador.Compilar();
+
+            this.Salida.Text = await Compilador.Compilar();
             // TxtAsm.Text = Compilador.CodigoMaquina?.ToString();
 
             if (!this.Errores.Resultados.Any())
@@ -221,7 +208,7 @@ namespace Gui.Views
             }
             this.Salida.Text += string.Join("\n", this.Errores.Resultados
                 .Select(x => $"->[{x.Linea}] " + x.Texto));
-
+            this.ProgresoCompilacion.IsIndeterminate = false;
         }
         private void SelectText(int offset, int length)
         {

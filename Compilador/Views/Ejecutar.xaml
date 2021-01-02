@@ -1,0 +1,25 @@
+﻿<local:NavigationUserControl x:Class="Gui.Views.Ejecutar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gui.Views"
+             xmlns:hc="https://handyorg.github.io/handycontrol" 
+             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" xmlns:advertencias="clr-namespace:Gui.Advertencias"
+             mc:Ignorable="d"  x:Name="Me"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <hc:TransitioningContentControl>
+            <avalonedit:TextEditor
+                        Background="{DynamicResource MainContentBackgroundBrush}"
+                        Foreground="{DynamicResource PrimaryTextBrush}"
+                    Name="TxtMy" IsReadOnly="True" 
+                    FontFamily="Consolas"
+                    FontSize="14pt" LineNumbersForeground="{DynamicResource PrimaryTextBrush}"
+                   SyntaxHighlighting="Binario"
+                    ShowLineNumbers="True" WordWrap="True">
+                <avalonedit:TextEditor.VerticalScrollBarVisibility>Visible</avalonedit:TextEditor.VerticalScrollBarVisibility>
+            </avalonedit:TextEditor>
+        </hc:TransitioningContentControl>
+    </Grid>
+</local:NavigationUserControl>

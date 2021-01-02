@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static _8086VCPU.Registros.Memoria;
-namespace Gui.Compilador.Instrucciones.SUB
+using static _8086VCPU.Registros.Localidad;
+namespace Gui.Compilador.Instrucciones.Modos
 {
-    public class Inmediato : SUB
+    public class Inmediato : Direccionado
     {
         public readonly string NombreRegistroD;
-        public Inmediato(string NombreRegistroD, Numero Fuente, ResultadosCompilacion resultados, DocumentLine cs) : base(cs)
+        public Inmediato(string NombreRegistroD, Numero Fuente,
+            ResultadosCompilacion resultados, DocumentLine cs, TipoInstruccion tipo) : base(cs, tipo)
         {
             this.NombreRegistroD = NombreRegistroD.ToUpper();
             Destino = Registros.PorNombre(this.NombreRegistroD);
@@ -27,6 +28,16 @@ namespace Gui.Compilador.Instrucciones.SUB
             {
                 resultados.ResultadoCompilacion($"El valor '{Fuente.Hex}' - {TamañoFuente} sobrepasa el tamaño del operando de destino '{this.NombreRegistroD}' - {TamañoDestino}", LineaDocumento);
             }
+        }
+
+        protected override StringBuilder Traduccion()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("011");
+            sb.AppendLine(Registros.OpCode(NombreRegistroD));
+            sb.AppendLine(this.Fuente.ToString());
+            return sb;
+
         }
     }
 }

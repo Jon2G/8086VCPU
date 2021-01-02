@@ -85,37 +85,39 @@
     <Compile Include="Compilador\Fases\Analizador.cs" />
     <Compile Include="Compilador\Fases\ExpresionesRegulares.cs" />
     <Compile Include="Compilador\Fases\Token.cs" />
-    <Compile Include="Compilador\Instrucciones\ADD\ADD.cs" />
-    <Compile Include="Compilador\Instrucciones\ADD\Directo.cs" />
-    <Compile Include="Compilador\Instrucciones\ADD\Indexado.cs" />
-    <Compile Include="Compilador\Instrucciones\ADD\Indirecto.cs" />
-    <Compile Include="Compilador\Instrucciones\ADD\Inmediato.cs" />
-    <Compile Include="Compilador\Instrucciones\ADD\PorRegistro.cs" />
-    <Compile Include="Compilador\Instrucciones\DIV.cs" />
+    <Compile Include="Compilador\Instrucciones\Modos\Direccionado.cs" />
+    <Compile Include="Compilador\Instrucciones\Modos\Directo.cs" />
+    <Compile Include="Compilador\Instrucciones\Modos\Simple.cs" />
+    <Compile Include="Compilador\Instrucciones\Modos\Indexado.cs" />
+    <Compile Include="Compilador\Instrucciones\Modos\Indirecto.cs" />
+    <Compile Include="Compilador\Instrucciones\Modos\Inmediato.cs" />
+    <Compile Include="Compilador\Instrucciones\Modos\PorRegistro.cs" />
     <Compile Include="Compilador\Instrucciones\Instruccion.cs" />
-    <Compile Include="Compilador\Instrucciones\MOV\Directo.cs" />
-    <Compile Include="Compilador\Instrucciones\MOV\Indexado.cs" />
-    <Compile Include="Compilador\Instrucciones\MOV\Indirecto.cs" />
-    <Compile Include="Compilador\Instrucciones\MOV\Inmediato.cs" />
-    <Compile Include="Compilador\Instrucciones\MOV\MOV.cs" />
-    <Compile Include="Compilador\Instrucciones\MOV\PorRegistro.cs" />
-    <Compile Include="Compilador\Instrucciones\MUL.cs" />
     <Compile Include="Compilador\Instrucciones\Numero.cs" />
-    <Compile Include="Compilador\Instrucciones\SUB\Directo.cs" />
-    <Compile Include="Compilador\Instrucciones\SUB\Indexado.cs" />
-    <Compile Include="Compilador\Instrucciones\SUB\Indirecto.cs" />
-    <Compile Include="Compilador\Instrucciones\SUB\Inmediato.cs" />
-    <Compile Include="Compilador\Instrucciones\SUB\PorRegistro.cs" />
-    <Compile Include="Compilador\Instrucciones\SUB\SUB.cs" />
     <Compile Include="Ejemplos\Ejemplo.cs" />
+    <Compile Include="Resources\AutoCompletado.cs" />
+    <Compile Include="Resources\BraceFoldingStrategy.cs" />
+    <Compile Include="Resources\HighLight.cs" />
     <Compile Include="Resources\Highlighting.cs" />
+    <Compile Include="Resources\ITextMarkerService.cs" />
+    <Compile Include="Resources\MyCompletionData.cs" />
+    <Compile Include="Resources\TextMarkerService.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Views\NavigationUserControl.cs" />
     <Page Include="Advertencias\WarningError.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Ejecutar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Editor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ElementoAutoCompletado.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,8 +129,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\Ejecutar.xaml.cs">
+      <DependentUpon>Ejecutar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Editor.xaml.cs">
       <DependentUpon>Editor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ElementoAutoCompletado.xaml.cs">
+      <DependentUpon>ElementoAutoCompletado.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -219,6 +227,12 @@
       <Project>{cb14ea76-bbb5-4d39-ae1d-70dd296d9a2c}</Project>
       <Name>8086VCPU</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logical-thinking.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\CustomHighlightingBinario.xshd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

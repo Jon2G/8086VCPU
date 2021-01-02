@@ -6,31 +6,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static _8086VCPU.Registros.Memoria;
+using static _8086VCPU.Registros.Localidad;
 
-namespace Gui.Compilador.Instrucciones
+namespace Gui.Compilador.Instrucciones.Modos
 {
-    public class MUL : Instruccion
+    public class Simple : Instruccion
     {
         public string NombreOperador { get; private set; }
-        public Memoria Operador { get; protected set; }
+        public Localidad Operador { get; protected set; }
         public Tamaños Tamaño { get; protected set; }
 
-        public MUL(string NombreOperador, DocumentLine LineaDocumento) : base(LineaDocumento)
+        public Simple(string NombreOperador,DocumentLine LineaDocumento, TipoInstruccion tipo) : base(LineaDocumento, tipo)
         {
             this.NombreOperador = NombreOperador;
             this.Tamaño = TamañoRegistro(NombreOperador);
             this.Operador = Registros.PorNombre(NombreOperador);
         }
+   
 
         public override bool RevisarSemantica(ResultadosCompilacion Errores)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
-        public override StringBuilder Traduccion()
+        protected override StringBuilder Traduccion()
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("110");
+            sb.AppendLine(Registros.OpCode(NombreOperador));
+            return sb;
+
         }
     }
 }

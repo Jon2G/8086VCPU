@@ -10,7 +10,7 @@ namespace _8086VCPU.Alu
 {
     public class Alu
     {
-        public const int Byte = 4;
+        public const int Byte = 16;
         public const int Palabra = Byte * 2;
 
 

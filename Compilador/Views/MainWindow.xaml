@@ -6,7 +6,7 @@
         xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        mc:Ignorable="d"
+        mc:Ignorable="d" ActiveGlowColor="DodgerBlue"
         Title="{Binding Title}" 
         WindowStartupLocation="CenterScreen"
         ShowTitle="True"
@@ -18,7 +18,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <StackPanel Height="29">
+            <!--<StackPanel Height="29">
                 <Menu HorizontalAlignment="Left">
                     <MenuItem Header="Header1">
                         <MenuItem Header="Header1"/>
@@ -33,7 +33,7 @@
                         <MenuItem Header="Header2"/>
                     </MenuItem>
                 </Menu>
-            </StackPanel>
+            </StackPanel>-->
             <Button HorizontalAlignment="Right" Grid.Column="1" Click="ButtonConfig_OnClick" Name="ButtonConfig" Style="{StaticResource ButtonIcon}" Foreground="{DynamicResource PrimaryTextBrush}" hc:IconElement.Geometry="{StaticResource ConfigGeometry}"/>
             <Popup AllowsTransparency="True" Grid.Column="1" PlacementTarget="{Binding ElementName=ButtonConfig}" HorizontalOffset="-25" Name="PopupConfig" VerticalOffset="6" StaysOpen="False">
                 <Border Background="{DynamicResource SecondaryRegionBrush}" CornerRadius="4" Margin="16" Effect="{StaticResource EffectShadow2}">

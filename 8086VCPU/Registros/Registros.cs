@@ -49,5 +49,41 @@ namespace _8086VCPU.Registros
             }
             return null;
         }
+
+        public static string OpCode(string nombre)
+        {
+            switch (nombre.ToUpper())
+            {
+                case "AX":
+                    return "0001";
+                case "AH":
+                    return "0010";
+                case "AL":
+                    return "0011";
+                case "BX":
+                    return "0100";
+                case "BH":
+                    return "0101";
+                case "BL":
+                    return "0110";
+                case "CX":
+                    return "0111";
+                case "CH":
+                    return "1000";
+                case "CL":
+                    return "1001";
+                case "DX":
+                    return "1010";
+                case "DH":
+                    return "1011";
+                case "DL":
+                    return "1100";
+                case "SI":
+                    return "1101";
+                case "DI":
+                    return "1110";
+            }
+            return null;
+        }
     }
 }

@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Gui.Views.ElementoAutoCompletado"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Gui.Views"
+             mc:Ignorable="d" 
+             MinHeight="25"
+             Height="25" MinWidth="75" Padding="0" Margin="0"  HorizontalAlignment="Stretch" 
+             HorizontalContentAlignment="Stretch">
+    <DockPanel>
+        <!--<Border BorderBrush="Black" BorderThickness="1">-->
+        <Image DockPanel.Dock="Left" MaxWidth="45" Margin="5,0" x:Name="Imagen" Source="/Gui;component/Images/Copy.png"/>
+        <!--</Border>-->
+        <TextBlock DockPanel.Dock="Right" Foreground="Black" x:Name="TxtName" Grid.Column="1" FontSize="16"/>
+    </DockPanel>
+</UserControl>

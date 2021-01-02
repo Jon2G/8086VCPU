@@ -7,14 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gui.Compilador.Instrucciones.MOV
+namespace Gui.Compilador.Instrucciones.Modos
 {
-    public class Indexado : MOV
+    public class Indexado : Direccionado
     {
         public readonly string NombreRegistroD;
         public readonly string NombreRegistroDesplazamiento;
 
-        public Indexado(string NombreRegistroD, string NombreRegistroDesplazamiento, ResultadosCompilacion resultados, DocumentLine cs) : base(cs)
+        public Indexado(string NombreRegistroD, string NombreRegistroDesplazamiento,
+            ResultadosCompilacion resultados, DocumentLine cs, TipoInstruccion tipo) : base(cs, tipo)
         {
             this.NombreRegistroDesplazamiento = NombreRegistroDesplazamiento;
 
@@ -25,5 +26,15 @@ namespace Gui.Compilador.Instrucciones.MOV
 
         }
 
+        protected override StringBuilder Traduccion()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("101");
+            sb.AppendLine(Registros.OpCode(NombreRegistroD));
+            sb.AppendLine(Registros.OpCode(NombreRegistroDesplazamiento));
+            return sb;
+
+
+        }
     }
 }

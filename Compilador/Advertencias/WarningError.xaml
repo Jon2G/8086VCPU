@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  x:Name="Me"
-             xmlns:local="clr-namespace:Gui.Advertencias"
-             mc:Ignorable="d"  Background="White" HorizontalAlignment="Stretch" FontSize="18" MouseLeftButtonUp="UserControl_MouseLeftButtonUp">
+             xmlns:local="clr-namespace:Gui.Advertencias" BorderBrush="{DynamicResource AccentBrush}"
+             mc:Ignorable="d"  Background="{DynamicResource SecondaryRegionBrush}" 
+             HorizontalAlignment="Stretch" FontSize="18" MouseLeftButtonUp="UserControl_MouseLeftButtonUp">
     <DockPanel VerticalAlignment="Center">
         <Image MaxHeight="40" x:Name="Img" DockPanel.Dock="Left" Source="/Gui;component/Images/bug.png">
             <Image.Style>

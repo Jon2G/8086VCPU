@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
+using Compilador;
 using Gui.Advertencias;
 using Gui.Compilador.Fases;
 using Gui.Compilador.Fases._1._Analisis_Lexico;
@@ -7,6 +9,7 @@ using Gui.Compilador.Fases._2._Analisis_Sintactico;
 using Gui.Compilador.Fases._3._Analisis_Semantico;
 using Gui.Compilador.Fases._3._Codigo_Intermedio;
 using Gui.Compilador.Fases._4._Sintetizador;
+using Gui.Views;
 using ICSharpCode.AvalonEdit.Document;
 
 
@@ -16,22 +19,11 @@ namespace Gui.Compilador
     {
         private readonly ResultadosCompilacion ResultadosCompilacion;
         private readonly TextDocument Document;
-        public EventHandler OnProgreso;
         //private readonly BorlandC TurboC;
         public StringBuilder CodigoMaquina { get; private set; }
         public bool Compilado { get; set; }
 
-        private double IProgreso { get; set; }
 
-        public double Progreso
-        {
-            get => IProgreso;
-            set
-            {
-                IProgreso = value;
-                OnProgreso?.Invoke(this, null);
-            }
-        }
 
         public Compilador(TextDocument Document, ResultadosCompilacion ResultadosCompilacion)
         {
@@ -41,9 +33,9 @@ namespace Gui.Compilador
             //this.TurboC = new BorlandC();
             //this.ReconceTokens = new ReconoceTokens(this.ResultadosCompilacion, this.PropiedadesPrograma);
         }
-        public string Compilar()
+        public async Task<string> Compilar()
         {
-            this.Progreso = 0;
+            await Task.Yield();
             this.ResultadosCompilacion.Clear();
             //try
             //{
@@ -73,12 +65,9 @@ namespace Gui.Compilador
                         {
                             CodigoMaquina maquina = new CodigoMaquina((Sintesis)analizador);
                             maquina.Generar();
-                            //this.TurboC.Limpiar();
-                            //this.Compilado = this.TurboC.GeneraEjecutable(intermedio.Codigo.ToString());
                             this.CodigoMaquina = maquina.Codigo;
                             this.Compilado = true;
-                            return string.Empty;
-                            //            return this.TurboC.ResultadosCompilacion;
+                            return "Compilación exitosa";
                         }
                     }
                 }
@@ -91,6 +80,7 @@ namespace Gui.Compilador
         {
             if (this.Compilado)
             {
+  
                 //this.TurboC.Ejecutar();
                 //return this.TurboC.ResultadosCompilacion;
             }

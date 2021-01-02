@@ -12,8 +12,11 @@ namespace Compilador
 {
     public partial class App 
     {
+
+
         protected override Window CreateShell()
         {
+            ((App)Application.Current).UpdateSkin(SkinType.Dark);
             return Container.Resolve<MainWindow>();
         }
         protected override void OnStartup(StartupEventArgs e)
@@ -28,6 +31,7 @@ namespace Compilador
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<Editor>(nameof(Editor));
+            containerRegistry.RegisterForNavigation<Ejecutar>(nameof(Ejecutar));
 
         }
         internal void UpdateSkin(SkinType skin)

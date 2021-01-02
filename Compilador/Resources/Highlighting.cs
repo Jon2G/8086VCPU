@@ -17,6 +17,7 @@ namespace Gui.Resources
         {
             // Load our custom highlighting definition
             IHighlightingDefinition customHighlighting;
+            IHighlightingDefinition customHighlightingBin;
             using (var reflex = new ReflectionCaller())
             {
                 using (Stream s = reflex.GetAssembly(typeof(MainWindow))
@@ -30,8 +31,20 @@ namespace Gui.Resources
                             HighlightingLoader.Load(reader, HighlightingManager.Instance);
                     }
                 }
+                using (Stream s = reflex.GetAssembly(typeof(MainWindow))
+                    .GetResource("CustomHighlightingBinario.xshd"))
+                {
+                    if (s == null)
+                        throw new InvalidOperationException("Could not find embedded resource");
+                    using (XmlReader reader = new XmlTextReader(s))
+                    {
+                        customHighlightingBin = ICSharpCode.AvalonEdit.Highlighting.Xshd.
+                            HighlightingLoader.Load(reader, HighlightingManager.Instance);
+                    }
+                }
             }
             HighlightingManager.Instance.RegisterHighlighting("ASM", new string[] { ".asm" }, customHighlighting);
+            HighlightingManager.Instance.RegisterHighlighting("Binario", new string[] { ".bin" }, customHighlightingBin);
         }
     }
 }

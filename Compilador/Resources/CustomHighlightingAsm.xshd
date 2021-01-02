@@ -19,11 +19,11 @@
 		  (MOV)
 	  </Rule>
 
-	  <Rule foreground="#4FA139">
+	  <Rule foreground="#4295E5">
 		  (?i)(((\d+)(D|H|O))|(((1|0)+)(B)))+
 	  </Rule>
 
-	  <Rule fontWeight="bold" foreground="#B52323">
+	  <Rule fontWeight="bold" foreground="#E47D7D">
 		  (?i)(ADD|SUB|DIV|MUL)
 	  </Rule>
 
@@ -41,28 +41,13 @@
     </Keywords>-->
 
     <Keywords fontWeight="bold" foreground="DodgerBlue">
-      <Word>PROC</Word>
-      <Word>CALL</Word>
-      <Word>CMP</Word>
-      <Word>JE</Word>
-      <Word>JA</Word>
-      <Word>JNE</Word>
-      <Word>JS</Word>
-      <Word>JNS</Word>
-      <Word>JL</Word>
-      <Word>JZ</Word>
-      <Word>JNZ</Word>
-      <Word>JMP</Word>
+      <Word>NOT</Word>
+      <Word>OR</Word>
+      <Word>NOR</Word>
       <Word>XOR</Word>
-      <Word>MUL</Word>
-      <Word>AAM</Word>
-      <Word>ENDP</Word>
-      <Word>END</Word>
-      <Word>INC</Word>
-      <Word>DEC</Word>
-      <Word>.MODEL SMALL</Word>
-      <Word>.386</Word>
-      <Word>.STACK</Word>
+      <Word>XNOR</Word>
+      <Word>AND</Word>
+      <Word>NAND</Word>
     </Keywords>
 
     <Keywords fontWeight="bold" foreground="Green">

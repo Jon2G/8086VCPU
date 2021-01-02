@@ -6,15 +6,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static _8086VCPU.Registros.Memoria;
+using static _8086VCPU.Registros.Localidad;
 
-namespace Gui.Compilador.Instrucciones.SUB
+namespace Gui.Compilador.Instrucciones.Modos
 {
-    public class PorRegistro : SUB
+    public class PorRegistro : Direccionado
     {
         public readonly string NombreRegistroD;
         public readonly string NombreRegistroF;
-        public PorRegistro(string NombreRegistroD, string NombreRegistroF, ResultadosCompilacion resultados, DocumentLine cs) : base(cs)
+        public PorRegistro(string NombreRegistroD, string NombreRegistroF, ResultadosCompilacion resultados,
+            DocumentLine cs, TipoInstruccion tipo) : base(cs, tipo)
         {
             this.NombreRegistroF = NombreRegistroF;
             this.NombreRegistroD = NombreRegistroD;
@@ -30,6 +31,17 @@ namespace Gui.Compilador.Instrucciones.SUB
             {
                 resultados.ResultadoCompilacion($"El tamaño de '{NombreRegistroF}' - {TamañoFuente} no conicide con el tamaño de '{NombreRegistroD.ToUpper()}' - {TamañoDestino}", LineaDocumento);
             }
+
+        }
+
+        protected override StringBuilder Traduccion()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("001");
+            sb.AppendLine(Registros.OpCode(NombreRegistroD));
+            sb.AppendLine(Registros.OpCode(NombreRegistroF));
+            return sb;
+
 
         }
     }

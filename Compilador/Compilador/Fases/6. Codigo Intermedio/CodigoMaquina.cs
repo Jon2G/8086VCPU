@@ -23,7 +23,7 @@ namespace Gui.Compilador.Fases._3._Codigo_Intermedio
         {
             foreach (Instruccion instruccion in this.CodeSegment.Instrucciones)
             {
-                this.Codigo.Append(instruccion.Traduccion());
+                this.Codigo.Append(instruccion.CodigoMaquina());
             }
         }
 

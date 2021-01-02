@@ -1,0 +1,17 @@
+﻿<?xml version="1.0"?>
+<SyntaxDefinition name="ResaltarTexto" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="Comment" foreground="Green" />
+ 
+
+  <!-- This is the main ruleset. -->
+  <RuleSet>
+    <Span color="Comment" begin=";" />
+    <Span color="Comment" multiline="true" begin="/\'" end="\'/" />
+
+
+	  <Rule foreground="#4295E5">
+		  (1|0)+
+	  </Rule>
+
+  </RuleSet>
+</SyntaxDefinition>
