@@ -22,15 +22,15 @@ namespace Pruebas
             //bool[] operador1 = Registros.CX.Get(); //   Leer 8 bits CX
 
             //MOV CL,3d
-            Registros.CX.HabilitarEscritura(true);
+            Registros.CX.EnableEscritura(true);
                                             //0010
             Registros.CX.SetLow(new bool[] { false, false, true, false });
-            Registros.CX.HabilitarEscritura(false);
+            Registros.CX.EnableEscritura(false);
 
             //MOV AX,6d
-            Registros.AX.HabilitarEscritura(true);
+            Registros.AX.EnableEscritura(true);
             Registros.AX.Set(new bool[] { false, false, false, false, false, true, true, false });
-            Registros.AX.HabilitarEscritura(false);
+            Registros.AX.EnableEscritura(false);
 
             //DIV CL
             Registros.CX.EnableLectura(true);
@@ -41,13 +41,13 @@ namespace Pruebas
 
 
             //MOV CL,5d
-            Registros.CX.HabilitarEscritura(true);
+            Registros.CX.EnableEscritura(true);
             Registros.CX.SetLow(new bool[] { true, true, true, true });
-            Registros.CX.HabilitarEscritura(false);
+            Registros.CX.EnableEscritura(false);
             //MOV DL,2d
-            Registros.DX.HabilitarEscritura(true);
+            Registros.DX.EnableEscritura(true);
             Registros.DX.SetLow(new bool[] { true, true, true, true });
-            Registros.DX.HabilitarEscritura(false);
+            Registros.DX.EnableEscritura(false);
             //ADD CL,DL
             Registros.CX.EnableLectura(true);
             operador1 = Registros.CX.GetLow();
@@ -58,9 +58,9 @@ namespace Pruebas
             Registros.DX.EnableLectura(false);
 
             CPU.Alu.ADD(operador1, operador2);
-            Registros.CX.HabilitarEscritura(true);
+            Registros.CX.EnableEscritura(true);
             Registros.CX.SetLow(CPU.Alu.Resultado);
-            Registros.CX.HabilitarEscritura(true);
+            Registros.CX.EnableEscritura(true);
 
             //ADD CX,DX
             Registros.CX.EnableLectura(true);
@@ -72,18 +72,18 @@ namespace Pruebas
             Registros.DX.EnableLectura(false);
 
             CPU.Alu.ADD(operador1, operador2);
-            Registros.CX.HabilitarEscritura(true);
+            Registros.CX.EnableEscritura(true);
             Registros.CX.Set(CPU.Alu.Resultado);
-            Registros.CX.HabilitarEscritura(true);
+            Registros.CX.EnableEscritura(true);
 
             //MUL Cl
-            Registros.CX.HabilitarEscritura(true);
+            Registros.CX.EnableEscritura(true);
             Registros.CX.SetLow(new bool[] { false, false, true, true });
-            Registros.CX.HabilitarEscritura(true);
+            Registros.CX.EnableEscritura(true);
 
-            Registros.AX.HabilitarEscritura(true);
+            Registros.AX.EnableEscritura(true);
             Registros.AX.SetLow(new bool[] { false, false, true, false });
-            Registros.AX.HabilitarEscritura(true);
+            Registros.AX.EnableEscritura(true);
 
             Registros.CX.EnableLectura(true);
             operador1 = Registros.CX.GetLow();
@@ -113,9 +113,9 @@ namespace Pruebas
             //alu.NOT(operador1);
 
 
-            Registros.CX.HabilitarEscritura(true);
+            Registros.CX.EnableEscritura(true);
             Registros.CX.Set(CPU.Alu.Resultado);
-            Registros.CX.HabilitarEscritura(false);
+            Registros.CX.EnableEscritura(false);
 
 
             Console.ReadKey(); //Leer una tecla para que no se cierre la consola

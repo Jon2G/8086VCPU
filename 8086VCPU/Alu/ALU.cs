@@ -12,28 +12,8 @@ namespace _8086VCPU.Alu
     {
         public const int Byte = 16;
         public const int Palabra = Byte * 2;
-
-
         public bool[] Resultado = new bool[Byte * 2 + 1];
 
-
-        private byte _Acarreo;
-        private byte Acarreo
-        {
-            get => _Acarreo;
-            set
-            {
-                if (value > 0)
-                {
-                    CPU.Banderas.Carry = true;
-                }
-                else
-                {
-                    CPU.Banderas.Carry = false;
-                }
-                _Acarreo = value;
-            }
-        }
         public void ADD(bool[] Operador1, bool[] Operador2)
         {
             Operador1 = Operador1.Reverse().ToArray();
@@ -103,7 +83,7 @@ namespace _8086VCPU.Alu
         public void AND(bool[] Operador1, bool[] Operador2)
         {
             Resultado = new bool[Operador1.Length];
-            Acarreo = 0;
+            CPU.Banderas.Carry = false;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
                 Resultado[i] = AND(Operador1[i], Operador2[i]);
@@ -112,7 +92,7 @@ namespace _8086VCPU.Alu
         public void OR(bool[] Operador1, bool[] Operador2)
         {
             Resultado = new bool[Operador1.Length];
-            Acarreo = 0;
+            CPU.Banderas.Carry = false;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
                 if (!Operador1[i] && !Operador2[i])
@@ -128,7 +108,7 @@ namespace _8086VCPU.Alu
         public void NAND(bool[] Operador1, bool[] Operador2)
         {
             Resultado = new bool[Operador1.Length];
-            Acarreo = 0;
+            CPU.Banderas.Carry = false;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
                 Resultado[i] = !(Operador1[i] && Operador2[i]);
@@ -137,7 +117,7 @@ namespace _8086VCPU.Alu
         public void NOR(bool[] Operador1, bool[] Operador2)
         {
             Resultado = new bool[Operador1.Length];
-            Acarreo = 0;
+            CPU.Banderas.Carry = false;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
                 Resultado[i] = (!Operador1[i] && !Operador2[i]);
@@ -195,23 +175,23 @@ namespace _8086VCPU.Alu
 
             if (Operador2.Length == Byte)
             {
-                Registros.Registros.AX.HabilitarEscritura(true);
+                Registros.Registros.AX.EnableEscritura(true);
                 Registros.Registros.AX.Set(Resultado);
-                Registros.Registros.AX.HabilitarEscritura(false);
+                Registros.Registros.AX.EnableEscritura(false);
             }
             else
             {
                 bool[] temporal = new bool[Byte * 2];
                 Array.Copy(Resultado, temporal, Byte * 2);
-                Registros.Registros.DX.HabilitarEscritura(true);
+                Registros.Registros.DX.EnableEscritura(true);
                 Registros.Registros.DX.Set(temporal);
-                Registros.Registros.DX.HabilitarEscritura(false);
+                Registros.Registros.DX.EnableEscritura(false);
 
                 temporal = new bool[Byte * 2];
                 Array.Copy(Resultado, Byte * 2, temporal, 0, Byte * 2);
-                Registros.Registros.AX.HabilitarEscritura(true);
+                Registros.Registros.AX.EnableEscritura(true);
                 Registros.Registros.AX.Set(temporal);
-                Registros.Registros.AX.HabilitarEscritura(false);
+                Registros.Registros.AX.EnableEscritura(false);
 
             }
             if (Resultado[0])
@@ -233,7 +213,7 @@ namespace _8086VCPU.Alu
         public void XOR(bool[] Operador1, bool[] Operador2)
         {
             Resultado = new bool[Operador1.Length];
-            Acarreo = 0;
+            CPU.Banderas.Carry = false;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
                 Resultado[i] = XOR(Operador1[i], Operador2[i]);
@@ -242,7 +222,7 @@ namespace _8086VCPU.Alu
         public void XNOR(bool[] Operador1, bool[] Operador2)
         {
             Resultado = new bool[Operador1.Length];
-            Acarreo = 0;
+            CPU.Banderas.Carry = false;
             for (int i = Operador1.Length - 1; i >= 0; i--)
             {
                 if (Operador1[i] != Operador2[i])
@@ -301,7 +281,7 @@ namespace _8086VCPU.Alu
                 temporal = new bool[Dividendo.Length];
                 Array.Copy(Dividendo, 0, temporal, temporal.Length - (i + 1), i + 1);
                 //
-                Acarreo = 0;
+                CPU.Banderas.Carry = false;
                 SUB(Divisor, temporal);
                 if (CPU.Banderas.Zero || CPU.Banderas.Signo)
                 {
@@ -345,16 +325,16 @@ namespace _8086VCPU.Alu
                 temporal = new bool[Alu.Byte];
                 Array.Copy(Resultado, Alu.Byte, temporal, 0, Alu.Byte);
 
-                Registros.Registros.AX.HabilitarEscritura(true);
+                Registros.Registros.AX.EnableEscritura(true);
                 Registros.Registros.AX.SetLow(temporal);
-                Registros.Registros.AX.HabilitarEscritura(false);
+                Registros.Registros.AX.EnableEscritura(false);
 
                 temporal = new bool[Alu.Byte];
                 Array.Copy(Residuo, Alu.Byte, temporal, 0, Alu.Byte);
 
-                Registros.Registros.AX.HabilitarEscritura(true);
+                Registros.Registros.AX.EnableEscritura(true);
                 Registros.Registros.AX.SetHigh(temporal);
-                Registros.Registros.AX.HabilitarEscritura(false);
+                Registros.Registros.AX.EnableEscritura(false);
 
             }
             else

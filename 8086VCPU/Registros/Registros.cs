@@ -14,12 +14,29 @@ namespace _8086VCPU.Registros
         public static Registro DX { get; private set; }
         public static Registro SI { get; private set; }
         public static Registro DI { get; private set; }
+        public static Registro IP { get; private set; }
         static Registros()
         {
             Registros.AX = new Registro("AX");
             Registros.BX = new Registro("BX");
-            Registros.SI = new Registro("CX");
-            Registros.DI = new Registro("DX");
+            Registros.CX = new Registro("CX");
+            Registros.DX = new Registro("DX");
+
+            Registros.SI = new Registro("SI");
+            Registros.DI = new Registro("DI");
+
+            Registros.IP = new Registro("IP");
+        }
+        internal static void Reset()
+        {
+            Registros.AX.Clear();
+            Registros.BX.Clear();
+            Registros.CX.Clear();
+            Registros.DX.Clear();
+
+            Registros.SI.Clear();
+            Registros.DI.Clear();
+            Registros.IP.Clear();
         }
 
         public static Registro PorNombre(string nombre)
@@ -52,38 +69,58 @@ namespace _8086VCPU.Registros
 
         public static string OpCode(string nombre)
         {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < Alu.Alu.Palabra - 4; i++)
+            {
+                sb.Append("0");
+            }
+
             switch (nombre.ToUpper())
             {
                 case "AX":
-                    return "0001";
+                    sb.Append("0001");
+                    break;
                 case "AH":
-                    return "0010";
+                    sb.Append("0010");
+                    break;
                 case "AL":
-                    return "0011";
+                    sb.Append("0011");
+                    break;
                 case "BX":
-                    return "0100";
+                    sb.Append("0100");
+                    break;
                 case "BH":
-                    return "0101";
+                    sb.Append("0101");
+                    break;
                 case "BL":
-                    return "0110";
+                    sb.Append("0110");
+                    break;
                 case "CX":
-                    return "0111";
+                    sb.Append("0111");
+                    break;
                 case "CH":
-                    return "1000";
+                    sb.Append("1000");
+                    break;
                 case "CL":
-                    return "1001";
+                    sb.Append("1001");
+                    break;
                 case "DX":
-                    return "1010";
+                    sb.Append("1010");
+                    break;
                 case "DH":
-                    return "1011";
+                    sb.Append("1011");
+                    break;
                 case "DL":
-                    return "1100";
+                    sb.Append("1100");
+                    break;
                 case "SI":
-                    return "1101";
+                    sb.Append("1101");
+                    break;
                 case "DI":
-                    return "1110";
+                    sb.Append("1110");
+                    break;
             }
-            return null;
+            return sb.ToString();
         }
     }
 }

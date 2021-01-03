@@ -75,7 +75,6 @@
     </Compile>
     <Compile Include="Compilador\CodeSegment.cs" />
     <Compile Include="Compilador\Compilador.cs" />
-    <Compile Include="Compilador\ConversorBinario.cs" />
     <Compile Include="Compilador\Fases\1. Analisis Lexico\AnalizadorLexico.cs" />
     <Compile Include="Compilador\Fases\1. Analisis Lexico\LineaLexica.cs" />
     <Compile Include="Compilador\Fases\2. Analisis Sintactico\AnalizadorSintactico.cs" />
@@ -233,6 +232,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\CustomHighlightingBinario.xshd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\next.png" />
+    <Resource Include="Images\reload.png" />
+    <Resource Include="Images\right-arrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

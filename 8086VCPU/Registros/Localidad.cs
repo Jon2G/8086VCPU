@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _8086VCPU.Registros
 {
-    public abstract class Localidad
+    public abstract class Localidad:ViewModelBase<Localidad>
     {
         public enum Tamaños
         {
@@ -24,7 +25,7 @@ namespace _8086VCPU.Registros
         {
             this.Lecctura = valor;
         }
-        public void HabilitarEscritura(bool valor)
+        public void EnableEscritura(bool valor)
         {
             this.Escritura = valor;
         }
@@ -39,6 +40,8 @@ namespace _8086VCPU.Registros
                 throw new AccessViolationException("La escritura no esta habilitada");
             }
             _Set(Valor);
+            OnPropertyChanged(nameof(Decimal));
+            OnPropertyChanged(nameof(Hex));
         }
         public bool[] Get()
         {

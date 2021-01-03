@@ -1,4 +1,5 @@
-﻿using _8086VCPU.Registros;
+﻿using _8086VCPU.Alu;
+using _8086VCPU.Registros;
 using Gui.Advertencias;
 using ICSharpCode.AvalonEdit.Document;
 using System;
@@ -33,9 +34,20 @@ namespace Gui.Compilador.Instrucciones.Modos
         protected override StringBuilder Traduccion()
         {
             StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < Alu.Palabra - 3; i++)
+            {
+                sb.Append("0");
+            }
             sb.AppendLine("011");
             sb.AppendLine(Registros.OpCode(NombreRegistroD));
-            sb.AppendLine(this.Fuente.ToString());
+
+            string fuente = this.Fuente.ToString();
+            for (int i = 0; i < Alu.Palabra - fuente.Length; i++)
+            {
+                sb.Append("0");
+            }
+
+            sb.AppendLine(fuente);
             return sb;
 
         }

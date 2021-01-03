@@ -10,50 +10,76 @@ namespace _8086VCPU.Registros
     public class Registro : Localidad
     {
         public string Nombre { get; private set; }
-        private bool[] High { get; set; }
-        private bool[] Low { get; set; }
+        public ParteRegistro High { get; set; }
+        public ParteRegistro Low { get; set; }
+
         public Registro(string Nombre)
         {
             this.Nombre = Nombre;
-            this.High = new bool[Alu.Alu.Byte];
-            this.Low = new bool[Alu.Alu.Byte];
+            this.High = new ParteRegistro();
+            this.Low = new ParteRegistro();
             this.Tamaño = Tamaños.Palabra;
         }
         public void SetLow(bool[] Low)
         {
-            if (Low.Length != this.Low.Length)
+            this.Low.EnableLectura(true);
+            if (Low.Length != this.Low.Get().Length)
             {
                 throw new OverflowException("El tamaño de entrada difiere del establecido");
             }
+            this.Low.EnableLectura(false);
             if (!Escritura)
             {
                 throw new AccessViolationException("La escritura no esta habilitada");
             }
-            this.Low = Low;
+            this.Low.EnableEscritura(true);
+            this.Low.Set(Low);
+            this.Low.EnableEscritura(false);
         }
+
+        internal void Clear()
+        {
+            this.High.Clear();
+            this.Low.Clear();
+        }
+
         public void SetHigh(bool[] High)
         {
-            if (High.Length != this.High.Length)
+            this.High.EnableLectura(true);
+            if (High.Length != this.High.Get().Length)
             {
                 throw new OverflowException("El tamaño de entrada difiere del establecido");
             }
+            this.High.EnableLectura(false);
             if (!Escritura)
             {
                 throw new AccessViolationException("La escritura no esta habilitada");
             }
-            this.High = High;
+            this.Low.EnableEscritura(true);
+            this.High.Set(High);
+            this.Low.EnableEscritura(false);
         }
 
         protected override void _Set(bool[] Valor)
         {
-            Array.Copy(Valor, 0, High, 0, Alu.Alu.Byte);
-            Array.Copy(Valor, Alu.Alu.Byte, Low, 0, Alu.Alu.Byte);
+            this.High.EnableLectura(true);
+            Array.Copy(Valor, 0, High.Get(), 0, Alu.Alu.Byte);
+            this.High.EnableLectura(false);
+
+            this.Low.EnableLectura(true);
+            Array.Copy(Valor, Alu.Alu.Byte, Low.Get(), 0, Alu.Alu.Byte);
+            this.Low.EnableLectura(false);
         }
         protected override bool[] _Get()
         {
             List<bool> unido = new List<bool>();
-            unido.AddRange(this.High);
-            unido.AddRange(this.Low);
+            this.High.EnableLectura(true);
+            unido.AddRange(this.High.Get());
+            this.High.EnableLectura(false);
+
+            this.Low.EnableLectura(true);
+            unido.AddRange(this.Low.Get());
+            this.Low.EnableLectura(false);
 
             return unido.ToArray();
         }
@@ -64,7 +90,10 @@ namespace _8086VCPU.Registros
             {
                 throw new AccessViolationException("La Lecctura no esta habilitada");
             }
-            return this.Low;
+            this.Low.EnableLectura(true);
+            bool[] valor= this.Low.Get();
+            this.Low.EnableLectura(false);
+            return valor;
         }
         public bool[] GetHigh()
         {
@@ -72,7 +101,11 @@ namespace _8086VCPU.Registros
             {
                 throw new AccessViolationException("La Lecctura no esta habilitada");
             }
-            return this.High;
+
+            this.High.EnableLectura(true);
+            bool[] valor = this.High.Get();
+            this.High.EnableLectura(false);
+            return valor;
         }
     }
 }

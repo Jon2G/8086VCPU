@@ -181,16 +181,20 @@ namespace Gui.Views
                 this.ProgresoCompilacion.IsIndeterminate = true;
                 this.Push<Ejecutar>(new NavigationParameters
                 {
-                    { "Compilador", this.Compilador }
+                    { "Ejecucion", this.Compilador.Ejecutar() }
                 });
             }
         }
 
         private async void Compilar(object sender, RoutedEventArgs e)
         {
+            await _Compilar();
+        }
+        private async Task _Compilar()
+        {
             if (TxtMy.Document.FileName != null)
             {
-                SaveFileClick(sender, e);
+                SaveFileClick(this,EventArgs.Empty);
             }
             this.ProgresoCompilacion.IsIndeterminate = true;
             this.Compilador = new Gui.Compilador.Compilador(this.TxtMy.TextArea.Document, this.Errores);
@@ -232,9 +236,9 @@ namespace Gui.Views
             }
         }
 
-        private void CompilarYEjecutar(object sender, RoutedEventArgs e)
+        private async void CompilarYEjecutar(object sender, RoutedEventArgs e)
         {
-            Compilar(sender, e);
+            await _Compilar();
             if (Compilador.Compilado)
             {
                 Ejecutar(sender, e);

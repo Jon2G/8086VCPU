@@ -5,11 +5,132 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Gui.Views"
              xmlns:hc="https://handyorg.github.io/handycontrol" 
-             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" xmlns:advertencias="clr-namespace:Gui.Advertencias"
-             mc:Ignorable="d"  x:Name="Me"
+             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" 
+             xmlns:registros="clr-namespace:_8086VCPU.Registros;assembly=8086VCPU"
+             mc:Ignorable="d"  x:Name="Me" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <hc:TransitioningContentControl>
+    <DockPanel>
+
+        <DockPanel  DockPanel.Dock="Left">
+            <Grid DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+
+                <Label Grid.Column="0" Margin="0" MouseLeftButtonUp="Redo_Click">
+                    <StackPanel>
+                        <Image Height="20" Source="/Gui;component/Images/Redo.png"/>
+                        <TextBlock Text="Recargar"/>
+                    </StackPanel>
+                </Label>
+
+
+                <Label Grid.Column="1" Margin="0" MouseLeftButtonUp="Next_Click">
+                    <StackPanel>
+                        <Image Height="20" Source="/Gui;component/Images/next.png"/>
+                        <TextBlock Text="Siguiente"/>
+                    </StackPanel>
+                </Label>
+                <Label Grid.Column="2" Margin="0" MouseLeftButtonUp="Run_Click">
+                    <StackPanel>
+                        <Image Height="20" Source="/Gui;component/Images/Run_16x.png"/>
+                        <TextBlock Text="Ejecutar"/>
+                    </StackPanel>
+                </Label>
+            </Grid>
+
+            <hc:TransitioningContentControl>
+                <GroupBox BorderThickness="1" BorderBrush="{DynamicResource DarkInfoBrush}" Style="{x:Null}" Header="Registros" Margin="5">
+                    <StackPanel >
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock TextAlignment="Center" Text="H" Grid.Column="1" HorizontalAlignment="Stretch"/>
+                            <TextBlock TextAlignment="Center" Text="L" Grid.Column="2" HorizontalAlignment="Stretch"/>
+                        </Grid>
+                        <Grid DataContext="{x:Static registros:Registros.AX}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox Grid.Column="1" DataContext="{Binding High}" Text="{Binding Hex,Mode=OneWay}"/>
+                            <TextBox Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Hex,Mode=OneWay}"/>
+                        </Grid>
+                        <Grid DataContext="{x:Static registros:Registros.BX}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox Grid.Column="1" DataContext="{Binding High}" Text="{Binding Hex,Mode=OneWay}"/>
+                            <TextBox Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Hex,Mode=OneWay}"/>
+                        </Grid>
+                        <Grid DataContext="{x:Static registros:Registros.CX}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox Grid.Column="1" DataContext="{Binding High}" Text="{Binding Hex,Mode=OneWay}"/>
+                            <TextBox Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Hex,Mode=OneWay}"/>
+                        </Grid>
+                        <Grid DataContext="{x:Static registros:Registros.DX}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox Grid.Column="1" DataContext="{Binding High}" Text="{Binding Hex,Mode=OneWay}"/>
+                            <TextBox Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Hex,Mode=OneWay}"/>
+                        </Grid>
+
+                        <Grid DataContext="{x:Static registros:Registros.SI}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox Grid.Column="1" Text="{Binding Hex,Mode=OneWay}" Grid.ColumnSpan="2"/>
+                        </Grid>
+                        <Grid DataContext="{x:Static registros:Registros.DI}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox Grid.Column="1" Text="{Binding Hex,Mode=OneWay}"  Grid.ColumnSpan="2"/>
+                        </Grid>
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Content="IP" HorizontalAlignment="Stretch"/>
+                            <TextBox Grid.Column="1" Text="FFFF"  Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+            </hc:TransitioningContentControl>
+            
+        </DockPanel>
+
+        
+        
+        <hc:TransitioningContentControl DockPanel.Dock="Right">
             <avalonedit:TextEditor
                         Background="{DynamicResource MainContentBackgroundBrush}"
                         Foreground="{DynamicResource PrimaryTextBrush}"
@@ -21,5 +142,5 @@
                 <avalonedit:TextEditor.VerticalScrollBarVisibility>Visible</avalonedit:TextEditor.VerticalScrollBarVisibility>
             </avalonedit:TextEditor>
         </hc:TransitioningContentControl>
-    </Grid>
+    </DockPanel>
 </local:NavigationUserControl>

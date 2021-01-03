@@ -19,7 +19,6 @@ namespace Gui.Compilador
     {
         private readonly ResultadosCompilacion ResultadosCompilacion;
         private readonly TextDocument Document;
-        //private readonly BorlandC TurboC;
         public StringBuilder CodigoMaquina { get; private set; }
         public bool Compilado { get; set; }
 
@@ -76,16 +75,14 @@ namespace Gui.Compilador
             return "Se encontrarón errores previos a la compilación\n";
         }
 
-        public string Ejecutar()
+        public Ejecucion Ejecutar()
         {
             if (this.Compilado)
             {
-  
-                //this.TurboC.Ejecutar();
-                //return this.TurboC.ResultadosCompilacion;
+                Ejecucion ejecucion = new Ejecucion(this.CodigoMaquina.ToString());
+                return ejecucion;
             }
-
-            return "No se ha compilado el archivo";
+            return null;
         }
     }
 }

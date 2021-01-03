@@ -1,4 +1,5 @@
 ﻿using _8086VCPU.Alu;
+using _8086VCPU.Auxiliares;
 using _8086VCPU.Registros;
 using Gui.Advertencias;
 using Gui.Compilador.Fases;

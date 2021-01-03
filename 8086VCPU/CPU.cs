@@ -21,6 +21,13 @@ namespace _8086VCPU
             CPU.Alu = new Alu.Alu();
             CPU.Banderas = new Banderas();
             CPU.Memoria = new Memoria();
+            Reset();
+        }
+
+        public static void Reset()
+        {
+            CPU.Banderas.Clear();
+            CPU.Memoria.Clear();
         }
     }
 }

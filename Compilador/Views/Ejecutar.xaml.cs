@@ -1,5 +1,6 @@
 ﻿using Compilador;
 using Gui.Advertencias;
+using Gui.Compilador;
 using Gui.Resources;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
@@ -29,7 +30,7 @@ namespace Gui.Views
      /// </summary>
     public partial class Ejecutar : NavigationUserControl
     {
-        private Compilador.Compilador Compilador;
+        private Ejecucion Ejecucion;
         public Ejecutar(IRegionManager RegionManager) : base(RegionManager)
         {
             InitializeComponent();
@@ -38,9 +39,10 @@ namespace Gui.Views
         protected override void OnNavigatedTo()
         {
             base.OnNavigatedTo();
-            this.Compilador = this.GetParameter<Compilador.Compilador>("Compilador");
-            TxtMy.Text = Compilador.CodigoMaquina.ToString();
+            this.Ejecucion = this.GetParameter<Ejecucion>("Ejecucion");
+            TxtMy.Text = Ejecucion.CodigoMaquina;
         }
+
 
         private void SelectText(int offset, int length)
         {
@@ -63,5 +65,22 @@ namespace Gui.Views
                 Log.LogMe(ex);
             }
         }
+
+        private void Redo_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+        private void Next_Click(object sender, MouseButtonEventArgs e)
+        {
+            Ejecucion.Siguiente();
+
+
+        }
+        private void Run_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+
     }
 }
