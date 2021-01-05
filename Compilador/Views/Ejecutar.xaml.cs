@@ -1,4 +1,5 @@
-﻿using Compilador;
+﻿using _8086VCPU.Alu;
+using Compilador;
 using Gui.Advertencias;
 using Gui.Compilador;
 using Gui.Resources;
@@ -31,10 +32,15 @@ namespace Gui.Views
     public partial class Ejecutar : NavigationUserControl
     {
         private Ejecucion Ejecucion;
+        private int Linea;
+        private DispatcherTimer Timer;
         public Ejecutar(IRegionManager RegionManager) : base(RegionManager)
         {
             InitializeComponent();
-            TxtMy.TextArea.TextView.BackgroundRenderers.Add(new HighLight(TxtMy));
+            Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromSeconds(1);
+            Timer.Tick += Timer_Tick;
+            Linea = 1;
         }
         protected override void OnNavigatedTo()
         {
@@ -68,19 +74,48 @@ namespace Gui.Views
 
         private void Redo_Click(object sender, MouseButtonEventArgs e)
         {
-
+            Timer.Stop();
+            Linea = 1;
+            Ejecucion.LongitudOperacion = 0;
+            Ejecucion.Redo();
+            Next_Click(sender, e);
         }
-        private void Next_Click(object sender, MouseButtonEventArgs e)
+        private void Next_Click(object sender, EventArgs e)
         {
+            //POR REGISTRO
+            if (Ejecucion.LongitudOperacion > 0)
+            {
+                Linea += Ejecucion.LongitudOperacion;
+            }
             Ejecucion.Siguiente();
+            Seleccionar(Ejecucion.LongitudOperacion);
 
 
         }
+        private void Seleccionar(int LongitudOperacion)
+        {
+            ICSharpCode.AvalonEdit.Document.DocumentLine line = TxtMy.Document.GetLineByNumber(Linea);
+
+            TxtMy.SelectionStart = line.Offset;
+
+            ICSharpCode.AvalonEdit.Document.DocumentLine lineafin = TxtMy.Document.GetLineByNumber(Linea + LongitudOperacion);
+            TxtMy.SelectionLength = lineafin.EndOffset - line.Offset;
+
+            double vertOffset = (TxtMy.TextArea.TextView.DefaultLineHeight) * (line.LineNumber-4);
+            if (vertOffset < 0)
+            {
+                vertOffset = 0;
+            }
+            TxtMy.ScrollToVerticalOffset(vertOffset);
+        }
+
         private void Run_Click(object sender, MouseButtonEventArgs e)
         {
-
+            Timer.Start();
         }
-
-
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            Next_Click(sender, e);
+        }
     }
 }

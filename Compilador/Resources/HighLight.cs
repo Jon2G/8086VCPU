@@ -25,22 +25,19 @@ namespace Gui.Resources
 
         //public KnownLayer Layer => throw new NotImplementedException();
 
-        public void Draw(ICSharpCode.AvalonEdit.Rendering.TextView textview, DrawingContext drawingcontext) {
-            if (_editor.Document == null|| textview.ActualWidth<=32)
+        public void Draw(ICSharpCode.AvalonEdit.Rendering.TextView textview, DrawingContext drawingcontext)
+        {
+            if (_editor.Document == null || textview.ActualWidth <= 32)
                 return;
-            textview.EnsureVisualLines(); 
-            var currentline = _editor.Document.GetLineByOffset(_editor.CaretOffset);
+            textview.EnsureVisualLines();
+            ICSharpCode.AvalonEdit.Document.DocumentLine currentline = _editor.Document.GetLineByOffset(_editor.CaretOffset);
             foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textview, currentline))
             {
-                drawingcontext.DrawRectangle(new SolidColorBrush(System.Windows.Media.Color.FromArgb(25,255, 255, 255)), null, new System.Windows.Rect(rect.Location,
-                    new System.Windows.Size(textview.ActualWidth - 32, rect.Height))); 
-            } 
+                drawingcontext.DrawRectangle(new SolidColorBrush(System.Windows.Media.Color.FromArgb(25, 255, 255, 255)), null, new System.Windows.Rect(rect.Location,
+                    new System.Windows.Size(textview.ActualWidth - 32, rect.Height)));
+            }
         }
 
-        //public void Draw(TextView textView, DrawingContext drawingContext)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 
 }
