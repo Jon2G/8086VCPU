@@ -59,13 +59,13 @@
                 <CheckBox Visibility="Collapsed" IsChecked="{Binding ElementName=textEditor,Path=Options.ShowEndOfLine}">
                     <TextBlock Width="16" TextAlignment="Center">¶</TextBlock>
                 </CheckBox>
-                <Button Click="Ejecutar">
+                <Button Click="Ejecutar" ToolTip="Ejecutar">
                     <Image Source="/Gui;component/Images/Run_16x.png"  Height="16"/>
                 </Button>
-                <Button Click="CompilarYEjecutar">
+                <Button Click="CompilarYEjecutar" ToolTip="Compilar y ejecutar">
                     <Image Source="/Gui;component/Images/CompilarEjecutar.png"  Height="16"/>
                 </Button>
-                <Button Click="Compilar" >
+                <Button Click="Compilar" ToolTip="Compilar">
                     <DockPanel>
                         <Image DockPanel.Dock="Left" MaxWidth="25" Source="/Gui;component/Images/BuildSolution_16x.png" Height="16"/>
                         <ProgressBar IsIndeterminate="True" Visibility="Visible" MinHeight="16" DockPanel.Dock="Top" MinWidth="200" Grid.Column="1" x:Name="ProgresoCompilacion"/>

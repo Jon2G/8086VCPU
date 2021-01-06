@@ -7,7 +7,7 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d" ActiveGlowColor="DodgerBlue"
-        Title="{Binding Title}" 
+        Title="8086VCPU" 
         WindowStartupLocation="CenterScreen"
         ShowTitle="True"
         Height="450" 
@@ -53,6 +53,6 @@
         </Grid>
     </hc:Window.NonClientAreaContent>
     <Grid>
-        <hc:TransitioningContentControl prism:RegionManager.RegionName="ContentRegion" />
+        <hc:TransitioningContentControl prism:RegionManager.RegionName="ContentRegion"  />
     </Grid>
 </hc:GlowWindow>

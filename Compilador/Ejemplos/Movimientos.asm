@@ -21,10 +21,10 @@ MOV AX,DX
 
 MOV AX,[0d]
 MOV AX,[BX]
-MOV AX,[BX+SI]
-MOV AX,[BX+DI]
+MOV AX,[BX + SI]
+MOV AX,[BX + DI]
 
-MOV AX,[BX+ SI]
+MOV AX,[BX + SI]
 MOV AX,[BX + DI]
 
 ;MOV AX,[BX]

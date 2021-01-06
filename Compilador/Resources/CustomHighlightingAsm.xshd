@@ -14,17 +14,17 @@
 		  (\[|\])
 	  </Rule>
 
-	  <Rule fontWeight="bold" foreground="Navy">
+	  <!--<Rule fontWeight="bold" foreground="Navy">
 		  (?i)
 		  (MOV)
-	  </Rule>
+	  </Rule>-->
 
 	  <Rule foreground="#4295E5">
 		  (?i)(((\d+)(D|H|O))|(((1|0)+)(B)))+
 	  </Rule>
 
 	  <Rule fontWeight="bold" foreground="#E47D7D">
-		  (?i)(ADD|SUB|DIV|MUL)
+		  (?i)(ADD|SUB|DIV|MUL|MOV)
 	  </Rule>
 
 	  <Rule fontWeight="bold" foreground="RoyalBlue">

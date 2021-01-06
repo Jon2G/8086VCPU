@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace Gui.Views
 {
-    public class NavigationUserControl : UserControl, INavigationAware, INotifyPropertyChanged
+    public class NavigationUserControl : UserControl, INavigationAware, INotifyPropertyChanged, IJournalAware
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
@@ -42,7 +42,8 @@ namespace Gui.Views
         protected void Push<T>(NavigationParameters parameters = null)
         {
             string Name = typeof(T).Name;
-            this.RegionManager.Regions["ContentRegion"].NavigationService.Journal.NavigationTarget.RequestNavigate(Name, parameters);
+            this.RegionManager.Regions["ContentRegion"].NavigationService.Journal.NavigationTarget.
+                RequestNavigate(Name, parameters);
         }
         protected bool Pop()
         {
@@ -89,6 +90,11 @@ namespace Gui.Views
         protected T GetParameter<T>(string Name)
         {
             return (T)this.NavigationContext.Parameters[Name];
+        }
+
+        public bool PersistInHistory()
+        {
+            return true;
         }
     }
 }

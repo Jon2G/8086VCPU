@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
+using _8086VCPU.Auxiliares;
 using Compilador;
 using Gui.Advertencias;
 using Gui.Compilador.Fases;

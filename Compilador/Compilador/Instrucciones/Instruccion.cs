@@ -60,7 +60,7 @@ namespace Gui.Compilador.Instrucciones
         public StringBuilder CodigoMaquina()
         {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < Alu.Palabra - 5; i++)
+            for (int i = 0; i < Alu.Palabra - 8; i++)
             {
                 sb.Append("0");
             }
@@ -68,40 +68,40 @@ namespace Gui.Compilador.Instrucciones
             switch (this.Tipo)
             {
                 case TipoInstruccion.MOV:
-                    sb.AppendLine($"00001");
+                    sb.Append($"00001");
                     break;
                 case TipoInstruccion.ADD:
-                    sb.AppendLine("00010");
+                    sb.Append("00010");
                     break;
                 case TipoInstruccion.MUL:
-                    sb.AppendLine("00101");
+                    sb.Append("00101");
                     break;
                 case TipoInstruccion.SUB:
-                    sb.AppendLine("00011");
+                    sb.Append("00011");
                     break;
                 case TipoInstruccion.DIV:
-                    sb.AppendLine("00100");
+                    sb.Append("00100");
                     break;
                 case TipoInstruccion.NOT:
-                    sb.AppendLine("00110");
+                    sb.Append("00110");
                     break;
                 case TipoInstruccion.OR:
-                    sb.AppendLine("00111");
+                    sb.Append("00111");
                     break;
                 case TipoInstruccion.NOR:
-                    sb.AppendLine("01000");
+                    sb.Append("01000");
                     break;
                 case TipoInstruccion.XOR:
-                    sb.AppendLine("01001");
+                    sb.Append("01001");
                     break;
                 case TipoInstruccion.XNOR:
-                    sb.AppendLine("01010");
+                    sb.Append("01010");
                     break;
                 case TipoInstruccion.AND:
-                    sb.AppendLine("01011");
+                    sb.Append("01011");
                     break;
                 case TipoInstruccion.NAND:
-                    sb.AppendLine("01100");
+                    sb.Append("01100");
                     break;
             }
             sb.Append(this.Traduccion());

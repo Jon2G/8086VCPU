@@ -7,7 +7,7 @@
              xmlns:hc="https://handyorg.github.io/handycontrol" 
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" 
              xmlns:registros="clr-namespace:_8086VCPU.Registros;assembly=8086VCPU"
-             mc:Ignorable="d"  x:Name="Me" 
+             mc:Ignorable="d"  x:Name="Me"
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
 
@@ -17,10 +17,16 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Margin="0" MouseLeftButtonUp="Volver_Click">
+                    <StackPanel>
+                        <Image Height="20" Source="/Gui;component/Images/back.png"/>
+                        <TextBlock Text="Volver"/>
+                    </StackPanel>
+                </Label>
 
-
-                <Label Grid.Column="0" Margin="0" MouseLeftButtonUp="Redo_Click">
+                <Label Grid.Column="1" Margin="0" MouseLeftButtonUp="Redo_Click">
                     <StackPanel>
                         <Image Height="20" Source="/Gui;component/Images/Redo.png"/>
                         <TextBlock Text="Recargar"/>
@@ -28,13 +34,13 @@
                 </Label>
 
 
-                <Label Grid.Column="1" Margin="0" MouseLeftButtonUp="Next_Click">
+                <Label Grid.Column="2" Margin="0" MouseLeftButtonUp="Next_Click">
                     <StackPanel>
                         <Image Height="20" Source="/Gui;component/Images/next.png"/>
                         <TextBlock Text="Siguiente"/>
                     </StackPanel>
                 </Label>
-                <Label Grid.Column="2" Margin="0" MouseLeftButtonUp="Run_Click">
+                <Label Grid.Column="3" Margin="0" MouseLeftButtonUp="Run_Click">
                     <StackPanel>
                         <Image Height="20" Source="/Gui;component/Images/Run_16x.png"/>
                         <TextBlock Text="Ejecutar"/>
@@ -44,15 +50,15 @@
 
             <hc:TransitioningContentControl>
                 <GroupBox BorderThickness="1" BorderBrush="{DynamicResource DarkInfoBrush}" Style="{x:Null}" Header="Registros" Margin="5">
-                    <StackPanel >
-                        <Grid >
+                    <StackPanel>
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock TextAlignment="Center" Text="H" Grid.Column="1" HorizontalAlignment="Stretch"/>
-                            <TextBlock TextAlignment="Center" Text="L" Grid.Column="2" HorizontalAlignment="Stretch"/>
+                            <TextBlock FontSize="18" TextAlignment="Center" Text="H" Grid.Column="1" HorizontalAlignment="Stretch"/>
+                            <TextBlock FontSize="18" TextAlignment="Center" Text="L" Grid.Column="2" HorizontalAlignment="Stretch"/>
                         </Grid>
                         <Grid DataContext="{x:Static registros:Registros.AX}">
                             <Grid.ColumnDefinitions>
@@ -60,9 +66,12 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox Grid.Column="1" DataContext="{Binding High}" Text="{Binding Hex,Mode=OneWay}"/>
-                            <TextBox Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Hex,Mode=OneWay}"/>
+                            <Button Background="{DynamicResource MainContentBackgroundBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    Foreground="{DynamicResource PrimaryTextBrush}"
+                                    VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox FontSize="18" Grid.Column="1" DataContext="{Binding High}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox FontSize="18" Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
                         </Grid>
                         <Grid DataContext="{x:Static registros:Registros.BX}">
                             <Grid.ColumnDefinitions>
@@ -70,9 +79,12 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox Grid.Column="1" DataContext="{Binding High}" Text="{Binding Hex,Mode=OneWay}"/>
-                            <TextBox Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Hex,Mode=OneWay}"/>
+                            <Button Background="{DynamicResource MainContentBackgroundBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    Foreground="{DynamicResource PrimaryTextBrush}"
+                                    VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox FontSize="18" Grid.Column="1" DataContext="{Binding High}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox FontSize="18" Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
                         </Grid>
                         <Grid DataContext="{x:Static registros:Registros.CX}">
                             <Grid.ColumnDefinitions>
@@ -80,9 +92,12 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox Grid.Column="1" DataContext="{Binding High}" Text="{Binding Hex,Mode=OneWay}"/>
-                            <TextBox Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Hex,Mode=OneWay}"/>
+                            <Button Background="{DynamicResource MainContentBackgroundBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    Foreground="{DynamicResource PrimaryTextBrush}"
+                                    VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox FontSize="18" Grid.Column="1" DataContext="{Binding High}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox FontSize="18" Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
                         </Grid>
                         <Grid DataContext="{x:Static registros:Registros.DX}">
                             <Grid.ColumnDefinitions>
@@ -90,9 +105,12 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox Grid.Column="1" DataContext="{Binding High}" Text="{Binding Hex,Mode=OneWay}"/>
-                            <TextBox Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Hex,Mode=OneWay}"/>
+                            <Button Background="{DynamicResource MainContentBackgroundBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    Foreground="{DynamicResource PrimaryTextBrush}"
+                                    VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox FontSize="18" Grid.Column="1" DataContext="{Binding High}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox FontSize="18" Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
                         </Grid>
 
                         <Grid DataContext="{x:Static registros:Registros.SI}">
@@ -101,8 +119,11 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox Grid.Column="1" Text="{Binding Hex,Mode=OneWay}" Grid.ColumnSpan="2"/>
+                            <Button Background="{DynamicResource MainContentBackgroundBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    Foreground="{DynamicResource PrimaryTextBrush}"
+                                    VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}" Grid.ColumnSpan="2"/>
                         </Grid>
                         <Grid DataContext="{x:Static registros:Registros.DI}">
                             <Grid.ColumnDefinitions>
@@ -110,17 +131,23 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox Grid.Column="1" Text="{Binding Hex,Mode=OneWay}"  Grid.ColumnSpan="2"/>
+                            <Button Background="{DynamicResource MainContentBackgroundBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    Foreground="{DynamicResource PrimaryTextBrush}"
+                                    VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
                         </Grid>
-                        <Grid >
+                        <Grid DataContext="{x:Static registros:Registros.IP}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Button Content="IP" HorizontalAlignment="Stretch"/>
-                            <TextBox Grid.Column="1" Text="FFFF"  Grid.ColumnSpan="2"/>
+                            <Button Background="{DynamicResource MainContentBackgroundBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    Foreground="{DynamicResource PrimaryTextBrush}"
+                                    VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
                         </Grid>
                     </StackPanel>
                 </GroupBox>
@@ -128,10 +155,43 @@
             
         </DockPanel>
 
-        
-        
-        <hc:TransitioningContentControl DockPanel.Dock="Right">
-            <avalonedit:TextEditor
+
+        <DockPanel  DockPanel.Dock="Right">
+            <DockPanel DockPanel.Dock="Top">
+                <hc:Card  DockPanel.Dock="Top" Margin="5">
+                    <Grid DataContext="{Binding Ejecucion,ElementName=Me}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Código Operacion"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                   Margin="0"/>
+                        <Label Content="{Binding OpCode}" Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                   Margin="0" HorizontalContentAlignment="Center" Foreground="#4295E5" FontSize="18"/>
+
+                        <Label Content="Modificador" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                   Margin="0"/>
+                        <Label Content="{Binding Modificador,Mode=OneWay}" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                   Margin="0" HorizontalContentAlignment="Center" Foreground="#4295E5"  FontSize="18"/>
+
+
+                            <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                   Margin="3"  FontSize="18"
+                                   Content="{Binding Instruccion,Mode=OneWay}" Grid.Column="2" Grid.RowSpan="2"/>
+
+                    </Grid>
+                </hc:Card>
+
+
+            </DockPanel>
+
+            <hc:TransitioningContentControl>
+                <avalonedit:TextEditor
                         Background="{DynamicResource MainContentBackgroundBrush}"
                         Foreground="{DynamicResource PrimaryTextBrush}"
                     Name="TxtMy" IsReadOnly="True" 
@@ -139,8 +199,9 @@
                     FontSize="14pt" LineNumbersForeground="{DynamicResource PrimaryTextBrush}"
                    SyntaxHighlighting="Binario"
                     ShowLineNumbers="True" WordWrap="True">
-                <avalonedit:TextEditor.VerticalScrollBarVisibility>Visible</avalonedit:TextEditor.VerticalScrollBarVisibility>
-            </avalonedit:TextEditor>
-        </hc:TransitioningContentControl>
+                    <avalonedit:TextEditor.VerticalScrollBarVisibility>Visible</avalonedit:TextEditor.VerticalScrollBarVisibility>
+                </avalonedit:TextEditor>
+            </hc:TransitioningContentControl>
+        </DockPanel>
     </DockPanel>
 </local:NavigationUserControl>

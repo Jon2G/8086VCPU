@@ -29,5 +29,10 @@ namespace _8086VCPU
             CPU.Banderas.Clear();
             CPU.Memoria.Clear();
         }
+
+        internal static void Ejecutar(bool[] Operacion,bool[] Modificador, bool[] Operador1, bool[] Operador2)
+        {
+       
+        }
     }
 }

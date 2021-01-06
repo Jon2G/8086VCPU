@@ -1,7 +1,7 @@
 ﻿using _8086VCPU.Alu;
+using _8086VCPU.Auxiliares;
 using Compilador;
 using Gui.Advertencias;
-using Gui.Compilador;
 using Gui.Resources;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
@@ -31,7 +31,8 @@ namespace Gui.Views
      /// </summary>
     public partial class Ejecutar : NavigationUserControl
     {
-        private Ejecucion Ejecucion;
+        private Ejecucion _Ejecucion;
+        public Ejecucion Ejecucion { get => _Ejecucion; set { _Ejecucion = value; OnPropertyChanged(); } }
         private int Linea;
         private DispatcherTimer Timer;
         public Ejecutar(IRegionManager RegionManager) : base(RegionManager)
@@ -49,30 +50,7 @@ namespace Gui.Views
             TxtMy.Text = Ejecucion.CodigoMaquina;
         }
 
-
-        private void SelectText(int offset, int length)
-        {
-            try
-            {
-                //Get the line number based off the offset.
-                var line = TxtMy.Document.GetLineByOffset(offset);
-                var lineNumber = line.LineNumber;
-
-                //Select the text.
-                TxtMy.SelectionStart = offset;
-                TxtMy.SelectionLength = length;
-
-                //Scroll the textEditor to the selected line.
-                var visualTop = TxtMy.TextArea.TextView.GetVisualTopByDocumentLine(lineNumber);
-                TxtMy.ScrollToVerticalOffset(visualTop);
-            }
-            catch (Exception ex)
-            {
-                Log.LogMe(ex);
-            }
-        }
-
-        private void Redo_Click(object sender, MouseButtonEventArgs e)
+        private void Redo_Click(object sender, EventArgs e)
         {
             Timer.Stop();
             Linea = 1;
@@ -80,6 +58,12 @@ namespace Gui.Views
             Ejecucion.Redo();
             Next_Click(sender, e);
         }
+        private void Volver_Click(object sender, EventArgs e)
+        {
+            Redo_Click(sender, e);
+            this.Push<Editor>();
+        }
+        
         private void Next_Click(object sender, EventArgs e)
         {
             //POR REGISTRO
@@ -87,10 +71,12 @@ namespace Gui.Views
             {
                 Linea += Ejecucion.LongitudOperacion;
             }
-            Ejecucion.Siguiente();
+            if (!Ejecucion.Siguiente())
+            {
+                Redo_Click(sender, e);
+                return;
+            }
             Seleccionar(Ejecucion.LongitudOperacion);
-
-
         }
         private void Seleccionar(int LongitudOperacion)
         {
@@ -98,10 +84,10 @@ namespace Gui.Views
 
             TxtMy.SelectionStart = line.Offset;
 
-            ICSharpCode.AvalonEdit.Document.DocumentLine lineafin = TxtMy.Document.GetLineByNumber(Linea + LongitudOperacion);
+            ICSharpCode.AvalonEdit.Document.DocumentLine lineafin = TxtMy.Document.GetLineByNumber(Linea + LongitudOperacion - 1);
             TxtMy.SelectionLength = lineafin.EndOffset - line.Offset;
 
-            double vertOffset = (TxtMy.TextArea.TextView.DefaultLineHeight) * (line.LineNumber-4);
+            double vertOffset = (TxtMy.TextArea.TextView.DefaultLineHeight) * (line.LineNumber - 4);
             if (vertOffset < 0)
             {
                 vertOffset = 0;

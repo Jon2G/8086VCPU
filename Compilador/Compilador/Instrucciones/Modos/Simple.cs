@@ -33,10 +33,6 @@ namespace Gui.Compilador.Instrucciones.Modos
         protected override StringBuilder Traduccion()
         {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < Alu.Palabra - 3; i++)
-            {
-                sb.Append("0");
-            }
             sb.AppendLine("110");
             sb.AppendLine(Registros.OpCode(NombreOperador));
             return sb;

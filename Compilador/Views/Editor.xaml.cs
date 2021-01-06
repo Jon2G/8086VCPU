@@ -194,7 +194,7 @@ namespace Gui.Views
         {
             if (TxtMy.Document.FileName != null)
             {
-                SaveFileClick(this,EventArgs.Empty);
+                SaveFileClick(this, EventArgs.Empty);
             }
             this.ProgresoCompilacion.IsIndeterminate = true;
             this.Compilador = new Gui.Compilador.Compilador(this.TxtMy.TextArea.Document, this.Errores);
@@ -251,6 +251,7 @@ namespace Gui.Views
             TxtMy.Document.Text = ex.GetDocumento();
             TxtMy.Document.FileName = null;
             TxtArchivo.Text = ex.Nombre;
+            this.AutoCompletado.DeberiaAnalizar = true;
 
         }
     }

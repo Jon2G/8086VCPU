@@ -122,5 +122,42 @@ namespace _8086VCPU.Registros
             }
             return sb.ToString();
         }
+
+        internal static string PorOpCode(string op1)
+        {
+            int n_registro = Convert.ToInt32(op1, 2);
+            switch (n_registro)
+            {
+                case 1:
+                    return "AX";
+                case 2:
+                    return "AH";
+                case 3:
+                    return "AL";
+                case 4:
+                    return "BX";
+                case 5:
+                    return "BH";
+                case 6:
+                    return "BL";
+                case 7:
+                    return "CX";
+                case 8:
+                    return "CH";
+                case 9:
+                    return "CL";
+                case 10:
+                    return "DX";
+                case 11:
+                    return "DH";
+                case 12:
+                    return "DL";
+                case 13:
+                    return "SI";
+                case 14:
+                    return "DI";
+            }
+            return null;
+        }
     }
 }

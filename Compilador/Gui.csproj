@@ -238,5 +238,8 @@
     <Resource Include="Images\reload.png" />
     <Resource Include="Images\right-arrow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\back.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

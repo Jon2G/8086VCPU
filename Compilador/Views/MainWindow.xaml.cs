@@ -18,14 +18,11 @@ namespace Gui.Views
             {
                 throw new ArgumentNullException(nameof(this.RegionManager));
             }
-
-           Navegar(typeof(Editor));
-
-
+           Navegar<Editor>();
         }
-        public void Navegar(Type ventana)
+        public void Navegar<T>()
         {
-            this.RegionManager.RegisterViewWithRegion("ContentRegion", ventana);
+            this.RegionManager.RegisterViewWithRegion("ContentRegion", typeof(T));
         }
 
         #region Change Skin

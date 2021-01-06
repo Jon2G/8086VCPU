@@ -40,7 +40,7 @@ namespace Gui.Ejemplos
         {
             using (ReflectionCaller reflection = new ReflectionCaller().GetAssembly(typeof(Ejemplo)))
             {
-                return ReflectionCaller.ToText(reflection.GetResource(this.NombreRecurso));
+                return ReflectionCaller.ToText(reflection.GetResource(this.NombreRecurso),Encoding.UTF8);
             }
         }
     }
