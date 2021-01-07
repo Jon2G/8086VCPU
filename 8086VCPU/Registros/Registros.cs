@@ -66,7 +66,6 @@ namespace _8086VCPU.Registros
             }
             return null;
         }
-
         public static string OpCode(string nombre)
         {
             StringBuilder sb = new StringBuilder();
@@ -122,7 +121,6 @@ namespace _8086VCPU.Registros
             }
             return sb.ToString();
         }
-
         internal static string PorOpCode(string op1)
         {
             int n_registro = Convert.ToInt32(op1, 2);

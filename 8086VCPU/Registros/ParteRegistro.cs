@@ -8,7 +8,17 @@ namespace _8086VCPU.Registros
 {
     public class ParteRegistro : Localidad
     {
-        private bool[] Valor { get; set; }
+        private bool[] _Valor;
+        private bool[] Valor
+        {
+            get => _Valor;
+            set
+            {
+                _Valor = value;
+                OnPropertyChanged(nameof(Decimal));
+                OnPropertyChanged(nameof(Hex));
+            }
+        }
         public ParteRegistro()
         {
             this.Tamaño = Tamaños.Byte;

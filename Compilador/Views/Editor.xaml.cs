@@ -251,7 +251,10 @@ namespace Gui.Views
             TxtMy.Document.Text = ex.GetDocumento();
             TxtMy.Document.FileName = null;
             TxtArchivo.Text = ex.Nombre;
-            this.AutoCompletado.DeberiaAnalizar = true;
+            if (this.AutoCompletado != null)
+            {
+                this.AutoCompletado.DeberiaAnalizar = true;
+            }
 
         }
     }

@@ -70,8 +70,8 @@
                                     BorderBrush="{DynamicResource BorderBrush}"
                                     Foreground="{DynamicResource PrimaryTextBrush}"
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox FontSize="18" Grid.Column="1" DataContext="{Binding High}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
-                            <TextBox FontSize="18" Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox FontSize="18" Grid.Column="1" Text="{Binding High.Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox FontSize="18" Grid.Column="2" Text="{Binding Low.Decimal,Mode=OneWay,StringFormat=X2}"/>
                         </Grid>
                         <Grid DataContext="{x:Static registros:Registros.BX}">
                             <Grid.ColumnDefinitions>

@@ -10,8 +10,10 @@ namespace _8086VCPU.Registros
     public class Registro : Localidad
     {
         public string Nombre { get; private set; }
-        public ParteRegistro High { get; set; }
-        public ParteRegistro Low { get; set; }
+        private ParteRegistro _High;
+        public ParteRegistro High { get => _High; set { _High = value; OnPropertyChanged(); } }
+        private ParteRegistro _Low;
+        public ParteRegistro Low { get => _Low; set { _Low = value; OnPropertyChanged(); } }
 
         public Registro(string Nombre)
         {
@@ -64,11 +66,21 @@ namespace _8086VCPU.Registros
         {
             this.High.EnableLectura(true);
             Array.Copy(Valor, 0, High.Get(), 0, Alu.Alu.Byte);
+            High.EnableEscritura(true);
+            High.Set(High.Get());
+            High.EnableLectura(false);
             this.High.EnableLectura(false);
 
             this.Low.EnableLectura(true);
             Array.Copy(Valor, Alu.Alu.Byte, Low.Get(), 0, Alu.Alu.Byte);
+            Low.EnableEscritura(true);
+            Low.Set(Low.Get());
+            Low.EnableLectura(false);
             this.Low.EnableLectura(false);
+            
+
+            OnGlobalPropertyChanged(nameof(Low));
+            OnGlobalPropertyChanged(nameof(High));
         }
         protected override bool[] _Get()
         {
@@ -91,7 +103,7 @@ namespace _8086VCPU.Registros
                 throw new AccessViolationException("La Lecctura no esta habilitada");
             }
             this.Low.EnableLectura(true);
-            bool[] valor= this.Low.Get();
+            bool[] valor = this.Low.Get();
             this.Low.EnableLectura(false);
             return valor;
         }
