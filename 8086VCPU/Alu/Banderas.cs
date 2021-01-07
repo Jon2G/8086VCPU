@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace _8086VCPU.Alu
 {
-    public class Banderas
+    public class Banderas : ViewModelBase<Banderas>
     {
-        public bool Carry { get; set; }
-        public bool Signo { get; set; }
-        public bool Zero { get; set; } 
-        public bool OverFlow { get; internal set; }
+        private bool _Carry;
+        public bool Carry { get => _Carry; set { _Carry = value; OnPropertyChanged(); } }
+        private bool _Signo;
+        public bool Signo { get => _Signo; set { _Signo = value; OnPropertyChanged(); } }
+        private bool _Zero;
+        public bool Zero { get => _Zero; set { _Zero = value; OnPropertyChanged(); } }
+        private bool _OverFlow;
+        public bool OverFlow { get => _OverFlow; set { _OverFlow = value; OnPropertyChanged(); } }
 
         internal void Clear()
         {

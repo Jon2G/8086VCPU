@@ -1,4 +1,5 @@
-﻿using Kit;
+﻿using _8086VCPU.Auxiliares;
+using Kit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace _8086VCPU.Registros
 {
-    public abstract class Localidad:ViewModelBase<Localidad>
+    public abstract class Localidad : ViewModelBase<Localidad>
     {
         public enum Tamaños
         {
@@ -19,7 +20,8 @@ namespace _8086VCPU.Registros
         protected bool Lecctura { get; set; }
         protected bool Escritura { get; set; }
         public string Hex => Decimal.ToString("X");
-        public int Decimal => Convert.ToInt32(ToString(), 2);
+        public int Decimal => ConversorBinario.Binario(ToString());
+        public int SDecimal => ConversorBinario.BinarioConSigno(ToString());
 
         public void EnableLectura(bool valor)
         {
@@ -41,6 +43,7 @@ namespace _8086VCPU.Registros
             }
             _Set(Valor);
             OnPropertyChanged(nameof(Decimal));
+            OnPropertyChanged(nameof(SDecimal));
             OnPropertyChanged(nameof(Hex));
         }
         public bool[] Get()

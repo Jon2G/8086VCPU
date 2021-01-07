@@ -1,5 +1,6 @@
 ﻿using _8086VCPU.Alu;
 using _8086VCPU.Auxiliares;
+using _8086VCPU.Registros;
 using Compilador;
 using Gui.Advertencias;
 using Gui.Resources;
@@ -56,16 +57,24 @@ namespace Gui.Views
             Linea = 1;
             Ejecucion.LongitudOperacion = 0;
             Ejecucion.Redo();
-            Next_Click(sender, e);
+            if (!(sender is bool))
+            {
+                Next_Click(sender, e);
+            }
         }
         private void Volver_Click(object sender, EventArgs e)
         {
             Redo_Click(sender, e);
             this.Push<Editor>();
         }
-        
+
         private void Next_Click(object sender, EventArgs e)
         {
+            if (Ejecucion.Reiniciar)
+            {
+                Redo_Click(false, e);
+                return;
+            }
             //POR REGISTRO
             if (Ejecucion.LongitudOperacion > 0)
             {
@@ -73,7 +82,9 @@ namespace Gui.Views
             }
             if (!Ejecucion.Siguiente())
             {
-                Redo_Click(sender, e);
+                TxtMy.SelectionStart = 0;
+                TxtMy.SelectionLength = 0;
+                TxtMy.ScrollToVerticalOffset(0);
                 return;
             }
             Seleccionar(Ejecucion.LongitudOperacion);
@@ -102,6 +113,18 @@ namespace Gui.Views
         private void Timer_Tick(object sender, EventArgs e)
         {
             Next_Click(sender, e);
+        }
+
+        private void VistaRegistro_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.DataContext is Registro registro)
+            {
+                (new VistaRegistro(registro)
+                {
+                    Owner = App.Current.MainWindow
+                }).ShowDialog();
+
+            }
         }
     }
 }

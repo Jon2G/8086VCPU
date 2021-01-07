@@ -13,6 +13,15 @@ namespace _8086VCPU.Auxiliares
         {
             return Convert.ToInt32(numero, fromBase: 2);
         }
+        public static int BinarioConSigno(string numero)
+        {
+            int n = Binario(numero.Substring(1));
+            if (numero[0] == '1')
+            {
+                n *= -1;
+            }
+            return n;
+        }
         public static bool[] Decimal(int numero)
         {
             List<bool> binario;

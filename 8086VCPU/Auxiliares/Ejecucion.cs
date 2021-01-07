@@ -24,12 +24,13 @@ namespace _8086VCPU.Auxiliares
         public bool[] ValorActual { get; set; }
         public int LongitudOperacion { get; set; }
         private string Operador1;
-        private bool[] BinOperador1 { get;  set; }
+        private bool[] BinOperador1 { get; set; }
         private bool[] BinOperador2 { get; set; }
         private bool[] BinModificador { get; set; }
         private bool[] BinOpCode { get; set; }
 
         private string Operador2;
+        public bool Reiniciar { get; private set; }
         public Ejecucion(string CodigoMaquina)
         {
             this.CodigoMaquina = CodigoMaquina;
@@ -47,6 +48,11 @@ namespace _8086VCPU.Auxiliares
 
             if (ValorActual.All(x => !x))
             {
+                InstruccionCompleta();
+                Instruccion = "~-~";
+                Modificador = "000";
+                OpCode = "00000";
+                Reiniciar = true;
                 return false;
             }
 
@@ -87,10 +93,10 @@ namespace _8086VCPU.Auxiliares
             int ip_actual = IP.Decimal;
             if (ip_actual > 0)
             {
-                CPU.Ejecutar(BinOpCode, BinModificador,BinOperador1,BinOperador2);
+                CPU.Ejecutar(BinOpCode, BinModificador, BinOperador1, BinOperador2);
             }
 
-            BinOpCode=OpCode.Select(x => x == '1').ToArray();
+            BinOpCode = OpCode.Select(x => x == '1').ToArray();
             BinModificador = Modificador.Select(x => x == '1').ToArray();
             IP.EnableEscritura(true);
             IP.Set(ConversorBinario.Palabra(IP.Decimal + 1));
@@ -198,8 +204,10 @@ namespace _8086VCPU.Auxiliares
         }
         public void Redo()
         {
+            Reiniciar = false;
             Instruccion = "~-~";
             Modificador = "000";
+            OpCode = "00000";
             LongitudOperacion = 0;
 
             CPU.Reset();

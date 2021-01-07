@@ -29,7 +29,7 @@ namespace Gui.Resources
         private Analizador Analizador;
         public bool Analizando { get; private set; }
         public bool DeberiaAnalizar { get; set; }
-        private CodeSegment CodeSegment;
+
         ITextMarkerService TextMarkerService;
         public readonly List<string> Registros;
         public readonly List<string> OperacionesAritmeticas;
@@ -81,7 +81,6 @@ namespace Gui.Resources
                         {
 
                         }
-                        CodeSegment = ((AnalizadorSintactico)this.Analizador).CodeSegment;
                     }
 
                     Application.Current?.Dispatcher?.Invoke(() =>

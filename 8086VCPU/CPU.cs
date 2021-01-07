@@ -27,6 +27,7 @@ namespace _8086VCPU
         {
             CPU.Banderas.Clear();
             CPU.Memoria.Clear();
+            Registros.Registros.Reset();
         }
         public static void Ejecutar(bool[] Operacion, bool[] Modificador, bool[] Operador1, bool[] Operador2)
         {
@@ -48,7 +49,7 @@ namespace _8086VCPU
             //     0                     1                   1 
             else if (!Modificador[0] && Modificador[1] && Modificador[2])
             {
-                ValorOperador1 = Operador2;
+                ValorOperador2 = Operador2;
                 //El valor del operador 2 ya representa al número en binario
             }
             //INDIRECTO	MOV AX,[SI/DI]
@@ -87,7 +88,7 @@ namespace _8086VCPU
             //MOV
             if (!Operacion[0] && !Operacion[1] && !Operacion[2] && !Operacion[3] && Operacion[4])
             {
-                GuardarEnRegistro(RegistroDestino, Operador1);
+                GuardarEnRegistro(RegistroDestino, Operador2);
             }
             else if (!Operacion[0] && !Operacion[1] && !Operacion[2] && Operacion[3] && !Operacion[4])
             {
