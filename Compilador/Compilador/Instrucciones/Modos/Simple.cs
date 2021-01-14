@@ -23,14 +23,7 @@ namespace Gui.Compilador.Instrucciones.Modos
             this.Tamaño = TamañoRegistro(NombreOperador);
             this.Operador = Registros.PorNombre(NombreOperador);
         }
-   
-
-        public override bool RevisarSemantica(ResultadosCompilacion Errores)
-        {
-            return true;
-        }
-
-        protected override StringBuilder Traduccion()
+        protected override StringBuilder Traduccion(CodeSegment segment)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("110");

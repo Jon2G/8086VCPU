@@ -3,8 +3,10 @@ using Gui.Compilador.Fases._1._Analisis_Lexico;
 using Gui.Compilador.Instrucciones;
 using Gui.Compilador.Instrucciones.Modos;
 using ICSharpCode.AvalonEdit.Document;
+using System;
 using System.Text.RegularExpressions;
 using static _8086VCPU.Registros.Localidad;
+using static Gui.Compilador.Instrucciones.Instruccion;
 
 namespace Gui.Compilador.Fases._2._Analisis_Sintactico
 {
@@ -25,8 +27,9 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
             foreach (LineaLexica linea in this.LineasLexicas)
             {
                 if (InstruccionDireccionada(linea) ||
-                    InstruccionUnica(linea)
-                    )
+                    InstruccionUnica(linea) ||
+                    Etiqueta(linea) ||
+                    Salto(linea)) 
                 {
                     continue;
                 }
@@ -42,7 +45,7 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
         private bool InstruccionDireccionada(LineaLexica linea)
         {
             foreach (string instruccion in new string[]
-            { "MOV", "ADD", "SUB", "OR", "NOR", "XOR", "XNOR", "AND", "NAND" })
+            { "MOV", "ADD", "SUB", "OR", "NOR", "XOR", "XNOR", "AND", "NAND","CMP" })
             {
                 if (Compare(linea[0].Lexema, instruccion))
                 {
@@ -124,7 +127,7 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
         }
         private bool InstruccionUnica(LineaLexica linea)
         {
-            foreach (string instruccion in new string[] { "NOT", "MUL", "DIV" })
+            foreach (string instruccion in new string[] {"NOT", "MUL", "DIV"})
             {
                 if (Compare(linea[0].Lexema, instruccion))
                 {
@@ -141,6 +144,43 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
                     this.CodeSegment.AgregarInstruccion(new Simple(linea[1].Lexema, linea.LineaDocumento, Instruccion.PorNombre(instruccion)));
                     return true;
                 }
+            }
+            return false;
+        }
+        private bool Etiqueta(LineaLexica linea)
+        {
+            if (linea[0].TipoToken != TipoToken.Identificador)
+            {
+                return false;
+            }
+            if (linea.Elementos != 2)
+            {
+                this.Errores.ResultadoCompilacion("Se esperaba una etiqueta con el formato [Identificador:]", linea.LineaDocumento);
+                return true;
+            }
+            if (linea[0].TipoToken == TipoToken.Identificador && linea[1].TipoToken == TipoToken.DosPuntos)
+            {
+                this.CodeSegment.AgregarInstruccion(new Etiqueta(linea[0].Lexema, linea.LineaDocumento, Instruccion.TipoInstruccion.Etiqueta));
+                return true;
+            }
+            return false;
+        }
+        private bool Salto(LineaLexica linea)
+        {
+            if (linea[0].TipoToken != TipoToken.PalabraReservada)
+            {
+                return false;
+            }
+            if (linea.Elementos != 2)
+            {
+                this.Errores.ResultadoCompilacion("Se esperaba un salto, formato incorrecto", linea.LineaDocumento);
+                return true;
+            }
+            if (linea[0].TipoToken == TipoToken.PalabraReservada && linea[1].TipoToken == TipoToken.Identificador)
+            {
+                TipoInstruccion instruccion = (TipoInstruccion)Enum.Parse(typeof(TipoInstruccion), linea[0].Lexema);
+                this.CodeSegment.AgregarInstruccion(new Salto(linea[1].Lexema, linea.LineaDocumento, instruccion));
+                return true;
             }
             return false;
         }

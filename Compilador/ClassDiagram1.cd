@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Gui.Compilador.Instrucciones.Instruccion">
+    <Position X="2.25" Y="0.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Gui.Compilador.Instrucciones.Instruccion.TipoInstruccion" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Compilador\Instrucciones\Instruccion.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABgAAEAAEAAACAAAAIAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Compilador\Instrucciones\Instruccion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gui.Compilador.Instrucciones.Modos.Direccionado">
+    <Position X="6" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAQABAAAgAAAAA=</HashCode>
+      <FileName>Compilador\Instrucciones\Modos\Direccionado.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gui.Compilador.Instrucciones.Modos.Simple">
+    <Position X="8.25" Y="1.75" Width="3" />
+    <InheritanceLine Type="Gui.Compilador.Instrucciones.Instruccion" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="3.375" />
+        <Point X="5.155" Y="3.375" />
+        <Point X="5.155" Y="3.375" />
+        <Point X="8.25" Y="3.375" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAACAAAAAEAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Compilador\Instrucciones\Modos\Simple.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gui.Compilador.Instrucciones.Modos.Directo">
+    <Position X="1.25" Y="6.5" Width="1.5" />
+    <InheritanceLine Type="Gui.Compilador.Instrucciones.Modos.Direccionado" ManuallyRouted="true">
+      <Path>
+        <Point X="7" Y="5.761" />
+        <Point X="7" Y="6.126" />
+        <Point X="2" Y="6.126" />
+        <Point X="2" Y="6.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compilador\Instrucciones\Modos\Directo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gui.Compilador.Instrucciones.Modos.Indexado">
+    <Position X="3.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAACAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compilador\Instrucciones\Modos\Indexado.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gui.Compilador.Instrucciones.Modos.Indirecto">
+    <Position X="5.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compilador\Instrucciones\Modos\Indirecto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gui.Compilador.Instrucciones.Modos.Inmediato">
+    <Position X="7.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compilador\Instrucciones\Modos\Inmediato.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gui.Compilador.Instrucciones.Modos.PorRegistro">
+    <Position X="9.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compilador\Instrucciones\Modos\PorRegistro.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gui.Compilador.Instrucciones.Etiqueta">
+    <Position X="6.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compilador\Instrucciones\Etiqueta.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Gui.Compilador.Instrucciones.Salto">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compilador\Instrucciones\Salto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

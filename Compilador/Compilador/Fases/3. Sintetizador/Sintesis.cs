@@ -1,5 +1,5 @@
 ﻿using Gui.Advertencias;
-using Gui.Compilador.Fases._3._Analisis_Semantico;
+using Gui.Compilador.Fases._2._Analisis_Sintactico;
 using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections.Generic;
@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gui.Compilador.Fases._4._Sintetizador
+namespace Gui.Compilador.Fases._3._Sintetizador
 {
     public class Sintesis : Analizador
     {
         public readonly CodeSegment CodeSegment;
-        public Sintesis(AnalizadorSemantico Semantico, TextDocument Documento, ResultadosCompilacion Errores) : base(Documento, Errores)
+        public Sintesis(AnalizadorSintactico Semantico, TextDocument Documento, ResultadosCompilacion Errores) : base(Documento, Errores)
         {
             this.CodeSegment = Semantico.CodeSegment;
         }

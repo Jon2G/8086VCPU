@@ -7,9 +7,8 @@ using Gui.Advertencias;
 using Gui.Compilador.Fases;
 using Gui.Compilador.Fases._1._Analisis_Lexico;
 using Gui.Compilador.Fases._2._Analisis_Sintactico;
-using Gui.Compilador.Fases._3._Analisis_Semantico;
-using Gui.Compilador.Fases._3._Codigo_Intermedio;
-using Gui.Compilador.Fases._4._Sintetizador;
+using Gui.Compilador.Fases._3._Sintetizador;
+using Gui.Compilador.Fases._4._Codigo_Intermedio;
 using Gui.Views;
 using ICSharpCode.AvalonEdit.Document;
 
@@ -51,25 +50,20 @@ namespace Gui.Compilador
                 analizador.Analizar();
                 if (analizador.EsValido)
                 {
-                    //Fase 3 Analisis Semantico
+
+                    //        //Fase 4 Sintetizador
                     analizador =
-                          new AnalizadorSemantico((AnalizadorSintactico)analizador, this.Document, this.ResultadosCompilacion);
+                         new Sintesis((AnalizadorSintactico)analizador, this.Document, this.ResultadosCompilacion);
                     analizador.Analizar();
                     if (analizador.EsValido)
                     {
-                        //        //Fase 4 Sintetizador
-                        analizador =
-                             new Sintesis((AnalizadorSemantico)analizador, this.Document, this.ResultadosCompilacion);
-                        analizador.Analizar();
-                        if (analizador.EsValido)
-                        {
-                            CodigoMaquina maquina = new CodigoMaquina((Sintesis)analizador);
-                            maquina.Generar();
-                            this.CodigoMaquina = maquina.Codigo;
-                            this.Compilado = true;
-                            return "Compilación exitosa";
-                        }
+                        CodigoMaquina maquina = new CodigoMaquina((Sintesis)analizador);
+                        maquina.Generar();
+                        this.CodigoMaquina = maquina.Codigo;
+                        this.Compilado = true;
+                        return "Compilación exitosa";
                     }
+
                 }
             }
             this.Compilado = false;

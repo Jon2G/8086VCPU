@@ -78,12 +78,12 @@
     <Compile Include="Compilador\Fases\1. Analisis Lexico\AnalizadorLexico.cs" />
     <Compile Include="Compilador\Fases\1. Analisis Lexico\LineaLexica.cs" />
     <Compile Include="Compilador\Fases\2. Analisis Sintactico\AnalizadorSintactico.cs" />
-    <Compile Include="Compilador\Fases\3. Analisis Semantico\AnalizadorSemantico.cs" />
-    <Compile Include="Compilador\Fases\4. Sintetizador\Sintesis.cs" />
-    <Compile Include="Compilador\Fases\6. Codigo Intermedio\CodigoMaquina.cs" />
+    <Compile Include="Compilador\Fases\3. Sintetizador\Sintesis.cs" />
+    <Compile Include="Compilador\Fases\4. Codigo Intermedio\CodigoMaquina.cs" />
     <Compile Include="Compilador\Fases\Analizador.cs" />
     <Compile Include="Compilador\Fases\ExpresionesRegulares.cs" />
     <Compile Include="Compilador\Fases\Token.cs" />
+    <Compile Include="Compilador\Instrucciones\Etiqueta.cs" />
     <Compile Include="Compilador\Instrucciones\Modos\Direccionado.cs" />
     <Compile Include="Compilador\Instrucciones\Modos\Directo.cs" />
     <Compile Include="Compilador\Instrucciones\Modos\Simple.cs" />
@@ -93,6 +93,7 @@
     <Compile Include="Compilador\Instrucciones\Modos\PorRegistro.cs" />
     <Compile Include="Compilador\Instrucciones\Instruccion.cs" />
     <Compile Include="Compilador\Instrucciones\Numero.cs" />
+    <Compile Include="Compilador\Instrucciones\Salto.cs" />
     <Compile Include="Ejemplos\Ejemplo.cs" />
     <Compile Include="Resources\AutoCompletado.cs" />
     <Compile Include="Resources\BraceFoldingStrategy.cs" />
@@ -247,6 +248,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

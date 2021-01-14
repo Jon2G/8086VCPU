@@ -11,7 +11,7 @@ namespace Gui.Compilador.Fases
     {
         Identificador, SeparadorParametros,
         PalabraReservada, Invalido,
-        CorcheteAbierto, CorcheteCerrado, Cadena, Numero,Registro
+        CorcheteAbierto, CorcheteCerrado, Cadena, Numero,Registro, DosPuntos
     }
     public enum TipoDato
     {
@@ -62,25 +62,24 @@ namespace Gui.Compilador.Fases
                 token.TipoDato = TipoDato.NoAplica;
                 return token;
             }
+            if (Patrones.Evaluar(Patrones.Identificador, Token))
+            {
+                token.TipoToken = TipoToken.Identificador;
+                token.TipoDato = TipoDato.Cadena;
+                return token;
+            }
+
             if (Patrones.Evaluar(Patrones.Numeros, Token))
             {
                 token.TipoToken = TipoToken.Numero;
                 token.TipoDato = TipoDato.Entero;
                 return token;
             }
-
-
             if (Patrones.Evaluar(Patrones.Cadena, Token))
             {
                 token.TipoToken = TipoToken.Cadena;
                 token.TipoDato = TipoDato.Cadena;
                 token.Lexema = Patrones["Cadena"];
-                return token;
-            }
-            if (Patrones.Evaluar(Patrones.Identificador, Token))
-            {
-                token.TipoToken = TipoToken.Identificador;
-                token.TipoDato = TipoDato.Cadena;
                 return token;
             }
             if (Token == ",")
@@ -102,12 +101,12 @@ namespace Gui.Compilador.Fases
             //    return token;
             //}
 
-            //if (Token == ":=")
-            //{
-            //    token.TipoToken = TipoToken.Relacional;
-            //    token.TipoDato = TipoDato.NoAplica;
-            //    return token;
-            //}
+            if (Token == ":")
+            {
+                token.TipoToken = TipoToken.DosPuntos;
+                token.TipoDato = TipoDato.NoAplica;
+                return token;
+            }
 
             //if (Patrones.Evaluar(Patrones.OperadoresLogicos, Token))
             //{

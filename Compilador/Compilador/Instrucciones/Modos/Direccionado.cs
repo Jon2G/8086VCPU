@@ -21,9 +21,5 @@ namespace Gui.Compilador.Instrucciones.Modos
         {
 
         }
-        public override bool RevisarSemantica(ResultadosCompilacion Errores)
-        {
-            return true;
-        }
     }
 }

@@ -30,7 +30,7 @@ namespace Gui.Compilador.Instrucciones.Modos
             //}
         }
 
-        protected override StringBuilder Traduccion()
+        protected override StringBuilder Traduccion(CodeSegment segment)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("010");

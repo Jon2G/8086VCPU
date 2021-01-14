@@ -17,15 +17,14 @@ namespace Gui.Compilador.Instrucciones
     {
         public enum TipoInstruccion
         {
-            MOV, ADD, MUL, SUB, DIV, NOT, OR, NOR, XOR, XNOR, AND, NAND
+            MOV, ADD, MUL, SUB, DIV, NOT, OR, NOR, XOR, XNOR, AND, NAND,
+            JMP, JZ, JE, JNZ, JNE, JC, JA, JAE, JLE, JO, JNS, JNO,CMP,Etiqueta
         }
-        //protected readonly CodeSegment CodeSegment;
         public readonly DocumentLine LineaDocumento;
         protected readonly TipoInstruccion Tipo;
         protected Instruccion(DocumentLine LineaDocumento, TipoInstruccion Tipo)
         {
             this.Tipo = Tipo;
-            //this.CodeSegment = Programa;
             this.LineaDocumento = LineaDocumento;
         }
 
@@ -34,7 +33,7 @@ namespace Gui.Compilador.Instrucciones
         //    //Variable variable = this.CodeSegment.SegmentoDeDatos.ObtenerVariable(tk.Lexema);
         //    //variable?.HacerReferencia();
         //}
-        public abstract bool RevisarSemantica(ResultadosCompilacion Errores);
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder(this.GetType().Name);
@@ -56,8 +55,8 @@ namespace Gui.Compilador.Instrucciones
         {
             return (TipoInstruccion)Enum.Parse(typeof(TipoInstruccion), instruccion);
         }
-        protected abstract StringBuilder Traduccion();
-        public StringBuilder CodigoMaquina()
+        protected abstract StringBuilder Traduccion(CodeSegment code);
+        public StringBuilder CodigoMaquina(CodeSegment code)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < Alu.Palabra - 8; i++)
@@ -103,8 +102,11 @@ namespace Gui.Compilador.Instrucciones
                 case TipoInstruccion.NAND:
                     sb.Append("01100");
                     break;
+                case TipoInstruccion.CMP:
+                    sb.Append("01101");
+                    break;
             }
-            sb.Append(this.Traduccion());
+            sb.Append(this.Traduccion(code));
             return sb;
         }
     }

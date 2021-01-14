@@ -38,13 +38,14 @@ namespace _8086VCPU.Auxiliares
         }
         public bool Siguiente()
         {
-            IP.EnableEscritura(true);
-            IP.Set(ConversorBinario.Palabra(IP.Decimal + LongitudOperacion));
-            IP.EnableEscritura(false);
+            //IP.EnableEscritura(true);
+            //IP.Set(ConversorBinario.Palabra(IP.Decimal + LongitudOperacion));
+            //IP.EnableEscritura(false);
 
             IP.EnableLectura(true);
             ValorActual = CPU.Memoria.Leer(IP.Get());
             IP.EnableLectura(false);
+
 
             if (ValorActual.All(x => !x))
             {
@@ -83,8 +84,11 @@ namespace _8086VCPU.Auxiliares
                     break;
             }
 
-
             Instruccion = InstruccionCompleta();
+
+            IP.EnableEscritura(true);
+            IP.Set(ConversorBinario.Palabra(IP.Decimal + LongitudOperacion));
+            IP.EnableEscritura(false);
             return true;
 
         }

@@ -25,7 +25,7 @@ namespace _8086VCPU
                 this.Real[direccion] = programa[i];
             }
         }
-        private string CalcularDireccion(int Numero)
+        public static string CalcularDireccion(int Numero)
         {
             return string.Join(string.Empty, ConversorBinario.Palabra(Numero).Select(x => x ? "1" : "0"));
         }

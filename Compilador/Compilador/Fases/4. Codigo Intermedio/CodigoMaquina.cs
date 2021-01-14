@@ -1,4 +1,6 @@
-﻿using Gui.Compilador.Fases._4._Sintetizador;
+﻿using _8086VCPU;
+using _8086VCPU.Alu;
+using Gui.Compilador.Fases._3._Sintetizador;
 using Gui.Compilador.Instrucciones;
 using System;
 using System.Collections.Generic;
@@ -6,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gui.Compilador.Fases._3._Codigo_Intermedio
+namespace Gui.Compilador.Fases._4._Codigo_Intermedio
 {
     public class CodigoMaquina
     {
@@ -23,7 +25,13 @@ namespace Gui.Compilador.Fases._3._Codigo_Intermedio
         {
             foreach (Instruccion instruccion in this.CodeSegment.Instrucciones)
             {
-                this.Codigo.Append(instruccion.CodigoMaquina());
+                this.Codigo.Append(instruccion.CodigoMaquina(this.CodeSegment));
+                if (instruccion is Etiqueta etiqueta)
+                {
+                    int direccionMemoria = this.Codigo.ToString().Length / (Alu.Palabra + 2);
+                    string direccion = Memoria.CalcularDireccion(direccionMemoria);
+                    this.CodeSegment.AgregarEtiqueta(etiqueta.Identificador, direccion);
+                }
             }
         }
 

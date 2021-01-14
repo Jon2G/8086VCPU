@@ -16,25 +16,22 @@ namespace Gui.Compilador.Fases
         {
 
         }
-        public Regex Identificador => new Regex(@"^(?<Lexema>(([a-zA-Z]+[0-9a-zA-Z]*|\w)+))$", RegexOptions.Compiled);
-        public Regex PalabrasReservadas => new Regex(@"^(Nom\.(([a-zA-Z]+[0-9a-zA-Z]*|\w)+)|MOV|ADD|SUB)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
+        public Regex Identificador => new Regex(@"^(?<Lexema>([_a-zA-Z][_a-zA-Z0-9]{0,30}))$", RegexOptions.Compiled);
+        public Regex PalabrasReservadas => new Regex(@"^(Nom\.(([a-zA-Z]+[0-9a-zA-Z]*|\w)+)|MOV|ADD|SUB|DI|MUL|NOT|OR|NOR|XOR|XNOR|AND|NAND|CMP|JMP|JZ|JE|JNZ|JNE|JC|JA|JAE|JLE|JO|JNS|JNO)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         public Regex Cadena => new Regex(@"^(')(?<Cadena>(.)+)(')$", RegexOptions.Compiled);
-        public Regex Registros => new Regex(@"(((A|B|C|D)(X|H|L))|SI|DI)+", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        public Regex Registros => new Regex(@"(?<Registro>(((A|B|C|D)(X|H|L))|SI|DI)+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         public Regex Numeros => new Regex(@"(((?<Decimal>(\+|\-)?\d+)(?<Base>D|H|O))|((?<Binario>(1|0)+)(B)))+", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         public Regex Comentarios => new Regex(@";[\s\S]*$", RegexOptions.Compiled);
-
-
-
-
         public Regex SaltoLinea => new Regex(@"(\\n)", RegexOptions.Compiled);
-
-
-        public Regex Documento => new Regex(@"(,|\s|\n|\]|\[|\+)(?=(?:[^\']*\'[^\']*\')*[^\']*$)", RegexOptions.Compiled);
+        public Regex Documento => new Regex(@"(,|\s|\n|\]|\[|\+|\:)(?=(?:[^\']*\'[^\']*\')*[^\']*$)", RegexOptions.Compiled);
         public bool Evaluar(Regex Expresion, string Texto)
         {
             var match = Expresion.Match(Texto);
             this.Grupos = match.Groups;
+            if (match.Value?.ToUpper() != Texto?.ToUpper())
+            {
+                return false;
+            }
             return match.Success;
         }
     }

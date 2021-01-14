@@ -217,7 +217,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Código Operacion"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        <Label Content="Código Operacion (IR)"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                    Margin="0"/>
                         <Label Content="{Binding OpCode}" Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                    Margin="0" HorizontalContentAlignment="Center" Foreground="#4295E5" FontSize="18"/>
