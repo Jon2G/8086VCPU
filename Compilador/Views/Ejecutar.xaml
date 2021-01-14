@@ -207,7 +207,7 @@
         <DockPanel  DockPanel.Dock="Right">
             <DockPanel DockPanel.Dock="Top">
                 <hc:Card  DockPanel.Dock="Top" Margin="5">
-                    <Grid DataContext="{Binding Ejecucion,ElementName=Me}">
+                    <Grid DataContext="{Binding Ejecucion.InstruccionSiguiente,ElementName=Me}">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -219,18 +219,18 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Código Operacion (IR)"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                    Margin="0"/>
-                        <Label Content="{Binding OpCode}" Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        <Label Content="{Binding OpCode,Mode=OneWay}" Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                    Margin="0" HorizontalContentAlignment="Center" Foreground="#4295E5" FontSize="18"/>
 
                         <Label Content="Modificador" Grid.Column="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                    Margin="0"/>
-                        <Label Content="{Binding Modificador,Mode=OneWay}" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        <Label Content="{Binding ModCode,Mode=OneWay}" Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                    Margin="0" HorizontalContentAlignment="Center" Foreground="#4295E5"  FontSize="18"/>
 
 
                             <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                    Margin="3"  FontSize="18"
-                                   Content="{Binding Instruccion,Mode=OneWay}" Grid.Column="2" Grid.RowSpan="2"/>
+                                   Content="{Binding OpInstruccion,Mode=OneWay}" Grid.Column="2" Grid.RowSpan="2"/>
 
                     </Grid>
                 </hc:Card>

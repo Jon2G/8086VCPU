@@ -58,6 +58,7 @@
       <Word>JNE</Word>
       <Word>JC</Word>
       <Word>JA</Word>
+      <Word>JL</Word>
       <Word>JAE</Word>
       <Word>JLE</Word>
       <Word>JO</Word>
@@ -82,10 +83,15 @@
       <Word>CMP</Word>
     </Keywords>
 
+    <Keywords fontWeight="bold" foreground="Gray">
+      <Word>RET</Word>
+    </Keywords>
 
     <Rule fontWeight="bold" foreground="HotPink">
       ([_a-zA-Z][_a-zA-Z0-9]{0,30})
     </Rule>
+
+
     
   </RuleSet>
 </SyntaxDefinition>

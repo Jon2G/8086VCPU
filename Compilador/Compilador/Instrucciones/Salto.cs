@@ -50,8 +50,16 @@ namespace Gui.Compilador.Instrucciones
                 case TipoInstruccion.JNO:
                     sb.Append("11001");
                     break;
+                case TipoInstruccion.JL:
+                    sb.Append("11011");
+                    break;
             }
-            sb.AppendLine("111");
+            sb.AppendLine($"111 ;{this.Tipo}");
+            if (!code.Etiquetas.ContainsKey(this.Etiqueta))
+            {
+                //Kit.Services.CustomMessageBox.Current.Show($"No se definio la etiqueta: [{this.Etiqueta}]", "Alerta", Kit.Enums.CustomMessageBoxButton.OK, Kit.Enums.CustomMessageBoxImage.Error);
+                return sb.AppendLine(";ERROR");
+            }
             sb.AppendLine(code.Etiquetas[this.Etiqueta]);
             return sb;
         }

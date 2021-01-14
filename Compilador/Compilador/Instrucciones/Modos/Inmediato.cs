@@ -34,7 +34,7 @@ namespace Gui.Compilador.Instrucciones.Modos
         protected override StringBuilder Traduccion(CodeSegment segment)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("011");
+            sb.AppendLine($"011 ;{this.Tipo}");
             sb.AppendLine(Registros.OpCode(NombreRegistroD));
 
             string fuente = this.Fuente.ToString();

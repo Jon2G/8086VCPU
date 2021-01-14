@@ -31,6 +31,12 @@ namespace _8086VCPU
         }
         public static void Ejecutar(bool[] Operacion, bool[] Modificador, bool[] Operador1, bool[] Operador2)
         {
+            //DIRECTO	MOV AX,[00H]
+            //     1                     1            0               1                0 
+            if (Operacion[0] && Operacion[1] && !Operacion[2] && Operacion[3] && !Operacion[4])
+            {
+                return;
+            }
             bool[] ValorOperador1 = CPU.ObtenerRegistro(Operador1);
             bool[] ValorOperador2 = null;
             //POR REGISTRO	MOV AX,AX
@@ -80,6 +86,14 @@ namespace _8086VCPU
             else if (Modificador[0] && Modificador[1] && !Modificador[2])
             {
                 //la función no tiene segundo operador
+            }
+            //SALTO	[JMP*] [DIRECCION]
+            //     1       
+            else if (Modificador[0] && Modificador[1] && Modificador[2])
+            {
+                ValorOperador1 = Operador1;
+                Saltar(Operacion, ValorOperador1);
+                return;
             }
             EjecutarOperacion(Operacion, ValorOperador1, ValorOperador2, Operador1);
         }
@@ -152,6 +166,70 @@ namespace _8086VCPU
                 CPU.Alu.NAND(Operador1, Operador2);
                 //Se guarda el valor en el primer operador
                 GuardarEnRegistro(RegistroDestino, CPU.Alu.Resultado);
+            }//CMP          0             1               1                0           1    
+            else if (!Operacion[0] && Operacion[1] && Operacion[2] && !Operacion[3] && Operacion[4])
+            {
+                CPU.Alu.SUB(Operador1, Operador2);
+            }
+        }
+        private static void Saltar(bool[] Salto, bool[] Direccion)
+        {
+            bool DeboSaltar = false;
+            //01110 JMP
+            if (!Salto[0] && Salto[1] && Salto[2] && Salto[3] && !Salto[4])
+            {
+                DeboSaltar = true;
+            }
+            //01111,10000   JZ,JE
+            else if ((!Salto[0] && Salto[1] && Salto[2] && Salto[3] && Salto[4]) ||
+                (Salto[0] && !Salto[1] && !Salto[2] && !Salto[3] && !Salto[4]))
+            {
+                DeboSaltar = CPU.Banderas.Zero && !CPU.Banderas.Signo;
+            }//10001,10010  JNZ,JNE
+            else if ((Salto[0] && !Salto[1] && !Salto[2] && !Salto[3] && Salto[4]) ||
+                (Salto[0] && !Salto[1] && !Salto[2] && Salto[3] && !Salto[4]))
+            {
+                DeboSaltar = !(CPU.Banderas.Zero && !CPU.Banderas.Signo);
+            }//10011 JC
+            else if (!Salto[0] && Salto[1] && Salto[2] && !Salto[3] && !Salto[4])
+            {
+                DeboSaltar = CPU.Banderas.Carry;
+            }//10100 JA
+            else if (Salto[0] && !Salto[1] && Salto[2] && !Salto[3] && !Salto[4])
+            {
+                DeboSaltar = (!CPU.Banderas.Signo && !CPU.Banderas.Zero) && CPU.Banderas.Carry;
+            }//10101 JAE
+            else if (Salto[0] && !Salto[1] && Salto[2] && !Salto[3] && Salto[4])
+            {
+                DeboSaltar = (CPU.Banderas.Zero || !CPU.Banderas.Signo) && CPU.Banderas.Carry;
+            }//10110 JLE
+            else if (Salto[0] && !Salto[1] && Salto[2] && Salto[3] && !Salto[4])
+            {
+                DeboSaltar = CPU.Banderas.Zero || CPU.Banderas.Signo;
+            }//10111 JO
+            else if (Salto[0] && !Salto[1] && Salto[2] && Salto[3] && Salto[4])
+            {
+                DeboSaltar = CPU.Banderas.OverFlow;
+            }//11000 JNS
+            else if (Salto[0] && Salto[1] && !Salto[2] && !Salto[3] && !Salto[4])
+            {
+                DeboSaltar = !CPU.Banderas.Signo;
+            }//11001 JNO
+            else if (Salto[0] && Salto[1] && !Salto[2] && !Salto[3] && Salto[4])
+            {
+                DeboSaltar = !CPU.Banderas.OverFlow;
+            } //11011  JL
+            else if (Salto[0] && Salto[1] && !Salto[2] && Salto[3] && Salto[4])
+            {
+                DeboSaltar = (CPU.Banderas.Signo && !CPU.Banderas.Zero);
+            }
+
+            if (DeboSaltar)
+            {
+                Registros.Registros.IP.EnableEscritura(true);
+                Registros.Registros.IP.Set(Direccion);
+                Registros.Registros.IP.EnableEscritura(false);
+
             }
         }
         private static void GuardarEnRegistro(bool[] RegistroDestino, bool[] Valor)

@@ -33,6 +33,12 @@ namespace Gui.Compilador.Fases._4._Codigo_Intermedio
                     this.CodeSegment.AgregarEtiqueta(etiqueta.Identificador, direccion);
                 }
             }
+
+            this.Codigo.Clear();
+            foreach (Instruccion instruccion in this.CodeSegment.Instrucciones)
+            {
+                this.Codigo.Append(instruccion.CodigoMaquina(this.CodeSegment));
+            }
         }
 
     }

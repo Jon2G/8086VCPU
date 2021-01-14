@@ -19,7 +19,7 @@ namespace Gui.Compilador.Instrucciones
         protected override StringBuilder Traduccion(CodeSegment code)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("11010000\n");
+            sb.AppendLine($"11010000 ;{Identificador}");
             return sb;
         }
     }

@@ -38,12 +38,10 @@ namespace Gui.Compilador.Instrucciones.Modos
         protected override StringBuilder Traduccion(CodeSegment segment)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("001");
+            sb.AppendLine($"001 ;{this.Tipo}");
             sb.AppendLine(Registros.OpCode(NombreRegistroD));
             sb.AppendLine(Registros.OpCode(NombreRegistroF));
             return sb;
-
-
         }
     }
 }

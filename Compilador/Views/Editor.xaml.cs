@@ -51,8 +51,8 @@ namespace Gui.Views
             //TxtAsm.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("ASM");
 
 
-            TxtMy.Load($@"{Tools.Instance.LibraryPath}\..\..\Ejemplos\Movimientos.asm");
-            TxtMy.Load($@"{Tools.Instance.LibraryPath}\..\..\Ejemplos\Sumas.asm");
+            //TxtMy.Load($@"{Tools.Instance.LibraryPath}\..\..\Ejemplos\Movimientos.asm");
+            TxtMy.Load($@"{Tools.Instance.LibraryPath}\..\..\Ejemplos\Saltos.asm");
             TxtArchivo.Text = TxtMy.Document.FileName;
 
 

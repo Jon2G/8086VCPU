@@ -17,8 +17,8 @@ namespace Gui.Compilador.Instrucciones
     {
         public enum TipoInstruccion
         {
-            MOV, ADD, MUL, SUB, DIV, NOT, OR, NOR, XOR, XNOR, AND, NAND,
-            JMP, JZ, JE, JNZ, JNE, JC, JA, JAE, JLE, JO, JNS, JNO,CMP,Etiqueta
+            MOV, ADD, MUL, SUB, DIV, NOT, OR, NOR, XOR, XNOR, AND, NAND, ReturnControl,
+            JMP, JZ, JE, JNZ, JNE, JC, JA, JAE, JLE, JO, JNS, JNO,CMP,Etiqueta,JL
         }
         public readonly DocumentLine LineaDocumento;
         protected readonly TipoInstruccion Tipo;

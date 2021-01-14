@@ -17,6 +17,12 @@ namespace _8086VCPU
             Clear();
         }
 
+        public void Cargar(string CodigoMaquina)
+        {
+            Cargar(string.Concat(CodigoMaquina.Where(x => x == '1' || x == '0' || x == '\r' || x == '\n'))
+                .Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.Select(y => y == '1').ToArray()).ToArray());
+        }
         public void Cargar(bool[][] programa)
         {
             for (int i = 0; i <= programa.Length - 1; i++)
@@ -40,7 +46,7 @@ namespace _8086VCPU
             for (int i = 0; i <= 0xFFFF; i++)
             {
                 string direccion = CalcularDireccion(i);
-                this.Real.Add(direccion, new bool[Alu.Alu.Byte]);
+                this.Real.Add(direccion, new bool[Alu.Alu.Palabra]);
             }
         }
 

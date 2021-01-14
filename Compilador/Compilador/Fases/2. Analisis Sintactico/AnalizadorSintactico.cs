@@ -29,7 +29,8 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
                 if (InstruccionDireccionada(linea) ||
                     InstruccionUnica(linea) ||
                     Etiqueta(linea) ||
-                    Salto(linea)) 
+                    ReturnControl(linea)||
+                    Salto(linea))
                 {
                     continue;
                 }
@@ -127,7 +128,7 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
         }
         private bool InstruccionUnica(LineaLexica linea)
         {
-            foreach (string instruccion in new string[] {"NOT", "MUL", "DIV"})
+            foreach (string instruccion in new string[] { "NOT", "MUL", "DIV" })
             {
                 if (Compare(linea[0].Lexema, instruccion))
                 {
@@ -178,8 +179,26 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
             }
             if (linea[0].TipoToken == TipoToken.PalabraReservada && linea[1].TipoToken == TipoToken.Identificador)
             {
-                TipoInstruccion instruccion = (TipoInstruccion)Enum.Parse(typeof(TipoInstruccion), linea[0].Lexema);
+                TipoInstruccion instruccion = (TipoInstruccion)Enum.Parse(typeof(TipoInstruccion), linea[0].Lexema.ToUpper());
                 this.CodeSegment.AgregarInstruccion(new Salto(linea[1].Lexema, linea.LineaDocumento, instruccion));
+                return true;
+            }
+            return false;
+        }
+        private bool ReturnControl(LineaLexica linea)
+        {
+            if (linea[0].TipoToken != TipoToken.PalabraReservada)
+            {
+                return false;
+            }
+            if (Compare(linea[0].Lexema, "RET"))
+            {
+                if (linea.Elementos != 1)
+                {
+                    this.Errores.ResultadoCompilacion("Ninguna instrucción puede acompañar a RET", linea.LineaDocumento);
+                }
+
+                this.CodeSegment.AgregarInstruccion(new ReturnControl(linea.LineaDocumento, TipoInstruccion.ReturnControl));
                 return true;
             }
             return false;

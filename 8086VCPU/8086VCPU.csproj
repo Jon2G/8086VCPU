@@ -46,6 +46,8 @@
     <Compile Include="Alu\Banderas.cs" />
     <Compile Include="Auxiliares\ConversorBinario.cs" />
     <Compile Include="Auxiliares\Ejecucion.cs" />
+    <Compile Include="Auxiliares\InstruccionEjecucion.cs" />
+    <Compile Include="Auxiliares\VistaPrevia.cs" />
     <Compile Include="CPU.cs" />
     <Compile Include="Memoria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

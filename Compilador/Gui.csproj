@@ -93,6 +93,7 @@
     <Compile Include="Compilador\Instrucciones\Modos\PorRegistro.cs" />
     <Compile Include="Compilador\Instrucciones\Instruccion.cs" />
     <Compile Include="Compilador\Instrucciones\Numero.cs" />
+    <Compile Include="Compilador\Instrucciones\ReturnControl.cs" />
     <Compile Include="Compilador\Instrucciones\Salto.cs" />
     <Compile Include="Ejemplos\Ejemplo.cs" />
     <Compile Include="Resources\AutoCompletado.cs" />
@@ -251,6 +252,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Ejemplos\Saltos.asm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

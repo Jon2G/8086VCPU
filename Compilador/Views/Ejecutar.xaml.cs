@@ -34,7 +34,7 @@ namespace Gui.Views
     {
         private Ejecucion _Ejecucion;
         public Ejecucion Ejecucion { get => _Ejecucion; set { _Ejecucion = value; OnPropertyChanged(); } }
-        private int Linea;
+
         private DispatcherTimer Timer;
         public Ejecutar(IRegionManager RegionManager) : base(RegionManager)
         {
@@ -42,7 +42,7 @@ namespace Gui.Views
             Timer = new DispatcherTimer();
             Timer.Interval = TimeSpan.FromSeconds(1);
             Timer.Tick += Timer_Tick;
-            Linea = 1;
+
         }
         protected override void OnNavigatedTo()
         {
@@ -54,8 +54,6 @@ namespace Gui.Views
         private void Redo_Click(object sender, EventArgs e)
         {
             Timer.Stop();
-            Linea = 1;
-            Ejecucion.LongitudOperacion = 0;
             Ejecucion.Redo();
             if (!(sender is bool))
             {
@@ -75,11 +73,7 @@ namespace Gui.Views
                 Redo_Click(false, e);
                 return;
             }
-            //POR REGISTRO
-            if (Ejecucion.LongitudOperacion > 0)
-            {
-                Linea += Ejecucion.LongitudOperacion;
-            }
+
             if (!Ejecucion.Siguiente())
             {
                 TxtMy.SelectionStart = 0;
@@ -87,23 +81,47 @@ namespace Gui.Views
                 TxtMy.ScrollToVerticalOffset(0);
                 return;
             }
-            Seleccionar(Ejecucion.LongitudOperacion);
+            Seleccionar(this.Ejecucion.InstruccionSiguiente.LongitudOperacion);
         }
         private void Seleccionar(int LongitudOperacion)
         {
-            ICSharpCode.AvalonEdit.Document.DocumentLine line = TxtMy.Document.GetLineByNumber(Linea);
-
-            TxtMy.SelectionStart = line.Offset;
-
-            ICSharpCode.AvalonEdit.Document.DocumentLine lineafin = TxtMy.Document.GetLineByNumber(Linea + LongitudOperacion - 1);
-            TxtMy.SelectionLength = lineafin.EndOffset - line.Offset;
-
-            double vertOffset = (TxtMy.TextArea.TextView.DefaultLineHeight) * (line.LineNumber - 4);
-            if (vertOffset < 0)
+            try
             {
-                vertOffset = 0;
+                if (this.TxtMy.Document.LineCount < this.Ejecucion.Linea)
+                {
+                    return;
+                }
+                ICSharpCode.AvalonEdit.Document.DocumentLine line = TxtMy.Document.GetLineByNumber(this.Ejecucion.Linea);
+                if (TxtMy.Document.TextLength < line.Offset)
+                {
+                    return;
+                }
+
+                TxtMy.SelectionLength = 0;
+                TxtMy.SelectionStart = line.Offset;
+
+                ICSharpCode.AvalonEdit.Document.DocumentLine lineafin;
+                if (LongitudOperacion > 0)
+                {
+                    lineafin = TxtMy.Document.GetLineByNumber(this.Ejecucion.Linea + LongitudOperacion - 1);
+                }
+                else
+                {
+                    lineafin = line;
+                }
+                TxtMy.SelectionLength = lineafin.EndOffset - line.Offset;
+
+                double vertOffset = (TxtMy.TextArea.TextView.DefaultLineHeight) * (line.LineNumber - 4);
+                if (vertOffset < 0)
+                {
+                    vertOffset = 0;
+                }
+                TxtMy.ScrollToVerticalOffset(vertOffset);
             }
-            TxtMy.ScrollToVerticalOffset(vertOffset);
+            catch (Exception ex)
+            {
+                Log.LogMe(ex);
+            }
         }
 
         private void Run_Click(object sender, MouseButtonEventArgs e)

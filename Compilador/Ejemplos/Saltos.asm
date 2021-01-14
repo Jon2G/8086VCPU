@@ -1,0 +1,9 @@
+MOV AX,02D
+MOV BX,0D
+
+hola:
+
+ADD AX,01D
+CMP AX,BX
+JA hola
+
