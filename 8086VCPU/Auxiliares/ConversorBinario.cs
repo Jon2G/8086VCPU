@@ -8,7 +8,14 @@ namespace _8086VCPU.Auxiliares
 {
     public static class ConversorBinario
     {
-
+        public static int BinarioToDec(bool[] direccion)
+        {
+            return Binario(BinarioToString(direccion));
+        }
+        public static string BinarioToString(bool[] direccion)
+        {
+            return string.Join(string.Empty, direccion.Select(x => x ? "1" : "0"));
+        }
         public static int Binario(string numero)
         {
             return Convert.ToInt32(numero, fromBase: 2);
@@ -21,6 +28,10 @@ namespace _8086VCPU.Auxiliares
                 n *= -1;
             }
             return n;
+        }
+        public static string StrDecimal(int numero)
+        {
+            return string.Concat(Decimal(numero).Select(x => x ? '1' : '0'));
         }
         public static bool[] Decimal(int numero)
         {
@@ -66,5 +77,6 @@ namespace _8086VCPU.Auxiliares
             }
             return binario.ToArray();
         }
+
     }
 }

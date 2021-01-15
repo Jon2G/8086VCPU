@@ -35,6 +35,9 @@ namespace Gui.Compilador.Instrucciones
                         case "D":
                             numero = Convert.ToInt32(ndecimal);
                             break;
+                        case "H":
+                            numero = int.Parse(ndecimal, System.Globalization.NumberStyles.HexNumber);
+                            break;
                         default:
                             this.Tamaño = Tamaños.Invalido;
                             return;
@@ -77,7 +80,7 @@ namespace Gui.Compilador.Instrucciones
         internal void ByteEnPalabra()
         {
             bool[] palabra = new bool[Alu.Palabra];
-            Array.Copy(this.Valor, palabra,Alu.Byte);
+            Array.Copy(this.Valor, palabra, Alu.Byte);
             this.Valor = palabra;
             this.Tamaño = Tamaños.Palabra;
         }

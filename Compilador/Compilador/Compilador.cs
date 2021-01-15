@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using _8086VCPU.Auxiliares;
 using Compilador;
 using Gui.Advertencias;
@@ -21,7 +22,7 @@ namespace Gui.Compilador
         private readonly TextDocument Document;
         public StringBuilder CodigoMaquina { get; private set; }
         public bool Compilado { get; set; }
-
+        private CodeSegment CodeSegment;
 
 
         public Compilador(TextDocument Document, ResultadosCompilacion ResultadosCompilacion)
@@ -61,6 +62,7 @@ namespace Gui.Compilador
                         maquina.Generar();
                         this.CodigoMaquina = maquina.Codigo;
                         this.Compilado = true;
+                        this.CodeSegment = maquina.CodeSegment;
                         return "Compilación exitosa";
                     }
 
@@ -69,7 +71,23 @@ namespace Gui.Compilador
             this.Compilado = false;
             return "Se encontrarón errores previos a la compilación\n";
         }
-
+        public bool PuedeEjecutar()
+        {
+            if (this.Compilado)
+            {
+                if (!this.CodeSegment.TieneInicio)
+                {
+                    MessageBox.Show("Imposible continuar sin un inicio de programa", "Atención", MessageBoxButton.OK,MessageBoxImage.Error);
+                    return false;
+                }
+                if (!this.CodeSegment.TieneFin)
+                {
+                    MessageBox.Show("¡Alerta!, este programa no tiene una instrucción de retorno del control.", "Atención", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                return true;
+            }
+            return false;
+        }
         public Ejecucion Ejecutar()
         {
             if (this.Compilado)

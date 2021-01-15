@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Gui.Compilador.Fases._4._Codigo_Intermedio
@@ -23,12 +24,13 @@ namespace Gui.Compilador.Fases._4._Codigo_Intermedio
         }
         public void Generar()
         {
+            this.Codigo.Append("\n");
             foreach (Instruccion instruccion in this.CodeSegment.Instrucciones)
             {
                 this.Codigo.Append(instruccion.CodigoMaquina(this.CodeSegment));
                 if (instruccion is Etiqueta etiqueta)
                 {
-                    int direccionMemoria = this.Codigo.ToString().Length / (Alu.Palabra + 2);
+                    int direccionMemoria = Regex.Matches(this.Codigo.ToString(), Environment.NewLine).Count;
                     string direccion = Memoria.CalcularDireccion(direccionMemoria);
                     this.CodeSegment.AgregarEtiqueta(etiqueta.Identificador, direccion);
                 }
@@ -39,6 +41,7 @@ namespace Gui.Compilador.Fases._4._Codigo_Intermedio
             {
                 this.Codigo.Append(instruccion.CodigoMaquina(this.CodeSegment));
             }
+            this.CodeSegment.Validar();
         }
 
     }

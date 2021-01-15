@@ -30,7 +30,7 @@ namespace Gui.Compilador.Instrucciones.Modos
         protected override StringBuilder Traduccion(CodeSegment segment)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("101");
+            sb.AppendLine($"101 ;{this.Tipo}");
             sb.AppendLine(Registros.OpCode(NombreRegistroD));
             sb.AppendLine(Registros.OpCode(NombreRegistroDesplazamiento));
             return sb;

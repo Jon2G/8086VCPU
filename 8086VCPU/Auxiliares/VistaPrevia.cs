@@ -29,8 +29,8 @@ namespace _8086VCPU.Auxiliares
             get => _OpInstruccion;
             private set { _OpInstruccion = value; OnPropertyChanged(); }
         }
-        public string _Operador1;
-        public string _Operador2;
+        private string _Operador1;
+        private string _Operador2;
         public VistaPrevia()
         {
             ModCode = "000";
@@ -102,6 +102,8 @@ namespace _8086VCPU.Auxiliares
         {
             switch (OpCode)
             {
+                case "11100":
+                    return "begin";
                 case "00001":
                     return "MOV";
                 case "00010":

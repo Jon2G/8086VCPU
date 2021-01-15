@@ -13,6 +13,7 @@ namespace Gui.Compilador.Instrucciones.Modos
 {
     public abstract class Direccionado : Instruccion
     {
+        public bool HaciaLaMemoria { get; set; }
         public Localidad Fuente { get; protected set; }
         public Localidad Destino { get; protected set; }
         public Tamaños TamañoDestino { get; protected set; }

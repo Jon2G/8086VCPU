@@ -99,10 +99,15 @@ namespace Gui.Compilador.Fases._1._Analisis_Lexico
                             this.Errores.ResultadoCompilacion(
                                 $"El nombre '{token.Lexema}' no existe en el contexto actual", linea.Item2);
                             this.EsValido = false;
+                            break;
                         }
                     }
                 }
                 this.LineasLexicas.Add(LLex);
+                if (this.Errores.Resultados.Count > 5)
+                {
+                    break;
+                }
             }
 
 

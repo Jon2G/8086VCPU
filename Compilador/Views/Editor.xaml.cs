@@ -52,7 +52,7 @@ namespace Gui.Views
 
 
             //TxtMy.Load($@"{Tools.Instance.LibraryPath}\..\..\Ejemplos\Movimientos.asm");
-            TxtMy.Load($@"{Tools.Instance.LibraryPath}\..\..\Ejemplos\Saltos.asm");
+            TxtMy.Load($@"{Tools.Instance.LibraryPath}\..\..\Ejemplos\Burbuja.asm");
             TxtArchivo.Text = TxtMy.Document.FileName;
 
 
@@ -154,9 +154,7 @@ namespace Gui.Views
             {
                 if (!this.AutoCompletado.Analizando && this.AutoCompletado.DeberiaAnalizar)
                 {
-                    this.ProgresoCompilacion.IsIndeterminate = true;
                     await this.AutoCompletado.Analizar();
-                    this.ProgresoCompilacion.IsIndeterminate = false;
                     AutoCompletado.DeberiaAnalizar = false;
                 }
             }
@@ -178,7 +176,11 @@ namespace Gui.Views
             }
             else
             {
-                this.ProgresoCompilacion.IsIndeterminate = true;
+                if (!this.Compilador.PuedeEjecutar())
+                {
+                    return;
+                }
+
                 this.Push<Ejecutar>(new NavigationParameters
                 {
                     { "Ejecucion", this.Compilador.Ejecutar() }
@@ -196,7 +198,7 @@ namespace Gui.Views
             {
                 SaveFileClick(this, EventArgs.Empty);
             }
-            this.ProgresoCompilacion.IsIndeterminate = true;
+
             this.Compilador = new Gui.Compilador.Compilador(this.TxtMy.TextArea.Document, this.Errores);
 
             this.Salida.Text = await Compilador.Compilar();
@@ -212,7 +214,6 @@ namespace Gui.Views
             }
             this.Salida.Text += string.Join("\n", this.Errores.Resultados
                 .Select(x => $"->[{x.Linea}] " + x.Texto));
-            this.ProgresoCompilacion.IsIndeterminate = false;
         }
         private void SelectText(int offset, int length)
         {

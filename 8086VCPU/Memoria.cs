@@ -35,10 +35,11 @@ namespace _8086VCPU
         {
             return string.Join(string.Empty, ConversorBinario.Palabra(Numero).Select(x => x ? "1" : "0"));
         }
-        private string CalcularDireccion(bool[] direccion)
+        private static bool[] CalcularDireccion(string direccion)
         {
-            return string.Join(string.Empty, direccion.Select(x => x ? "1" : "0"));
+            return direccion.Select(x => x == '1').ToArray();
         }
+
         internal void Clear()
         {
             this.Real = new Dictionary<string, bool[]>();
@@ -52,7 +53,7 @@ namespace _8086VCPU
 
         public bool[] Leer(bool[] direccion)
         {
-            string dir = CalcularDireccion(direccion);
+            string dir = ConversorBinario.BinarioToString(direccion);
             return this.Real[dir];
         }
     }

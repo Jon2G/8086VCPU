@@ -18,7 +18,7 @@ namespace Gui.Compilador.Instrucciones
         public enum TipoInstruccion
         {
             MOV, ADD, MUL, SUB, DIV, NOT, OR, NOR, XOR, XNOR, AND, NAND, ReturnControl,
-            JMP, JZ, JE, JNZ, JNE, JC, JA, JAE, JLE, JO, JNS, JNO,CMP,Etiqueta,JL
+            JMP, JZ, JE, JNZ, JNE, JC, JA, JAE, JLE, JO, JNS, JNO,CMP,Etiqueta,JL, DB, Begin
         }
         public readonly DocumentLine LineaDocumento;
         protected readonly TipoInstruccion Tipo;
@@ -59,52 +59,55 @@ namespace Gui.Compilador.Instrucciones
         public StringBuilder CodigoMaquina(CodeSegment code)
         {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < Alu.Palabra - 8; i++)
+            if (Tipo != TipoInstruccion.DB)
             {
-                sb.Append("0");
-            }
+                for (int i = 0; i < Alu.Palabra - 8; i++)
+                {
+                    sb.Append("0");
+                }
 
-            switch (this.Tipo)
-            {
-                case TipoInstruccion.MOV:
-                    sb.Append($"00001");
-                    break;
-                case TipoInstruccion.ADD:
-                    sb.Append("00010");
-                    break;
-                case TipoInstruccion.MUL:
-                    sb.Append("00101");
-                    break;
-                case TipoInstruccion.SUB:
-                    sb.Append("00011");
-                    break;
-                case TipoInstruccion.DIV:
-                    sb.Append("00100");
-                    break;
-                case TipoInstruccion.NOT:
-                    sb.Append("00110");
-                    break;
-                case TipoInstruccion.OR:
-                    sb.Append("00111");
-                    break;
-                case TipoInstruccion.NOR:
-                    sb.Append("01000");
-                    break;
-                case TipoInstruccion.XOR:
-                    sb.Append("01001");
-                    break;
-                case TipoInstruccion.XNOR:
-                    sb.Append("01010");
-                    break;
-                case TipoInstruccion.AND:
-                    sb.Append("01011");
-                    break;
-                case TipoInstruccion.NAND:
-                    sb.Append("01100");
-                    break;
-                case TipoInstruccion.CMP:
-                    sb.Append("01101");
-                    break;
+                switch (this.Tipo)
+                {
+                    case TipoInstruccion.MOV:
+                        sb.Append($"00001");
+                        break;
+                    case TipoInstruccion.ADD:
+                        sb.Append("00010");
+                        break;
+                    case TipoInstruccion.MUL:
+                        sb.Append("00101");
+                        break;
+                    case TipoInstruccion.SUB:
+                        sb.Append("00011");
+                        break;
+                    case TipoInstruccion.DIV:
+                        sb.Append("00100");
+                        break;
+                    case TipoInstruccion.NOT:
+                        sb.Append("00110");
+                        break;
+                    case TipoInstruccion.OR:
+                        sb.Append("00111");
+                        break;
+                    case TipoInstruccion.NOR:
+                        sb.Append("01000");
+                        break;
+                    case TipoInstruccion.XOR:
+                        sb.Append("01001");
+                        break;
+                    case TipoInstruccion.XNOR:
+                        sb.Append("01010");
+                        break;
+                    case TipoInstruccion.AND:
+                        sb.Append("01011");
+                        break;
+                    case TipoInstruccion.NAND:
+                        sb.Append("01100");
+                        break;
+                    case TipoInstruccion.CMP:
+                        sb.Append("01101");
+                        break;
+                }
             }
             sb.Append(this.Traduccion(code));
             return sb;

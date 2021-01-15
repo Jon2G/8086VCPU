@@ -197,7 +197,7 @@ namespace _8086VCPU
             }//10100 JA
             else if (Salto[0] && !Salto[1] && Salto[2] && !Salto[3] && !Salto[4])
             {
-                DeboSaltar = (!CPU.Banderas.Signo && !CPU.Banderas.Zero) && CPU.Banderas.Carry;
+                DeboSaltar = (!CPU.Banderas.Signo && !CPU.Banderas.Zero);
             }//10101 JAE
             else if (Salto[0] && !Salto[1] && Salto[2] && !Salto[3] && Salto[4])
             {

@@ -13,41 +13,55 @@
     <DockPanel>
 
         <DockPanel  DockPanel.Dock="Left">
-            <Grid DockPanel.Dock="Top">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Margin="0" MouseLeftButtonUp="Volver_Click">
-                    <StackPanel>
-                        <Image Height="20" Source="/Gui;component/Images/back.png"/>
-                        <TextBlock Text="Volver"/>
-                    </StackPanel>
-                </Label>
+            <StackPanel DockPanel.Dock="Top">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Margin="0" MouseLeftButtonUp="Volver_Click">
+                        <StackPanel>
+                            <Image Height="20" Source="/Gui;component/Images/back.png"/>
+                            <TextBlock Text="Volver"/>
+                        </StackPanel>
+                    </Label>
 
-                <Label Grid.Column="1" Margin="0" MouseLeftButtonUp="Redo_Click">
-                    <StackPanel>
-                        <Image Height="20" Source="/Gui;component/Images/Redo.png"/>
-                        <TextBlock Text="Recargar"/>
-                    </StackPanel>
-                </Label>
+                    <Label Grid.Column="1" Margin="0" MouseLeftButtonUp="Redo_Click">
+                        <StackPanel>
+                            <Image Height="20" Source="/Gui;component/Images/Redo.png"/>
+                            <TextBlock Text="Recargar"/>
+                        </StackPanel>
+                    </Label>
 
 
-                <Label Grid.Column="2" Margin="0" MouseLeftButtonUp="Next_Click">
-                    <StackPanel>
-                        <Image Height="20" Source="/Gui;component/Images/next.png"/>
-                        <TextBlock Text="Siguiente"/>
-                    </StackPanel>
-                </Label>
-                <Label Grid.Column="3" Margin="0" MouseLeftButtonUp="Run_Click">
-                    <StackPanel>
-                        <Image Height="20" Source="/Gui;component/Images/Run_16x.png"/>
-                        <TextBlock Text="Ejecutar"/>
-                    </StackPanel>
-                </Label>
-            </Grid>
+                    <Label Grid.Column="2" Margin="0" MouseLeftButtonUp="Next_Click">
+                        <StackPanel>
+                            <Image Height="20" Source="/Gui;component/Images/next.png"/>
+                            <TextBlock Text="Siguiente"/>
+                        </StackPanel>
+                    </Label>
+                    <Label Grid.Column="3" Margin="0" MouseLeftButtonUp="Stop_Click">
+                        <StackPanel>
+                            <Image Height="20" Source="/Gui;component/Images/pause.png"/>
+                            <TextBlock Text="Pausa"/>
+                        </StackPanel>
+                    </Label>
+                    <Label Grid.Column="4" Margin="0" MouseLeftButtonUp="Run_Click">
+                        <StackPanel>
+                            <Image Height="20" Source="/Gui;component/Images/Run_16x.png"/>
+                            <TextBlock Text="Ejecutar"/>
+                        </StackPanel>
+                    </Label>
+                </Grid>
+                <DockPanel>
+                    <TextBlock Text="{Binding Interval.TotalMilliseconds,StringFormat='Tiempo entre instrucciones:{0:N2}'}" DataContext="{Binding Timer,ElementName=Me}"/>
+                    <Slider ValueChanged="Slider_ValueChanged" Minimum="0.5" Maximum="3"/>
+                </DockPanel>
+            </StackPanel>
+
 
             <hc:TransitioningContentControl>
                 <GroupBox BorderThickness="1" BorderBrush="{DynamicResource DarkInfoBrush}" Style="{x:Null}" Header="Registros" Margin="5">

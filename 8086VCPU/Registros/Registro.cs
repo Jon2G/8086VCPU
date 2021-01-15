@@ -1,4 +1,5 @@
 ﻿using _8086VCPU.Alu;
+using _8086VCPU.Auxiliares;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,45 +23,51 @@ namespace _8086VCPU.Registros
             this.Low = new ParteRegistro();
             this.Tamaño = Tamaños.Palabra;
         }
+        public void SetHigh(bool[] High)
+        {
+            SetHighLow(High, this.High);
+        }
         public void SetLow(bool[] Low)
         {
-            this.Low.EnableLectura(true);
-            if (Low.Length != this.Low.Get().Length)
+            SetHighLow(Low, this.Low);
+        }
+        private void SetHighLow(bool[] Valor, ParteRegistro parte)
+        {
+            parte.EnableLectura(true);
+            if (Valor.Length != parte.Get().Length)
             {
-                throw new OverflowException("El tamaño de entrada difiere del establecido");
+                if (Valor.Length > parte.Get().Length)
+                {
+                    int valor = ConversorBinario.BinarioToDec(Valor);
+                    Valor = ConversorBinario.Decimal(valor);
+                    if (Valor.Length != parte.Get().Length)
+                    {
+                        throw new OverflowException("El tamaño de entrada difiere del establecido");
+                    }
+                    else
+                    {
+                        SetHighLow(Valor,parte);
+                        return;
+                    }
+                }
             }
-            this.Low.EnableLectura(false);
+            parte.EnableLectura(false);
+
             if (!Escritura)
             {
                 throw new AccessViolationException("La escritura no esta habilitada");
             }
-            this.Low.EnableEscritura(true);
-            this.Low.Set(Low);
-            this.Low.EnableEscritura(false);
+            parte.EnableEscritura(true);
+            parte.Set(Valor);
+            parte.EnableEscritura(false);
         }
-
         internal void Clear()
         {
             this.High.Clear();
             this.Low.Clear();
         }
 
-        public void SetHigh(bool[] High)
-        {
-            this.High.EnableLectura(true);
-            if (High.Length != this.High.Get().Length)
-            {
-                throw new OverflowException("El tamaño de entrada difiere del establecido");
-            }
-            this.High.EnableLectura(false);
-            if (!Escritura)
-            {
-                throw new AccessViolationException("La escritura no esta habilitada");
-            }
-            this.Low.EnableEscritura(true);
-            this.High.Set(High);
-            this.Low.EnableEscritura(false);
-        }
+
 
         protected override void _Set(bool[] Valor)
         {
@@ -77,7 +84,7 @@ namespace _8086VCPU.Registros
             Low.Set(Low.Get());
             Low.EnableLectura(false);
             this.Low.EnableLectura(false);
-            
+
 
             OnGlobalPropertyChanged(nameof(Low));
             OnGlobalPropertyChanged(nameof(High));

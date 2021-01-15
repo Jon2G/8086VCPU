@@ -49,12 +49,14 @@ namespace Gui.Views
             base.OnNavigatedTo();
             this.Ejecucion = this.GetParameter<Ejecucion>("Ejecucion");
             TxtMy.Text = Ejecucion.CodigoMaquina;
+            Redo_Click(true, EventArgs.Empty);
         }
 
         private void Redo_Click(object sender, EventArgs e)
         {
             Timer.Stop();
             Ejecucion.Redo();
+            Seleccionar(Ejecucion.InstruccionSiguiente.LongitudOperacion);
             if (!(sender is bool))
             {
                 Next_Click(sender, e);
@@ -104,12 +106,14 @@ namespace Gui.Views
                 if (LongitudOperacion > 0)
                 {
                     lineafin = TxtMy.Document.GetLineByNumber(this.Ejecucion.Linea + LongitudOperacion - 1);
+                    TxtMy.SelectionLength = lineafin.EndOffset - line.Offset;
                 }
                 else
                 {
-                    lineafin = line;
+                    TxtMy.SelectionStart = line.Offset;
+                    TxtMy.SelectionLength = line.Length;
                 }
-                TxtMy.SelectionLength = lineafin.EndOffset - line.Offset;
+
 
                 double vertOffset = (TxtMy.TextArea.TextView.DefaultLineHeight) * (line.LineNumber - 4);
                 if (vertOffset < 0)
@@ -142,6 +146,28 @@ namespace Gui.Views
                     Owner = App.Current.MainWindow
                 }).ShowDialog();
 
+            }
+        }
+        private void Stop_Click(object sender, RoutedEventArgs e)
+        {
+            this.Timer.Stop();
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if(this.Timer is null)
+            {
+                return;
+            }
+            bool running = this.Timer.IsEnabled;
+            if (running)
+            {
+                this.Timer.Stop();
+            }
+            this.Timer.Interval = TimeSpan.FromSeconds((sender as Slider).Value);
+            if (running)
+            {
+                this.Timer.Start();
             }
         }
     }

@@ -13,7 +13,6 @@ namespace _8086VCPU.Auxiliares
 {
     public class Ejecucion : ViewModelBase<Ejecucion>
     {
-        private Dictionary<string, int> Etiquetas;
         public string CodigoMaquina { get; private set; }
         public bool Reiniciar { get; private set; }
         public int Linea;
@@ -24,33 +23,33 @@ namespace _8086VCPU.Auxiliares
             this.CodigoMaquina = CodigoMaquina;
             Redo();
         }
-        private void IncrementarIP()
+        private void IncrementarIP(int incremento = 0)
         {
             IP.EnableEscritura(true);
-            IP.Set(ConversorBinario.Palabra(IP.Decimal + this.InstruccionSiguiente.LongitudOperacion));
+            IP.Set(ConversorBinario.Palabra(IP.Decimal + this.InstruccionSiguiente.LongitudOperacion + incremento));
+            IP.EnableEscritura(false);
+        }
+        public void DecrementarIP(int decremento = 1)
+        {
+            IP.EnableEscritura(true);
+            IP.Set(ConversorBinario.Palabra(IP.Decimal - decremento));
             IP.EnableEscritura(false);
         }
 
         public bool Siguiente()
         {
             ///////////////
-            if (this.InstruccionSiguiente.LongitudOperacion > 0)
-            {
-                Linea += this.InstruccionSiguiente.LongitudOperacion;
-            }
+            MoverLinea();
             ///////////////
 
             if (this.InstruccionSiguiente.IsPrefetched())
             {
-                this.InstruccionSiguiente = this.InstruccionSiguiente.Decode();
+                this.InstruccionSiguiente.Decode();
+                Linea += 2;
                 return true;
             }
             int last_ip = IP.Decimal;
             this.InstruccionSiguiente.Execute();
-            if (this.InstruccionSiguiente.EsEtiqueta())
-            {
-                GuardarEtiqueta();
-            }
             if (IP.Decimal == last_ip)
             {
                 IncrementarIP();
@@ -70,28 +69,43 @@ namespace _8086VCPU.Auxiliares
         }
         private void IrAEtiqueta()
         {
-            if (Etiquetas.ContainsKey(this.InstruccionSiguiente._Operador1))
-            {
-                this.Linea = Etiquetas[this.InstruccionSiguiente._Operador1];
-            }
-        }
-        private void GuardarEtiqueta()
-        {
-            string direccion = Memoria.CalcularDireccion(IP.Decimal + 1);
+            IP.EnableEscritura(true);
+            IP.Set(this.InstruccionSiguiente.Operador1);
+            IP.EnableEscritura(false);
+            Linea = IP.Decimal+1;
 
-            if (!Etiquetas.ContainsKey(direccion))
-            {
-                Etiquetas.Add(direccion, this.Linea);
-            }
         }
         public void Redo()
         {
             Reiniciar = false;
             CPU.Reset();
             CPU.Memoria.Cargar(CodigoMaquina);
-            this.InstruccionSiguiente = InstruccionEjecucion.Fetch();
             Linea = 1;
-            this.Etiquetas = new Dictionary<string, int>();
+            SkipDataSegment();
+            this.InstruccionSiguiente = InstruccionEjecucion.Fetch();
+        }
+        public void SkipDataSegment()
+        {
+            do
+            {
+                this.InstruccionSiguiente = InstruccionEjecucion.Fetch().Decode();
+                IncrementarIP(1);
+                MoverLinea();
+            } while (!this.InstruccionSiguiente.IsBegin());
+            DecrementarIP(this.InstruccionSiguiente.LongitudOperacion);
+            this.InstruccionSiguiente = InstruccionEjecucion.Fetch();
+            this.Linea = IP.Decimal-1;
+        }
+        private void MoverLinea()
+        {
+            if (this.InstruccionSiguiente.LongitudOperacion > 0)
+            {
+                Linea += this.InstruccionSiguiente.LongitudOperacion;
+            }
+            else
+            {
+                //Linea++;
+            }
         }
     }
 }

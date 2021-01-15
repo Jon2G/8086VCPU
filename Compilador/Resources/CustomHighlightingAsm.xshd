@@ -20,8 +20,8 @@
 	  </Rule>-->
 
 	  <Rule foreground="#4295E5">
-		  (?i)(((\d+)(D|H|O))|(((1|0)+)(B)))+
-	  </Rule>
+      (?i)(\d+(\d*[A-F]+)H+)|(((\d+)(D|H|O))|(((1|0)+)(B)))+
+    </Rule>
 
 	  <Rule fontWeight="bold" foreground="#E47D7D">
 		  (?i)(ADD|SUB|DIV|MUL|MOV)
@@ -39,7 +39,10 @@
       <Word>]</Word>
       <Word>RET</Word>
     </Keywords>-->
-
+    <Keywords fontWeight="bold" foreground="DarkSlateBlue">
+      <Word>db</Word>
+    </Keywords>
+    
     <Keywords fontWeight="bold" foreground="DodgerBlue">
       <Word>NOT</Word>
       <Word>OR</Word>

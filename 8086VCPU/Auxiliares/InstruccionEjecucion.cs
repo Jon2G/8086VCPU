@@ -13,7 +13,7 @@ namespace _8086VCPU.Auxiliares
     {
         private bool[] Operacion;
         private bool[] Modificador;
-        private bool[] Operador1;
+        public bool[] Operador1 { get; private set; }
         private bool[] Operador2;
         private bool[] Instruccion;
         public int LongitudOperacion { get; private set; }
@@ -78,6 +78,10 @@ namespace _8086VCPU.Auxiliares
                     Debugger.Break();
                     break;
             }
+            if (this.EsNOP())
+            {
+                LongitudOperacion = 1;
+            }
         }
 
         internal bool EsEtiqueta()
@@ -114,7 +118,20 @@ namespace _8086VCPU.Auxiliares
             SetOperadores(Operador1, Operador2);
         }
 
-
+        public bool IsBegin()
+        {
+            if(this.OpCode == "11100")
+            {
+                if (this.ModCode == "000")
+                {
+                    if (ConversorBinario.BinarioToString(this.Instruccion) == "00000000000000000000000011100000")
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
         public bool EsFin()
         {
