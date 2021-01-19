@@ -59,7 +59,7 @@
                 <CheckBox Visibility="Collapsed" IsChecked="{Binding ElementName=textEditor,Path=Options.ShowEndOfLine}">
                     <TextBlock Width="16" TextAlignment="Center">¶</TextBlock>
                 </CheckBox>
-                <Button Click="Ejecutar" ToolTip="Ejecutar">
+                <Button IsEnabled="False" Visibility="Collapsed" Click="Ejecutar" ToolTip="Ejecutar">
                     <Image Source="/Gui;component/Images/Run_16x.png"  Height="16"/>
                 </Button>
                 <Button Click="CompilarYEjecutar" ToolTip="Ensamblar y ejecutar">

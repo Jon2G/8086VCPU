@@ -77,7 +77,7 @@ namespace _8086VCPU.Auxiliares
             if (this.InstruccionSiguiente.EsFin())
             {
                 MessageBox.Show("Fin de programa","Alerta",MessageBoxButton.OK,MessageBoxImage.Warning);
-                Reiniciar = true;
+               Reiniciar = false;
                 return false;
             }
             return true;

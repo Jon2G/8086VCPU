@@ -85,8 +85,8 @@
                                     BorderBrush="{DynamicResource BorderBrush}"
                                     Foreground="{DynamicResource PrimaryTextBrush}" Click="VistaRegistro_Click"
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox FontSize="18" Grid.Column="1" Text="{Binding High.Decimal,Mode=OneWay,StringFormat=X2}"/>
-                            <TextBox FontSize="18" Grid.Column="2" Text="{Binding Low.Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox IsReadOnly="True" FontSize="18" Grid.Column="1" Text="{Binding High.Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox IsReadOnly="True"  FontSize="18" Grid.Column="2" Text="{Binding Low.Decimal,Mode=OneWay,StringFormat=X2}"/>
                         </Grid>
                         <Grid DataContext="{x:Static registros:Registros.BX}">
                             <Grid.ColumnDefinitions>
@@ -98,8 +98,8 @@
                                     BorderBrush="{DynamicResource BorderBrush}"
                                     Foreground="{DynamicResource PrimaryTextBrush}" Click="VistaRegistro_Click"
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox FontSize="18" Grid.Column="1" DataContext="{Binding High}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
-                            <TextBox FontSize="18" Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox IsReadOnly="True"  FontSize="18" Grid.Column="1" DataContext="{Binding High}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox IsReadOnly="True" FontSize="18" Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
                         </Grid>
                         <Grid DataContext="{x:Static registros:Registros.CX}">
                             <Grid.ColumnDefinitions>
@@ -111,8 +111,8 @@
                                     BorderBrush="{DynamicResource BorderBrush}"
                                     Foreground="{DynamicResource PrimaryTextBrush}" Click="VistaRegistro_Click"
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox FontSize="18" Grid.Column="1" DataContext="{Binding High}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
-                            <TextBox FontSize="18" Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox IsReadOnly="True"  FontSize="18" Grid.Column="1" DataContext="{Binding High}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox IsReadOnly="True"  FontSize="18" Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
                         </Grid>
                         <Grid DataContext="{x:Static registros:Registros.DX}">
                             <Grid.ColumnDefinitions>
@@ -124,8 +124,8 @@
                                     BorderBrush="{DynamicResource BorderBrush}"
                                     Foreground="{DynamicResource PrimaryTextBrush}" Click="VistaRegistro_Click"
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox FontSize="18" Grid.Column="1" DataContext="{Binding High}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
-                            <TextBox FontSize="18" Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox IsReadOnly="True"  FontSize="18" Grid.Column="1" DataContext="{Binding High}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
+                            <TextBox IsReadOnly="True"  FontSize="18" Grid.Column="2" DataContext="{Binding Low}" Text="{Binding Decimal,Mode=OneWay,StringFormat=X2}"/>
                         </Grid>
 
                         <Grid DataContext="{x:Static registros:Registros.SI}">
@@ -138,7 +138,7 @@
                                     BorderBrush="{DynamicResource BorderBrush}"
                                     Foreground="{DynamicResource PrimaryTextBrush}" Click="VistaRegistro_Click"
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}" Grid.ColumnSpan="2"/>
+                            <TextBox IsReadOnly="True" FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}" Grid.ColumnSpan="2"/>
                         </Grid>
                         <Grid DataContext="{x:Static registros:Registros.DI}">
                             <Grid.ColumnDefinitions>
@@ -150,7 +150,7 @@
                                     BorderBrush="{DynamicResource BorderBrush}"
                                     Foreground="{DynamicResource PrimaryTextBrush}" Click="VistaRegistro_Click"
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
+                            <TextBox IsReadOnly="True" FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
                         </Grid>
                         <Grid DataContext="{x:Static registros:Registros.IP}">
                             <Grid.ColumnDefinitions>
@@ -162,7 +162,7 @@
                                     BorderBrush="{DynamicResource BorderBrush}"
                                     Foreground="{DynamicResource PrimaryTextBrush}" Click="VistaRegistro_Click"
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
+                            <TextBox IsReadOnly="True" FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
                         </Grid>
                         
                         <Grid DataContext="{x:Static registros:Registros.IA}">
@@ -175,7 +175,7 @@
                                     BorderBrush="{DynamicResource BorderBrush}"
                                     Foreground="{DynamicResource PrimaryTextBrush}" Click="VistaRegistro_Click"
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
+                            <TextBox IsReadOnly="True"  FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
                         </Grid>
                         <Grid DataContext="{x:Static registros:Registros.IR}">
                             <Grid.ColumnDefinitions>
@@ -187,7 +187,7 @@
                                     BorderBrush="{DynamicResource BorderBrush}"
                                     Foreground="{DynamicResource PrimaryTextBrush}" Click="VistaRegistro_Click"
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
-                            <TextBox FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
+                            <TextBox IsReadOnly="True"  FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
                         </Grid>
                         
                         <Grid DataContext="{x:Static cpu:CPU.Banderas}">
@@ -202,7 +202,7 @@
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch">
                                 <StackPanel Margin="3">
                                     <TextBlock FontSize="18" Text="Acarreo"/>
-                                    <CheckBox IsChecked="{Binding Carry,Mode=OneWay}"/>
+                                    <CheckBox IsHitTestVisible="False" IsChecked="{Binding Carry,Mode=OneWay}"/>
                                 </StackPanel>
                             </Button>
                             <Button Background="{DynamicResource MainContentBackgroundBrush}"
@@ -211,7 +211,7 @@
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch">
                                 <StackPanel Margin="3">
                                     <TextBlock FontSize="18" Text="Signo"/>
-                                    <CheckBox IsChecked="{Binding Signo,Mode=OneWay}"/>
+                                    <CheckBox IsHitTestVisible="False" IsChecked="{Binding Signo,Mode=OneWay}"/>
                                 </StackPanel>
                             </Button>
                             <Button Background="{DynamicResource MainContentBackgroundBrush}"
@@ -220,7 +220,7 @@
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch">
                                 <StackPanel Margin="3">
                                     <TextBlock FontSize="18" Text="Zero"/>
-                                    <CheckBox IsChecked="{Binding Zero,Mode=OneWay}"/>
+                                    <CheckBox IsHitTestVisible="False" IsChecked="{Binding Zero,Mode=OneWay}"/>
                                 </StackPanel>
                             </Button>
                         </Grid>
@@ -232,7 +232,7 @@
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch">
                                 <StackPanel Margin="3">
                                     <TextBlock FontSize="18" Text="OverFlow"/>
-                                    <CheckBox IsChecked="{Binding OverFlow,Mode=OneWay}"/>
+                                    <CheckBox IsHitTestVisible="False" IsChecked="{Binding OverFlow,Mode=OneWay}"/>
                                 </StackPanel>
                             </Button>
                         </Grid>
@@ -243,7 +243,7 @@
         </DockPanel>
 
  
-            <DataGrid x:Name="Memoria" Width="250" DockPanel.Dock="Right" HorizontalContentAlignment="Stretch"
+            <DataGrid  IsReadOnly="True" x:Name="Memoria" Width="250" DockPanel.Dock="Right" HorizontalContentAlignment="Stretch"
                       SelectedIndex="{Binding Decimal,Source={x:Static registros:Registros.IP},Mode=OneWay}" 
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
                   ScrollViewer.VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False"
