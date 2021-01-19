@@ -58,7 +58,7 @@
                 </Grid>
                 <DockPanel>
                     <TextBlock Text="{Binding Interval.TotalMilliseconds,StringFormat='Tiempo entre instrucciones:{0:N2}'}" DataContext="{Binding Timer,ElementName=Me}"/>
-                    <Slider ValueChanged="Slider_ValueChanged" Minimum="0.5" Maximum="3"/>
+                    <Slider ValueChanged="Slider_ValueChanged" Minimum="0" Maximum="3"/>
                 </DockPanel>
             </StackPanel>
 
@@ -164,7 +164,32 @@
                                     VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
                             <TextBox FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
                         </Grid>
-
+                        
+                        <Grid DataContext="{x:Static registros:Registros.IA}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Background="{DynamicResource MainContentBackgroundBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    Foreground="{DynamicResource PrimaryTextBrush}" Click="VistaRegistro_Click"
+                                    VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
+                        </Grid>
+                        <Grid DataContext="{x:Static registros:Registros.IR}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Background="{DynamicResource MainContentBackgroundBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    Foreground="{DynamicResource PrimaryTextBrush}" Click="VistaRegistro_Click"
+                                    VerticalContentAlignment="Center" Style="{x:Null}" VerticalAlignment="Stretch" FontSize="18" Content="{Binding Nombre}" HorizontalAlignment="Stretch"/>
+                            <TextBox FontSize="18" Grid.Column="1" Text="{Binding Decimal,Mode=OneWay,StringFormat=X4}"  Grid.ColumnSpan="2"/>
+                        </Grid>
+                        
                         <Grid DataContext="{x:Static cpu:CPU.Banderas}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -214,9 +239,35 @@
                     </StackPanel>
                 </GroupBox>
             </hc:TransitioningContentControl>
-            
+
         </DockPanel>
 
+ 
+            <DataGrid x:Name="Memoria" Width="250" DockPanel.Dock="Right" HorizontalContentAlignment="Stretch"
+                      SelectedIndex="{Binding Decimal,Source={x:Static registros:Registros.IP},Mode=OneWay}" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
+                  ScrollViewer.VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False"
+                  DataContext="{x:Static cpu:CPU.Memoria}" ItemsSource="{Binding Real,Mode=OneWay}" SelectionChanged="DataGrid_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="#" Width="50" Binding="{Binding Direccion,Mode=OneWay}"/>
+                    <DataGridTextColumn Header="Hex" Width="100" Binding="{Binding Hex,Mode=OneWay}"/>
+                    <DataGridTextColumn Header="Decimal" Width="100" Binding="{Binding Hex,Mode=OneWay}"/>
+                </DataGrid.Columns>
+            <!--<DataGrid.CellStyle>
+                <Style TargetType="DataGridCell" BasedOn="{StaticResource DataGridCellStyle}">
+                    <Style.Triggers>
+                        <DataTrigger Value="True" Binding="{Binding Lecctura}">
+                            <Setter Property="BorderBrush" Value="DarkRed"/>
+                            <Setter Property="BorderThickness" Value="10"/>
+                        </DataTrigger>
+                        <DataTrigger Value="True" Binding="{Binding Escritura}">
+                            <Setter Property="BorderBrush" Value="DarkGreen"/>
+                            <Setter Property="BorderThickness" Value="10"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>-->
+            </DataGrid>
 
         <DockPanel  DockPanel.Dock="Right">
             <DockPanel DockPanel.Dock="Top">
@@ -242,7 +293,7 @@
                                    Margin="0" HorizontalContentAlignment="Center" Foreground="#4295E5"  FontSize="18"/>
 
 
-                            <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        <Label HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                    Margin="3"  FontSize="18"
                                    Content="{Binding OpInstruccion,Mode=OneWay}" Grid.Column="2" Grid.RowSpan="2"/>
 
@@ -265,5 +316,6 @@
                 </avalonedit:TextEditor>
             </hc:TransitioningContentControl>
         </DockPanel>
+
     </DockPanel>
 </local:NavigationUserControl>

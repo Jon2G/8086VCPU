@@ -3,6 +3,7 @@ using Gui.Advertencias;
 using Gui.Compilador.Fases;
 using Gui.Compilador.Fases._1._Analisis_Lexico;
 using Gui.Compilador.Instrucciones.Modos;
+using Gui.Compilador.Instrucciones.Modos.Inversos;
 using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections.Generic;
@@ -10,22 +11,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static _8086VCPU.Registros.Localidad;
+using static Kit.Extensions.Helpers;
 
 namespace Gui.Compilador.Instrucciones
 {
-    public abstract class Instruccion
+    public abstract class Instruccion : IComparable<Instruccion>
     {
         public enum TipoInstruccion
         {
-            MOV, ADD, MUL, SUB, DIV, NOT, OR, NOR, XOR, XNOR, AND, NAND, ReturnControl,
-            JMP, JZ, JE, JNZ, JNE, JC, JA, JAE, JLE, JO, JNS, JNO,CMP,Etiqueta,JL, DB, Begin
+            MOV = 1, ADD = 2, SUB = 3, DIV = 4, MUL = 5, NOT = 6, OR = 7, NOR = 8, XOR = 9, XNOR = 10,
+            AND = 11, NAND = 12, CMP = 13, JMP = 14, JZ = 15, JE = 16, JNZ = 17, JNE = 18, JC = 19, JA = 20, JAE = 21, JLE = 22, JO = 23, JNS = 24,
+            JNO = 25, Etiqueta = 26, JL = 27, Begin = 28, LOOP = 29, DB = 30, RET = 31, Invalida = -1
         }
+        public readonly string Linea;
         public readonly DocumentLine LineaDocumento;
         protected readonly TipoInstruccion Tipo;
-        protected Instruccion(DocumentLine LineaDocumento, TipoInstruccion Tipo)
+
+        protected Instruccion(LineaLexica Linea, TipoInstruccion Tipo)
         {
             this.Tipo = Tipo;
-            this.LineaDocumento = LineaDocumento;
+            this.LineaDocumento = Linea?.LineaDocumento;
+            this.Linea = Linea?.ToString();
         }
 
         //protected void HacerReferencia(Token tk)
@@ -51,66 +57,78 @@ namespace Gui.Compilador.Instrucciones
             }
         }
 
-        internal static TipoInstruccion PorNombre(string instruccion)
+        public static TipoInstruccion PorNombre(string instruccion)
         {
             return (TipoInstruccion)Enum.Parse(typeof(TipoInstruccion), instruccion);
         }
-        protected abstract StringBuilder Traduccion(CodeSegment code);
+        protected abstract StringBuilder Traducir(CodeSegment code);
+        protected StringBuilder Modificador()
+        {
+            StringBuilder sb = new StringBuilder();
+            //sb.Append(Convert.ToString((int)this.Tipo, 2).PadLeft(6, '0'));
+            int modificador = 0;
+            switch (this)
+            {
+                case DirectoI _:
+                    modificador = 9;
+                    break;
+                case IndirectoI _:
+                    modificador = 10;
+                    break;
+                case IndexadoI _:
+                    modificador = 11;
+                    break;
+                case PorRegistro _:
+                    modificador = 1;
+                    break;
+                case Directo _:
+                    modificador = 2;
+                    break;
+                case Inmediato _:
+                    modificador = 3;
+                    break;
+                case Indirecto _:
+                    modificador = 4;
+                    break;
+                case Indexado _:
+                    modificador = 5;
+                    break;
+                case Salto _:
+                    modificador = 7;
+                    break;
+                case Simple _:
+                    modificador = 6;
+                    break;
+                default:
+                    modificador = 0;
+                    break;
+            }
+            sb.Append(Convert.ToString(modificador, 2).PadLeft(4, '0'));
+            //sb.AppendLine(Convert.ToString(modificador, 2).PadLeft(4, '0'))
+            //    .Append(Traducir(code));
+            return sb;
+        }
         public StringBuilder CodigoMaquina(CodeSegment code)
         {
             StringBuilder sb = new StringBuilder();
-            if (Tipo != TipoInstruccion.DB)
-            {
-                for (int i = 0; i < Alu.Palabra - 8; i++)
-                {
-                    sb.Append("0");
-                }
+            sb.Append(Convert.ToString((int)this.Tipo, 2).PadLeft(28, '0'))
+                .Append(Modificador()).AppendLine();
+                //.Append("; ").Append(this.Tipo.ToString()).Append(" - ").AppendLine(this.GetType().Name);
 
-                switch (this.Tipo)
-                {
-                    case TipoInstruccion.MOV:
-                        sb.Append($"00001");
-                        break;
-                    case TipoInstruccion.ADD:
-                        sb.Append("00010");
-                        break;
-                    case TipoInstruccion.MUL:
-                        sb.Append("00101");
-                        break;
-                    case TipoInstruccion.SUB:
-                        sb.Append("00011");
-                        break;
-                    case TipoInstruccion.DIV:
-                        sb.Append("00100");
-                        break;
-                    case TipoInstruccion.NOT:
-                        sb.Append("00110");
-                        break;
-                    case TipoInstruccion.OR:
-                        sb.Append("00111");
-                        break;
-                    case TipoInstruccion.NOR:
-                        sb.Append("01000");
-                        break;
-                    case TipoInstruccion.XOR:
-                        sb.Append("01001");
-                        break;
-                    case TipoInstruccion.XNOR:
-                        sb.Append("01010");
-                        break;
-                    case TipoInstruccion.AND:
-                        sb.Append("01011");
-                        break;
-                    case TipoInstruccion.NAND:
-                        sb.Append("01100");
-                        break;
-                    case TipoInstruccion.CMP:
-                        sb.Append("01101");
-                        break;
-                }
+
+            StringBuilder complemento = Traducir(code).TrimEnd();
+            if (complemento.Length > 0)
+            {
+                sb.Append(complemento);
             }
-            sb.Append(this.Traduccion(code));
+
+            sb.TrimEnd().AppendLine();
             return sb;
+        }
+
+        public int CompareTo(Instruccion other)
+        {
+            return this.Tipo - other.Tipo;
         }
     }
 

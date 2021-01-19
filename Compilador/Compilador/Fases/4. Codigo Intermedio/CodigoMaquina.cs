@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+using static Kit.Extensions.Helpers;
 namespace Gui.Compilador.Fases._4._Codigo_Intermedio
 {
     public class CodigoMaquina
@@ -39,7 +39,9 @@ namespace Gui.Compilador.Fases._4._Codigo_Intermedio
             this.Codigo.Clear();
             foreach (Instruccion instruccion in this.CodeSegment.Instrucciones)
             {
-                this.Codigo.Append(instruccion.CodigoMaquina(this.CodeSegment));
+                StringBuilder ins = instruccion.CodigoMaquina(this.CodeSegment);
+                ins.TrimEnd().Append(";").AppendLine(instruccion.Linea);
+                this.Codigo.Append(ins);
             }
             this.CodeSegment.Validar();
         }

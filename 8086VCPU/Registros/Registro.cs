@@ -71,6 +71,24 @@ namespace _8086VCPU.Registros
 
         protected override void _Set(bool[] Valor)
         {
+            if (Valor.Length != Alu.Alu.Palabra)
+            {
+                if (Valor.Length < Alu.Alu.Palabra)
+                {
+                    int valor = ConversorBinario.BinarioToDec(Valor);
+                    Valor = ConversorBinario.Palabra(valor);
+                    if (Valor.Length != Alu.Alu.Palabra)
+                    {
+                        throw new OverflowException("El tamaño de entrada difiere del establecido");
+                    }
+                    else
+                    {
+                        _Set(Valor);
+                        return;
+                    }
+                }
+            }
+
             this.High.EnableLectura(true);
             Array.Copy(Valor, 0, High.Get(), 0, Alu.Alu.Byte);
             High.EnableEscritura(true);

@@ -16,12 +16,12 @@ namespace _8086VCPU.Auxiliares
         public bool[] Operador1 { get; private set; }
         private bool[] Operador2;
         private bool[] Instruccion;
-        public int LongitudOperacion { get; private set; }
+        public int LongitudOperacion { get;  set; }
 
         private InstruccionEjecucion(bool[] Instruccion)
         {
-            this.Operacion = new bool[5];
-            this.Modificador = new bool[3];
+            this.Operacion = new bool[6];
+            this.Modificador = new bool[4];
 
             this.Operador1 = new bool[Palabra];
             this.Operador2 = new bool[Palabra];
@@ -51,31 +51,43 @@ namespace _8086VCPU.Auxiliares
         private void GetOpCode()
         {
             //OpCode
-            Array.Copy(Instruccion, Palabra - 8, Operacion, 0, 5);
+            Operacion[0] = Instruccion[22];
+            Operacion[1] = Instruccion[23];
+            Operacion[2] = Instruccion[24];
+            Operacion[3] = Instruccion[25];
+            Operacion[4] = Instruccion[26];
+            Operacion[5] = Instruccion[27];
             GetOpCode(Operacion);
         }
         private void GetModificador()
         {
-            Array.Copy(Instruccion, Palabra - 3, Modificador, 0, 3);
+            Modificador[0] = Instruccion[28];
+            Modificador[1] = Instruccion[29];
+            Modificador[2] = Instruccion[30];
+            Modificador[3] = Instruccion[31];
             GetModCode(Modificador);
             switch (this.ModCode)
             {
-                case "011":
-                case "010":
-                case "001":
-                case "100":
-                case "101":
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 9:
+                case 10:
+                case 11:
                     LongitudOperacion = 3;
                     break;
-                case "110":
-                case "111":
+                case 6:
+                case 7:
                     LongitudOperacion = 2;
                     break;
-                case "000":
+                case 0:
                     LongitudOperacion = 1;
                     break;
                 default:
-                    Debugger.Break();
+                   // Debugger.Break();
+                   LongitudOperacion = 1;
                     break;
             }
             if (this.EsNOP())
@@ -86,7 +98,7 @@ namespace _8086VCPU.Auxiliares
 
         internal bool EsEtiqueta()
         {
-            return this.OpCode == "11010";
+            return this.OpCode == 26;
         }
 
         private void GetOperadores()
@@ -120,11 +132,11 @@ namespace _8086VCPU.Auxiliares
 
         public bool IsBegin()
         {
-            if(this.OpCode == "11100")
+            if (this.OpCode == 28)
             {
-                if (this.ModCode == "000")
+                if (this.ModCode == 0)
                 {
-                    if (ConversorBinario.BinarioToString(this.Instruccion) == "00000000000000000000000011100000")
+                    if (ConversorBinario.BinarioToString(this.Instruccion) == "00000000000000000000000111000000")
                     {
                         return true;
                     }
@@ -135,7 +147,7 @@ namespace _8086VCPU.Auxiliares
 
         public bool EsFin()
         {
-            return this.OpCode == "11111";
+            return this.OpCode == 31;
         }
         private bool EsNOP()
         {

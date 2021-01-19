@@ -12,17 +12,16 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static _8086VCPU.Registros.Localidad;
 
-namespace Gui.Compilador.Instrucciones.Modos
+namespace Gui.Compilador.Instrucciones.Modos.Inversos
 {
-    public class Directo : Direccionamiento
+    public class DirectoI : Directo
     {
-        protected string NombreRegistroD;
-        protected override Regex ExpresionRegular => new Regex($@"^((((A|B|C|D)(X|H|L))|SI|DI),\[((\d+(D|H))|((0|1)+B))\])$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        public Directo() 
+        protected override Regex ExpresionRegular => new Regex($@"^\[((\d+(D|H))|((0|1)+B))\],((((A|B|C|D)(X|H|L))|SI|DI))$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        public DirectoI()
         {
 
         }
-        public Directo(string NombreRegistro, Numero Fuente, ResultadosCompilacion resultados, LineaLexica cs, TipoInstruccion tipo) : base(cs, tipo)
+        public DirectoI(string NombreRegistro, Numero Fuente, ResultadosCompilacion resultados, LineaLexica cs, TipoInstruccion tipo) : base(NombreRegistro, Fuente, resultados, cs, tipo)
         {
             NombreRegistroD = NombreRegistro;
             Destino = Registros.PorNombre(NombreRegistro);
@@ -37,16 +36,8 @@ namespace Gui.Compilador.Instrucciones.Modos
             //    resultados.ResultadoCompilacion($"El valor '{Fuente.Hex}' - {TamañoFuente} sobrepasa el tamaño del operando de destino '{NombreRegistro.ToUpper()}' - {TamañoDestino}", LineaDocumento);
             //}
         }
-
-        protected override StringBuilder Traducir(CodeSegment segment)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine(Registros.OpCode(this.NombreRegistroD));
-            sb.AppendLine(this.Fuente.ToString());
-            return sb;
-        }
         /// <summary>
-        /// Modo directo MOV ADD,[0001]
+        /// DirectoI [001],AX
         /// </summary>
         /// <param name="linea"></param>
         /// <param name="Errores"></param>
@@ -54,7 +45,7 @@ namespace Gui.Compilador.Instrucciones.Modos
         /// <returns></returns>
         protected override Instruccion EsValida(LineaLexica linea, ResultadosCompilacion Errores, TipoInstruccion tipo)
         {
-            Numero numero = new Numero(linea[4]);
+            Numero numero = new Numero(linea[2]);
             if (numero.Tamaño == Tamaños.Invalido)
             {
                 Errores.ResultadoCompilacion($"Valor númerico incorrecto", linea.LineaDocumento);
@@ -63,8 +54,14 @@ namespace Gui.Compilador.Instrucciones.Modos
             {
                 numero.ByteEnPalabra();
             }
-
-            return new Directo(linea[1].Lexema, numero, Errores, linea, tipo);
+            return new DirectoI(linea[5].Lexema, numero, Errores, linea, tipo);
+        }
+        protected override StringBuilder Traducir(CodeSegment segment)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(Registros.OpCode(NombreRegistroD));
+            sb.AppendLine(Fuente.ToString());
+            return sb;
         }
     }
 }

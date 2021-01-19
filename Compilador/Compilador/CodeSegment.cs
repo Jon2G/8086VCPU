@@ -13,14 +13,12 @@ namespace Gui.Compilador
     {
         //public SegmentoDeDatos SegmentoDeDatos;
         public readonly List<Instruccion> Instrucciones;
-        public readonly ExpresionesRegulares Expresiones;
         public readonly Dictionary<string, string> Etiquetas;
         public bool TieneInicio { get; private set; }
         public bool TieneFin { get; private set; }
-        public CodeSegment(ExpresionesRegulares Expresiones)
+        public CodeSegment()
         {
             Instrucciones = new List<Instruccion>();
-            this.Expresiones = Expresiones;
             this.Etiquetas = new Dictionary<string, string>();
         }
         public void AgregarInstruccion(Instruccion accion)

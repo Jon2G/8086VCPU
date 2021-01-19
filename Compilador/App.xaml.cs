@@ -21,7 +21,7 @@ namespace Compilador
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            Kit.WPF.Tools.Init().InitLoggin(AlertAfterCritical: true);
+            Kit.WPF.Tools.Init();
             SQLHelper.SQLHelper.Init(Kit.Tools.Instance.LibraryPath, Debugger.IsAttached);
             Highlighting.Init();
             base.OnStartup(e);

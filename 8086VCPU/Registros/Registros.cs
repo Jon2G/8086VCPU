@@ -15,6 +15,8 @@ namespace _8086VCPU.Registros
         public static Registro SI { get; private set; }
         public static Registro DI { get; private set; }
         public static Registro IP { get; private set; }
+        public static Registro IA { get; private set; }
+        public static Registro IR { get; private set; }
         static Registros()
         {
             Registros.AX = new Registro("AX");
@@ -26,6 +28,9 @@ namespace _8086VCPU.Registros
             Registros.DI = new Registro("DI");
 
             Registros.IP = new Registro("IP");
+
+            Registros.IA = new Registro("IA");
+            Registros.IR = new Registro("IR");
         }
         internal static void Reset()
         {

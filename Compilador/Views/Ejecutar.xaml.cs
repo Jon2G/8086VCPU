@@ -170,5 +170,14 @@ namespace Gui.Views
                 this.Timer.Start();
             }
         }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //if (Memoria.SelectedItem != null)
+            //{
+            //    Memoria.UpdateLayout();
+            //    Memoria.ScrollIntoView(Memoria.SelectedItem);
+            //}
+        }
     }
 }

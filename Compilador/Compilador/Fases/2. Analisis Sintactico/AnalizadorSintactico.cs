@@ -5,6 +5,7 @@ using Gui.Compilador.Instrucciones.Modos;
 using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using static _8086VCPU.Registros.Localidad;
 using static Gui.Compilador.Instrucciones.Instruccion;
@@ -16,12 +17,21 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
         private readonly AnalizadorLexico Lexica;
         public CodeSegment CodeSegment { get; protected set; }
         private LineaLexica[] LineasLexicas => Lexica.LineasLexicas.ToArray();
-        internal ExpresionesRegulares Expresiones;
+        private static readonly Direccionamiento[] Direccionamientos;
+        private static readonly string[] Instrucciones;
+        static AnalizadorSintactico()
+        {
+            using (var reflex = new SQLHelper.Reflection.ReflectionCaller())
+            {
+                Direccionamientos = reflex.GetInheritedClasses<Direccionamiento>().Where(x => !(x is Simple)).ToArray();
+            }
+            Instrucciones = new string[]
+            { "MOV", "ADD", "SUB", "OR", "NOR", "XOR", "XNOR", "AND", "NAND","CMP" };
+        }
         public AnalizadorSintactico(AnalizadorLexico Lexica, TextDocument Documento, ResultadosCompilacion Errores) : base(Documento, Errores)
         {
             this.Lexica = Lexica;
-            this.Expresiones = Lexica.Expresiones;
-            this.CodeSegment = new CodeSegment(Expresiones);
+            this.CodeSegment = new CodeSegment();
         }
         public override void Analizar()
         {
@@ -48,104 +58,28 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
         }
         private bool InstruccionDireccionada(LineaLexica linea)
         {
-            foreach (string instruccion in new string[]
-            { "MOV", "ADD", "SUB", "OR", "NOR", "XOR", "XNOR", "AND", "NAND","CMP" })
+            string nemoncio = AnalizadorSintactico.Instrucciones.FirstOrDefault(x => Compare(linea[0].Lexema, x));
+            if (string.IsNullOrEmpty(nemoncio))
             {
-                Match match;
-                if (!Compare(linea[0].Lexema, instruccion))
-                {
-                    continue;
-                }
-                if (linea.Elementos < 2)
-                {
-                    this.Errores.ResultadoCompilacion($"Se esperaba un operador", linea.LineaDocumento);
-                    return true;
-                }
-
-
-                //Modo registro MOV AX,AX
-                Regex mov = new Regex($"^{instruccion} {this.Expresiones.Registros},{this.Expresiones.Registros}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                if (mov.IsMatch(linea.Texto))
-                {
-                    this.CodeSegment.AgregarInstruccion(new PorRegistro(linea[1].Lexema, linea[3].Lexema, this.Errores, linea.LineaDocumento, Instruccion.PorNombre(instruccion)));
-                    return true;
-                }
-
-                //Modo inmediato MOV AX,09h
-                mov = new Regex($"^{instruccion} {this.Expresiones.Registros},{this.Expresiones.Numeros}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                if (mov.IsMatch(linea.Texto))
-                {
-                    Numero numero = new Numero(linea[3], Expresiones);
-                    if (numero.Tamaño == Tamaños.Invalido)
-                    {
-                        this.Errores.ResultadoCompilacion($"Valor númerico incorrecto", linea.LineaDocumento);
-                    }
-                    this.CodeSegment.AgregarInstruccion(new Inmediato(linea[1].Lexema, numero, this.Errores, linea.LineaDocumento, Instruccion.PorNombre(instruccion)));
-                    return true;
-                }
-
-                //Modo directo MOV ADD,[0001] ó 
-                mov = new Regex($@"^(?<Normal>{instruccion} {this.Expresiones.Registros},\[{this.Expresiones.Numeros}\])|^(?<Invertido>{instruccion} \[{this.Expresiones.Numeros}\],{this.Expresiones.Registros})$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                if (mov.IsMatch(linea.Texto))
-                {
-                    Numero numero = new Numero(linea[4], Expresiones);
-                    if (numero.Tamaño == Tamaños.Invalido)
-                    {
-                        this.Errores.ResultadoCompilacion($"Valor númerico incorrecto", linea.LineaDocumento);
-                    }
-                    else if (numero.Tamaño < Tamaños.Palabra)
-                    {
-                        numero.ByteEnPalabra();
-                    }
-
-                    this.CodeSegment.AgregarInstruccion(new Directo(linea[1].Lexema, numero, this.Errores, linea.LineaDocumento, Instruccion.PorNombre(instruccion)));
-                    return true;
-                }
-
-                //Modo indirecto MOV AX,[SI]/[DI]
-                mov = new Regex($@"^(?<Normal>{instruccion} {this.Expresiones.Registros},\[(SI|DI)\])|({instruccion} \[(SI|DI)\],{this.Expresiones.Registros})$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                match = mov.Match(linea.Texto);
-                if (match.Success)
-                {
-                    if (match.Groups["Normal"].Success)
-                    {
-                        this.CodeSegment.AgregarInstruccion(new Indirecto(linea[1].Lexema, linea[4].Lexema, this.Errores, linea.LineaDocumento, Instruccion.PorNombre(instruccion)));
-                    }
-                    else
-                    {
-
-                        this.CodeSegment.AgregarInstruccion(new Indirecto(linea[4].Lexema, linea[1].Lexema, this.Errores, linea.LineaDocumento, Instruccion.PorNombre(instruccion)) { HaciaLaMemoria=true});
-                    }
-                    return true;
-                }
-
-                //Modo indexado MOV AX,[BX + SI/DI ]
-                mov = new Regex($@"^(?<Normal>{instruccion} {this.Expresiones.Registros},\[BX((\s*)\+(\s*)(SI|DI))?\])|(?<Invertido>{instruccion} \[BX((\s*)\+(\s*)(SI|DI))?\],{this.Expresiones.Registros})$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                match = mov.Match(linea.Texto);
-                if (match.Success)
-                {
-                    if (linea.Elementos >= 8)
-                    {
-                        this.CodeSegment.AgregarInstruccion(new Indexado(linea[1].Lexema, linea[6].Lexema, this.Errores, linea.LineaDocumento, Instruccion.PorNombre(instruccion)));
-                        return true;
-                    }
-                    if (match.Groups["Normal"].Success)
-                    {
-                        this.CodeSegment.AgregarInstruccion(new Indexado(linea[1].Lexema, linea[4].Lexema, this.Errores, linea.LineaDocumento, Instruccion.PorNombre(instruccion)));
-                    }
-                    else
-                    {
-                        this.CodeSegment.AgregarInstruccion(new Indexado(linea[4].Lexema, linea[1].Lexema, this.Errores, linea.LineaDocumento, Instruccion.PorNombre(instruccion)) { HaciaLaMemoria = true });
-                    }
-
-                    return true;
-                }
-
-                this.Errores.ResultadoCompilacion($"Direccionamiento invalido", linea.LineaDocumento);
-                return true;
-
+                return false;
             }
-            return false;
+            if (linea.Elementos < 2)
+            {
+                this.Errores.ResultadoCompilacion($"Se esperaba un operador", linea.LineaDocumento);
+                return true;
+            }
+            foreach (Direccionamiento direccionamiento in AnalizadorSintactico.Direccionamientos)
+            {
+                if (direccionamiento.Evaluar(nemoncio, linea, this.Errores) is Instruccion instruccion)
+                {
+                    this.CodeSegment.AgregarInstruccion(instruccion);
+                    return true;
+                }
+            }
+
+            this.Errores.ResultadoCompilacion($"Direccionamiento invalido", linea.LineaDocumento);
+            return true;
+
         }
         private bool InstruccionUnica(LineaLexica linea)
         {
@@ -163,7 +97,7 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
                         this.Errores.ResultadoCompilacion($"La operación {instruccion} solamente soporta un operador", linea.LineaDocumento);
                         return true;
                     }
-                    this.CodeSegment.AgregarInstruccion(new Simple(linea[1].Lexema, linea.LineaDocumento, Instruccion.PorNombre(instruccion)));
+                    this.CodeSegment.AgregarInstruccion(new Simple(linea[1].Lexema, linea, Instruccion.PorNombre(instruccion)));
                     return true;
                 }
             }
@@ -182,7 +116,7 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
             }
             if (linea[0].TipoToken == TipoToken.Identificador && linea[1].TipoToken == TipoToken.DosPuntos)
             {
-                this.CodeSegment.AgregarInstruccion(new Etiqueta(linea[0].Lexema, linea.LineaDocumento, Instruccion.TipoInstruccion.Etiqueta));
+                this.CodeSegment.AgregarInstruccion(new Etiqueta(linea[0].Lexema, linea, Instruccion.TipoInstruccion.Etiqueta));
                 return true;
             }
             return false;
@@ -201,7 +135,7 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
             if (linea[0].TipoToken == TipoToken.PalabraReservada && linea[1].TipoToken == TipoToken.Identificador)
             {
                 TipoInstruccion instruccion = (TipoInstruccion)Enum.Parse(typeof(TipoInstruccion), linea[0].Lexema.ToUpper());
-                this.CodeSegment.AgregarInstruccion(new Salto(linea[1].Lexema, linea.LineaDocumento, instruccion));
+                this.CodeSegment.AgregarInstruccion(new Salto(linea[1].Lexema, linea, instruccion));
                 return true;
             }
             return false;
@@ -214,7 +148,7 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
             }
             if (Compare(linea[0].Lexema, "DB"))
             {
-                DefineByte define = new DefineByte(linea.LineaDocumento, TipoInstruccion.DB);
+                DefineByte define = new DefineByte(linea, TipoInstruccion.DB);
                 bool coma = false;
                 bool numero = false;
                 for (int i = 1; i < linea.Elementos; i++)
@@ -242,7 +176,7 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
 
                     if (numero)
                     {
-                        Numero dbnumero = new Numero(linea[i], this.Expresiones);
+                        Numero dbnumero = new Numero(linea[i]);
                         if (dbnumero.Tamaño == Tamaños.Invalido)
                         {
                             this.Errores.ResultadoCompilacion($"Formato númerico invalido [{linea[i].Lexema}]", linea.LineaDocumento);
@@ -284,7 +218,7 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
                     this.Errores.ResultadoCompilacion("Solo se puede declarar inicio de programa", linea.LineaDocumento);
                     return true;
                 }
-                this.CodeSegment.AgregarInstruccion(new Begin(linea.LineaDocumento, Instruccion.TipoInstruccion.Begin));
+                this.CodeSegment.AgregarInstruccion(new Begin(linea, Instruccion.TipoInstruccion.Begin));
                 return true;
 
             }
@@ -303,7 +237,7 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
                     this.Errores.ResultadoCompilacion("Ninguna instrucción puede acompañar a RET", linea.LineaDocumento);
                 }
 
-                this.CodeSegment.AgregarInstruccion(new ReturnControl(linea.LineaDocumento, TipoInstruccion.ReturnControl));
+                this.CodeSegment.AgregarInstruccion(new ReturnControl(linea, TipoInstruccion.RET));
                 return true;
             }
             return false;

@@ -1,5 +1,4 @@
 ﻿using Gui.Resources;
-using Kit.WPF.Extensions;
 using SQLHelper;
 using System;
 using System.Collections.Generic;

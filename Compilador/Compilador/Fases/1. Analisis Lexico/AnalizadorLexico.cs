@@ -12,14 +12,12 @@ namespace Gui.Compilador.Fases._1._Analisis_Lexico
     {
         public readonly List<LineaLexica> LineasLexicas;
         public bool FinLineas { get; private set; }
-        internal ExpresionesRegulares Expresiones;
         public readonly List<Token> Simbolos;
         public AnalizadorLexico(TextDocument Documento, ResultadosCompilacion Errores) : base(Documento, Errores)
         {
             this.FinLineas = false;
             this.LineasLexicas = new List<LineaLexica>();
             this.Simbolos = new List<Token>();
-            this.Expresiones = new ExpresionesRegulares();
         }
         public override void Analizar()
         {
@@ -29,21 +27,21 @@ namespace Gui.Compilador.Fases._1._Analisis_Lexico
             {
                 string texto = this.Documento.GetText(linea).Trim();
                 //Remover comentarios
-                texto = Expresiones.Comentarios.Replace(texto, "").Trim();
+                texto = ExpresionesRegulares.Comentarios.Replace(texto, "").Trim();
                 if (string.IsNullOrEmpty(texto))
                 {
                     continue;
                 }
                 LineaLexica LLex = new LineaLexica(linea, texto);
                 string[] palabras =
-                    Expresiones.Documento
+                    ExpresionesRegulares.Documento
                         .Split(texto)
                         .Select(s => s.Trim())
                         .Where(s => !string.IsNullOrEmpty(s))
                         .ToArray();
                 foreach (string palabra in palabras)
                 {
-                    token = Token.Identificar(palabra, linea, Expresiones);
+                    token = Token.Identificar(palabra, linea);
                     if (token != null)
                     {
                         if (token.EsValido)
@@ -72,21 +70,21 @@ namespace Gui.Compilador.Fases._1._Analisis_Lexico
             {
                 string texto = linea.Item1;
                 //Remover comentarios
-                texto = Expresiones.Comentarios.Replace(texto, "").Trim();
+                texto = ExpresionesRegulares.Comentarios.Replace(texto, "").Trim();
                 if (string.IsNullOrEmpty(texto))
                 {
                     continue;
                 }
                 LineaLexica LLex = new LineaLexica(linea.Item2, texto);
                 string[] palabras =
-                    Expresiones.Documento
+                    ExpresionesRegulares.Documento
                         .Split(texto)
                         .Select(s => s.Trim())
                         .Where(s => !string.IsNullOrEmpty(s))
                         .ToArray();
                 foreach (string palabra in palabras)
                 {
-                    token = Token.Identificar(palabra, linea.Item2, Expresiones);
+                    token = Token.Identificar(palabra, linea.Item2);
                     if (token != null)
                     {
                         if (token.EsValido)

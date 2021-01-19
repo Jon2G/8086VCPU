@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using static _8086VCPU.Alu.Alu;
 using static _8086VCPU.Registros.Registros;
 
@@ -49,6 +50,9 @@ namespace _8086VCPU.Auxiliares
                 return true;
             }
             int last_ip = IP.Decimal;
+
+
+
             this.InstruccionSiguiente.Execute();
             if (IP.Decimal == last_ip)
             {
@@ -60,8 +64,19 @@ namespace _8086VCPU.Auxiliares
             }
             this.InstruccionSiguiente = InstruccionEjecucion.Fetch().Decode();
 
+            Registros.Registros.IA.EnableEscritura(true);
+            Registros.Registros.IP.EnableLectura(true);
+            Registros.Registros.IA.Set(Registros.Registros.IP.Get());
+            Registros.Registros.IP.EnableLectura(false);
+            Registros.Registros.IA.EnableEscritura(false);
+
+            Registros.Registros.IR.EnableEscritura(true);
+            Registros.Registros.IR.Set(ConversorBinario.Decimal(this.InstruccionSiguiente.OpCode));
+            Registros.Registros.IR.EnableEscritura(false);
+
             if (this.InstruccionSiguiente.EsFin())
             {
+                MessageBox.Show("Fin de programa","Alerta",MessageBoxButton.OK,MessageBoxImage.Warning);
                 Reiniciar = true;
                 return false;
             }
@@ -89,7 +104,8 @@ namespace _8086VCPU.Auxiliares
             do
             {
                 this.InstruccionSiguiente = InstruccionEjecucion.Fetch().Decode();
-                IncrementarIP(1);
+                this.InstruccionSiguiente.LongitudOperacion = 1;              
+                IncrementarIP(0);
                 MoverLinea();
             } while (!this.InstruccionSiguiente.IsBegin());
             DecrementarIP(this.InstruccionSiguiente.LongitudOperacion);

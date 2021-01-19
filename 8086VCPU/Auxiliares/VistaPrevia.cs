@@ -10,14 +10,14 @@ namespace _8086VCPU.Auxiliares
 {
     public class VistaPrevia : ViewModelBase<VistaPrevia>
     {
-        private string _OpCode;
-        public string OpCode
+        private int _OpCode;
+        public int OpCode
         {
             get => _OpCode;
             private set { _OpCode = value; OnPropertyChanged(); }
         }
-        private string _ModCode;
-        public string ModCode
+        private int _ModCode;
+        public int ModCode
         {
             get => _ModCode;
             private set { _ModCode = value; OnPropertyChanged(); }
@@ -33,23 +33,28 @@ namespace _8086VCPU.Auxiliares
         private string _Operador2;
         public VistaPrevia()
         {
-            ModCode = "000";
-            OpCode = "00000";
+            ModCode = 0;
+            OpCode = 0;
             OpInstruccion = "~-~";
             ObtenerInstruccion();
         }
         protected void GetOpCode(bool[] Operacion)
         {
-            OpCode = string.Concat(Operacion.Select(x => x ? "1" : "0"));
+            OpCode =Convert.ToInt32(string.Concat(Operacion.Select(x => x ? "1" : "0")),2);
         }
         protected void GetModCode(bool[] Modificador)
         {
-            ModCode = string.Concat(Modificador.Select(x => x ? "1" : "0"));
+            ModCode = Convert.ToInt32(string.Concat(Modificador.Select(x => x ? "1" : "0")),2);
         }
         protected void SetOperadores(bool[] operador1, bool[] operador2)
         {
+            if (operador1.Length != 32 || operador2.Length != 32)
+            {
+
+            }
             _Operador1 = string.Join("", operador1.Select(x => x ? "1" : "0"));
             _Operador2 = string.Join("", operador2.Select(x => x ? "1" : "0"));
+            
         }
         protected void CalcularVistaPrevia()
         {
@@ -57,30 +62,30 @@ namespace _8086VCPU.Auxiliares
             sb.Append(" ");
             switch (ModCode)
             {
-                case "001":
+                case 1:
                     sb.Append(Registros.Registros.PorOpCode(_Operador1));
                     sb.Append(",");
                     sb.Append(Registros.Registros.PorOpCode(_Operador2));
                     break;
-                case "010":
+                case 2:
                     sb.Append(Registros.Registros.PorOpCode(_Operador1));
                     sb.Append(",[");
                     sb.Append(Convert.ToInt32(_Operador2, 2));
                     sb.Append("d]");
                     break;
-                case "011":
+                case 3:
                     sb.Append(Registros.Registros.PorOpCode(_Operador1));
                     sb.Append(",");
                     sb.Append(Convert.ToInt32(_Operador2, 2));
                     sb.Append("d");
                     break;
-                case "100":
+                case 4:
                     sb.Append(Registros.Registros.PorOpCode(_Operador1));
                     sb.Append(",[");
                     sb.Append(Registros.Registros.PorOpCode(_Operador2));
                     sb.Append("]");
                     break;
-                case "101":
+                case 5:
                     sb.Append(Registros.Registros.PorOpCode(_Operador1));
                     sb.Append(",[BX");
                     string desplazamiento = Registros.Registros.PorOpCode(_Operador2);
@@ -91,9 +96,31 @@ namespace _8086VCPU.Auxiliares
                     }
                     sb.Append("]");
                     break;
-
-                case "110":
+                case 6:
                     sb.Append(Registros.Registros.PorOpCode(_Operador1));
+                    break;
+                case 9:
+                    sb.Append("[");
+                    sb.Append(Convert.ToInt32(_Operador2, 2));
+                    sb.Append("d],");
+                    sb.Append(Registros.Registros.PorOpCode(_Operador1));
+                    break;
+                case 10:
+                    sb.Append("[");
+                    sb.Append(Convert.ToInt32(_Operador1, 2));
+                    sb.Append("d],");
+                    sb.Append(Registros.Registros.PorOpCode(_Operador2));
+                    break;
+                case 11:
+                    sb.Append(Registros.Registros.PorOpCode(_Operador1));
+                    sb.Append(",[BX");
+                    string desplazamientoI = Registros.Registros.PorOpCode(_Operador2);
+                    if (desplazamientoI != "BX")
+                    {
+                        sb.Append("+");
+                        sb.Append(desplazamientoI);
+                    }
+                    sb.Append("]");
                     break;
             }
             this.OpInstruccion = sb.ToString();
@@ -102,65 +129,69 @@ namespace _8086VCPU.Auxiliares
         {
             switch (OpCode)
             {
-                case "11100":
-                    return "begin";
-                case "00001":
-                    return "MOV";
-                case "00010":
-                    return "ADD";
-                case "00101":
-                    return "MUL";
-                case "00011":
-                    return "SUB";
-                case "00100":
-                    return "DIV";
-                case "00110":
-                    return "NOT";
-                case "00111":
-                    return "OR";
-                case "01000":
-                    return "NOR";
-                case "01001":
-                    return "XOR";
-                case "01010":
-                    return "XNOR";
-                case "01011":
-                    return "AND";
-                case "01100":
-                    return "NAND";
-                case "11010":
-                    return "Etiqueta";
-                case "01101":
-                    return "CMP";
-                case "01110":
-                    return "JMP";
-                case "01111":
-                    return "JZ";
-                case "10000":
-                    return "JE";
-                case "10001":
-                    return "JNZ";
-                case "10010":
-                    return "JNE";
-                case "10011":
-                    return "JC";
-                case "10100":
-                    return "JA";
-                case "10101":
-                    return "JAE";
-                case "10110":
-                    return "JLE";
-                case "10111":
-                    return "JO";
-                case "11000":
-                    return "JNS";
-                case "11001":
-                    return "JNO";
-                case "00000":
+                case 0:
                     return "NOP";
-                case "11011":
+                case 1:
+                    return "MOV";
+                case 2:
+                    return "ADD";
+                case 3:
+                    return "SUB";
+                case 4:
+                    return "DIV";
+                case 5:
+                    return "MUL";
+                case 6:
+                    return "NOT";
+                case 7:
+                    return "OR";
+                case 8:
+                    return "NOR";
+                case 9:
+                    return "XOR";
+                case 10:
+                    return "XNOR";
+                case 11:
+                    return "AND";
+                case 12:
+                    return "NAND";
+                case 13:
+                    return "CMP";
+                case 14:
+                    return "JMP";
+                case 15:
+                    return "JZ";
+                case 16:
+                    return "JE";
+                case 17:
+                    return "JNZ";
+                case 18:
+                    return "JNE";
+                case 19:
+                    return "JC";
+                case 20:
+                    return "JA";
+                case 21:
+                    return "JAE";
+                case 22:
+                    return "JLE";
+                case 23:
+                    return "JO";
+                case 24:
+                    return "JNS";
+                case 25:
+                    return "JNO";
+                case 26:
+                    return "Etiqueta";
+                case 27:
                     return "JL";
-                case "11111":
+                case 28:
+                    return "begin";
+                case 29:
+                    return "LOOP";
+                case 30:
+                    return "DB";
+                case 31:
                     return "FIN PROGRAMA";
                 default:
                     throw new Exception();

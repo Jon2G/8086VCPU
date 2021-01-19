@@ -20,34 +20,32 @@ namespace Gui.Compilador.Instrucciones
         public bool Negativo { get; set; }
 
 
-        public Numero(Token token, ExpresionesRegulares ExpresionesRegulares)
+        public Numero(Token token)
         {
             Match match = ExpresionesRegulares.Numeros.Match(token.Lexema);
             if (match.Success)
             {
                 int numero = 0;
+                string ndecimal;
                 if (match.Groups["Decimal"].Success)
                 {
-                    string ndecimal = match.Groups["Decimal"].Value;
-                    string nbase = match.Groups["Base"].Value;
-                    switch (nbase.ToUpper())
-                    {
-                        case "D":
-                            numero = Convert.ToInt32(ndecimal);
-                            break;
-                        case "H":
-                            numero = int.Parse(ndecimal, System.Globalization.NumberStyles.HexNumber);
-                            break;
-                        default:
-                            this.Tamaño = Tamaños.Invalido;
-                            return;
-                    }
+                    ndecimal = match.Groups["Decimal"].Value;
+                    numero = Convert.ToInt32(ndecimal);
 
+                }
+                else if (match.Groups["Hexadecimal"].Success)
+                {
+                    ndecimal = $"0x{match.Groups["Hexadecimal"].Value}".ToUpper().Replace("H", "");
+                    numero = Convert.ToInt32(ndecimal, 16);
                 }
                 else if (match.Groups["Binario"].Success)
                 {
                     string binario = match.Groups["Binario"].Value;
                     numero = ConversorBinario.Binario(binario);
+                }
+                else
+                {
+                    this.Tamaño = Tamaños.Invalido;
                 }
                 this.Negativo = numero < 0;
                 this.Valor = ConversorBinario.Decimal(numero);
@@ -80,7 +78,7 @@ namespace Gui.Compilador.Instrucciones
         internal void ByteEnPalabra()
         {
             bool[] palabra = new bool[Alu.Palabra];
-            Array.Copy(this.Valor, palabra, Alu.Byte);
+            Array.Copy(this.Valor, 0, palabra, Alu.Byte, Alu.Byte);
             this.Valor = palabra;
             this.Tamaño = Tamaños.Palabra;
         }

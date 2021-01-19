@@ -47,39 +47,39 @@ namespace Gui.Compilador.Fases
             return sb.ToString();
         }
 
-        public static Token Identificar(string Token, DocumentLine Linea, ExpresionesRegulares Patrones)
+        public static Token Identificar(string Token, DocumentLine Linea)
         {
             Fases.Token token = new Token(Token, TipoToken.Invalido, TipoDato.Invalido, Linea);
-            if (Patrones.Evaluar(Patrones.PalabrasReservadas, Token))
+            if (ExpresionesRegulares.Evaluar(ExpresionesRegulares.PalabrasReservadas, Token))
             {
                 token.TipoToken = TipoToken.PalabraReservada;
                 token.TipoDato = TipoDato.NoAplica;
                 return token;
             }
-            if (Patrones.Evaluar(Patrones.Registros, Token))
+            if (ExpresionesRegulares.Evaluar(ExpresionesRegulares.Registros, Token))
             {
                 token.TipoToken = TipoToken.Registro;
                 token.TipoDato = TipoDato.NoAplica;
                 return token;
             }
-            if (Patrones.Evaluar(Patrones.Identificador, Token))
+            if (ExpresionesRegulares.Evaluar(ExpresionesRegulares.Identificador, Token))
             {
                 token.TipoToken = TipoToken.Identificador;
                 token.TipoDato = TipoDato.Cadena;
                 return token;
             }
 
-            if (Patrones.Evaluar(Patrones.Numeros, Token))
+            if (ExpresionesRegulares.Evaluar(ExpresionesRegulares.Numeros, Token))
             {
                 token.TipoToken = TipoToken.Numero;
                 token.TipoDato = TipoDato.Entero;
                 return token;
             }
-            if (Patrones.Evaluar(Patrones.Cadena, Token))
+            if (ExpresionesRegulares.Evaluar(ExpresionesRegulares.Cadena, Token))
             {
                 token.TipoToken = TipoToken.Cadena;
                 token.TipoDato = TipoDato.Cadena;
-                token.Lexema = Patrones["Cadena"];
+                token.Lexema = ExpresionesRegulares.Grupos["Cadena"].Value;
                 return token;
             }
             if (Token == ",")

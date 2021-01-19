@@ -1,4 +1,5 @@
 ﻿using _8086VCPU.Alu;
+using _8086VCPU.Auxiliares;
 using _8086VCPU.Registros;
 using System;
 using System.Collections.Generic;
@@ -40,34 +41,34 @@ namespace _8086VCPU
             bool[] ValorOperador1 = CPU.ObtenerRegistro(Operador1);
             bool[] ValorOperador2 = null;
             //POR REGISTRO	MOV AX,AX
-            //     0                     0                   1 
-            if (!Modificador[0] && !Modificador[1] && Modificador[2])
+            //           0                0                     0                   1 
+            if (!Modificador[0] && !Modificador[1] && !Modificador[2] && Modificador[3])
             {
                 ValorOperador2 = CPU.ObtenerRegistro(Operador2);
             }
             //DIRECTO	MOV AX,[00H]
-            //     0                     1                   0 
-            else if (!Modificador[0] && Modificador[1] && !Modificador[2])
+            //              0                0                     1                   0 
+            else if (!Modificador[0] && !Modificador[1] && Modificador[2] && !Modificador[3])
             {
                 ValorOperador2 = CPU.Memoria.Leer(Operador2);
             }
             //INMEDIATO	MOV AX,09H
-            //     0                     1                   1 
-            else if (!Modificador[0] && Modificador[1] && Modificador[2])
+            //              0                0                     1                   1 
+            else if (!Modificador[0] && !Modificador[1] && Modificador[2] && Modificador[3])
             {
                 ValorOperador2 = Operador2;
                 //El valor del operador 2 ya representa al número en binario
             }
             //INDIRECTO	MOV AX,[SI/DI]
-            //     1                     0                   0 
-            else if (Modificador[0] && !Modificador[1] && !Modificador[2])
+            //              0                1                     0                  0 
+            else if (!Modificador[0] && Modificador[1] && !Modificador[2] && !Modificador[3])
             {
                 ValorOperador2 = ObtenerRegistro(Operador2);
                 ValorOperador2 = CPU.Memoria.Leer(ValorOperador2);
             }
             //INDEXADO	MOV AX[BX+SI/DI]
-            //     1                     0                   1 
-            else if (Modificador[0] && !Modificador[1] && Modificador[2])
+            //              0                1                     0                  1
+            else if (!Modificador[0] && Modificador[1] && !Modificador[2] && Modificador[3])
             {
                 //Obtener valor de BX
                 Registros.Registros.BX.EnableLectura(true);
@@ -82,92 +83,112 @@ namespace _8086VCPU
 
             }
             //SIMPLE	MUL AX
-            //     1                     1                   0 
-            else if (Modificador[0] && Modificador[1] && !Modificador[2])
+            //              0                1                     1                  0 
+            else if (!Modificador[0] && Modificador[1] && Modificador[2] && !Modificador[3])
             {
                 //la función no tiene segundo operador
             }
             //SALTO	[JMP*] [DIRECCION]
-            //     1       
-            else if (Modificador[0] && Modificador[1] && Modificador[2])
+            //              0                1                     1                  1
+            else if (!Modificador[0] && Modificador[1] && Modificador[2] && Modificador[3])
             {
                 ValorOperador1 = Operador1;
                 Saltar(Operacion, ValorOperador1);
                 return;
+            } //INDIRECTO MOV [SI/DI],AX
+            //              1                0                     1                 1
+            else if (Modificador[0] && !Modificador[1] && Modificador[2] && Modificador[3])
+            {
+                ValorOperador2 = ObtenerRegistro(Operador2);
+                CPU.Memoria[ValorOperador1] = ValorOperador2;
+                return;
+            }//INDEXADO MOV [BX+SI/DI],AX
+            //              0                1                     1                  1
+            else if (!Modificador[0] && Modificador[1] && Modificador[2] && Modificador[3])
+            {
+
+            }//DIRECTO	MOV [00H],AX
+            //              1                0                     0                  1
+            else if (Modificador[0] && !Modificador[1] && !Modificador[2] && Modificador[3])
+            {
+                ValorOperador1 = ObtenerRegistro(Operador1);
+                CPU.Memoria[Operador2] = ValorOperador1;
+                return;
             }
+
             EjecutarOperacion(Operacion, ValorOperador1, ValorOperador2, Operador1);
         }
         private static void EjecutarOperacion(bool[] Operacion, bool[] Operador1, bool[] Operador2, bool[] RegistroDestino)
         {
             //MOV
-            if (!Operacion[0] && !Operacion[1] && !Operacion[2] && !Operacion[3] && Operacion[4])
+            if (!Operacion[0] && !Operacion[1] && !Operacion[2] && !Operacion[3] && !Operacion[4] && Operacion[5])
             {
                 GuardarEnRegistro(RegistroDestino, Operador2);
             }
-            else if (!Operacion[0] && !Operacion[1] && !Operacion[2] && Operacion[3] && !Operacion[4])
+            else if (!Operacion[0] && !Operacion[1] && !Operacion[2] && !Operacion[3] && Operacion[4] && !Operacion[5])
             {
                 CPU.Alu.ADD(Operador1, Operador2);
                 //Se guarda el valor en el primer operador
                 GuardarEnRegistro(RegistroDestino, CPU.Alu.Resultado);
             }
-            else if (!Operacion[0] && !Operacion[1] && !Operacion[2] && Operacion[3] && Operacion[4])
+            else if (!Operacion[0] && !Operacion[1] && !Operacion[2] && !Operacion[3] && Operacion[4] && Operacion[5])
             {
                 CPU.Alu.SUB(Operador1, Operador2);
                 //Se guarda el valor en el primer operador
                 GuardarEnRegistro(RegistroDestino, CPU.Alu.Resultado);
             }
-            else if (!Operacion[0] && !Operacion[1] && Operacion[2] && !Operacion[3] && !Operacion[4])
+            else if (!Operacion[0] && !Operacion[1] && !Operacion[2] && Operacion[3] && !Operacion[4] && !Operacion[5])
             {
                 CPU.Alu.DIV(Operador1);//Se guarda internamente por la ALU
             }
-            else if (!Operacion[0] && !Operacion[1] && Operacion[2] && !Operacion[3] && Operacion[4])
+            else if (!Operacion[0] && !Operacion[1] && !Operacion[2] && Operacion[3] && !Operacion[4] && Operacion[5])
             {
                 CPU.Alu.MUL(Operador1);//Se guarda internamente por la ALU
             }
-            else if (!Operacion[0] && !Operacion[1] && Operacion[2] && Operacion[3] && !Operacion[4])
+            else if (!Operacion[0] && !Operacion[1] && !Operacion[2] && Operacion[3] && Operacion[4] && !Operacion[5])
             {
                 CPU.Alu.NOT(Operador1);
                 //Se guarda el valor en el primer operador
                 GuardarEnRegistro(RegistroDestino, CPU.Alu.Resultado);
 
             }//OR          0             0                 1                1           1 
-            else if (!Operacion[0] && !Operacion[1] && Operacion[2] && Operacion[3] && Operacion[4])
+            else if (!Operacion[0] && !Operacion[1] && !Operacion[2] && Operacion[3] && Operacion[4] && Operacion[5])
             {
                 CPU.Alu.OR(Operador1, Operador2);
                 //Se guarda el valor en el primer operador
                 GuardarEnRegistro(RegistroDestino, CPU.Alu.Resultado);
             }//NOR          0             1                 0               0         0
-            else if (!Operacion[0] && Operacion[1] && !Operacion[2] && !Operacion[3] && !Operacion[4])
+            else if (!Operacion[0] && !Operacion[1] && Operacion[2] && !Operacion[3] && !Operacion[4] && !Operacion[5])
             {
                 CPU.Alu.NOR(Operador1, Operador2);
                 //Se guarda el valor en el primer operador
                 GuardarEnRegistro(RegistroDestino, CPU.Alu.Resultado);
             }//XOR          0             1                 0                0                1         
-            else if (!Operacion[0] && Operacion[1] && !Operacion[2] && !Operacion[3] && Operacion[4])
+            else if (!Operacion[0] && !Operacion[1] && Operacion[2] && !Operacion[3] && !Operacion[4] && Operacion[5])
             {
                 CPU.Alu.XOR(Operador1, Operador2);
                 //Se guarda el valor en el primer operador
                 GuardarEnRegistro(RegistroDestino, CPU.Alu.Resultado);
             }//XNOR          0             1                 0                1           0         
-            else if (!Operacion[0] && Operacion[1] && !Operacion[2] && Operacion[3] && !Operacion[4])
+            else if (!Operacion[0] && !Operacion[1] && Operacion[2] && !Operacion[3] && Operacion[4] && !Operacion[5])
             {
                 CPU.Alu.XNOR(Operador1, Operador2);
                 //Se guarda el valor en el primer operador
                 GuardarEnRegistro(RegistroDestino, CPU.Alu.Resultado);
             }//AND          0             1                 0                1             1
-            else if (!Operacion[0] && Operacion[1] && !Operacion[2] && Operacion[3] && Operacion[4])
+            else if (!Operacion[0] && !Operacion[1] && Operacion[2] && !Operacion[3] && Operacion[4] && Operacion[5])
             {
                 CPU.Alu.AND(Operador1, Operador2);
                 //Se guarda el valor en el primer operador
                 GuardarEnRegistro(RegistroDestino, CPU.Alu.Resultado);
             }//NAND          0             1               1                0           0    
-            else if (!Operacion[0] && Operacion[1] && Operacion[2] && !Operacion[3] && !Operacion[4])
+            else if (!Operacion[0] && !Operacion[1] && Operacion[2] && Operacion[3] && !Operacion[4] && !Operacion[5] && !Operacion[4])
             {
                 CPU.Alu.NAND(Operador1, Operador2);
                 //Se guarda el valor en el primer operador
                 GuardarEnRegistro(RegistroDestino, CPU.Alu.Resultado);
-            }//CMP          0             1               1                0           1    
-            else if (!Operacion[0] && Operacion[1] && Operacion[2] && !Operacion[3] && Operacion[4])
+            }//CMP          0                 0             1               1                0           1    
+            else if (!Operacion[0] && !Operacion[1] && Operacion[2] && Operacion[3] && !Operacion[4] && Operacion[5])
             {
                 CPU.Alu.SUB(Operador1, Operador2);
             }
@@ -176,52 +197,65 @@ namespace _8086VCPU
         {
             bool DeboSaltar = false;
             //01110 JMP
-            if (!Salto[0] && Salto[1] && Salto[2] && Salto[3] && !Salto[4])
+            if (!Salto[0] && !Salto[1] && Salto[2] && Salto[3] && Salto[4] && !Salto[5])
             {
                 DeboSaltar = true;
             }
             //01111,10000   JZ,JE
-            else if ((!Salto[0] && Salto[1] && Salto[2] && Salto[3] && Salto[4]) ||
-                (Salto[0] && !Salto[1] && !Salto[2] && !Salto[3] && !Salto[4]))
+            else if ((!Salto[0] && !Salto[1] && Salto[2] && Salto[3] && Salto[4] && Salto[5]) ||
+                (!Salto[0] && Salto[1] && !Salto[2] && !Salto[3] && !Salto[4] && !Salto[5]))
             {
                 DeboSaltar = CPU.Banderas.Zero && !CPU.Banderas.Signo;
             }//10001,10010  JNZ,JNE
-            else if ((Salto[0] && !Salto[1] && !Salto[2] && !Salto[3] && Salto[4]) ||
-                (Salto[0] && !Salto[1] && !Salto[2] && Salto[3] && !Salto[4]))
+            else if ((!Salto[0] && Salto[1] && !Salto[2] && !Salto[3] && !Salto[4] && Salto[5]) ||
+                (!Salto[0] && Salto[1] && !Salto[2] && !Salto[3] && Salto[4] && !Salto[5]))
             {
                 DeboSaltar = !(CPU.Banderas.Zero && !CPU.Banderas.Signo);
             }//10011 JC
-            else if (!Salto[0] && Salto[1] && Salto[2] && !Salto[3] && !Salto[4])
+            else if (!Salto[0] && !Salto[1] && Salto[2] && Salto[3] && !Salto[4] && !Salto[5])
             {
                 DeboSaltar = CPU.Banderas.Carry;
             }//10100 JA
-            else if (Salto[0] && !Salto[1] && Salto[2] && !Salto[3] && !Salto[4])
+            else if (!Salto[0] && Salto[1] && !Salto[2] && Salto[3] && !Salto[4] && !Salto[5])
             {
                 DeboSaltar = (!CPU.Banderas.Signo && !CPU.Banderas.Zero);
             }//10101 JAE
-            else if (Salto[0] && !Salto[1] && Salto[2] && !Salto[3] && Salto[4])
+            else if (!Salto[0] && Salto[1] && !Salto[2] && Salto[3] && !Salto[4] && Salto[5])
             {
                 DeboSaltar = (CPU.Banderas.Zero || !CPU.Banderas.Signo) && CPU.Banderas.Carry;
             }//10110 JLE
-            else if (Salto[0] && !Salto[1] && Salto[2] && Salto[3] && !Salto[4])
+            else if (!Salto[0] && Salto[1] && !Salto[2] && Salto[3] && Salto[4] && !Salto[5])
             {
                 DeboSaltar = CPU.Banderas.Zero || CPU.Banderas.Signo;
             }//10111 JO
-            else if (Salto[0] && !Salto[1] && Salto[2] && Salto[3] && Salto[4])
+            else if (!Salto[0] && Salto[1] && !Salto[2] && Salto[3] && Salto[4] && Salto[5])
             {
                 DeboSaltar = CPU.Banderas.OverFlow;
             }//11000 JNS
-            else if (Salto[0] && Salto[1] && !Salto[2] && !Salto[3] && !Salto[4])
+            else if (!Salto[0] && Salto[1] && Salto[2] && !Salto[3] && !Salto[4] && !Salto[5])
             {
                 DeboSaltar = !CPU.Banderas.Signo;
             }//11001 JNO
-            else if (Salto[0] && Salto[1] && !Salto[2] && !Salto[3] && Salto[4])
+            else if (!Salto[0] && Salto[1] && Salto[2] && !Salto[3] && !Salto[4] && Salto[5])
             {
                 DeboSaltar = !CPU.Banderas.OverFlow;
             } //11011  JL
-            else if (Salto[0] && Salto[1] && !Salto[2] && Salto[3] && Salto[4])
+            else if (!Salto[0] && Salto[1] && Salto[2] && !Salto[3] && Salto[4] && Salto[5])
             {
                 DeboSaltar = (CPU.Banderas.Signo && !CPU.Banderas.Zero);
+            } //LOOP
+            else if (!Salto[0] && Salto[1] && Salto[2] && Salto[3] && !Salto[4] && Salto[5])
+            {
+                Registros.Registros.CX.EnableLectura(true);
+                bool[] valorCx = Registros.Registros.CX.Get();
+                Registros.Registros.CX.EnableLectura(false);
+                Alu.SUB(valorCx, ConversorBinario.Palabra(1));
+                valorCx = Alu.Resultado;
+                Registros.Registros.CX.EnableEscritura(true);
+                Registros.Registros.CX.Set(valorCx);
+                Registros.Registros.CX.EnableEscritura(false);
+
+                DeboSaltar = !CPU.Banderas.Zero;
             }
 
             if (DeboSaltar)
@@ -229,7 +263,6 @@ namespace _8086VCPU
                 Registros.Registros.IP.EnableEscritura(true);
                 Registros.Registros.IP.Set(Direccion);
                 Registros.Registros.IP.EnableEscritura(false);
-
             }
         }
         private static void GuardarEnRegistro(bool[] RegistroDestino, bool[] Valor)

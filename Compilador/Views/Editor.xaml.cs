@@ -43,8 +43,8 @@ namespace Gui.Views
 
 
 
-            this.AutoCompletado = new AutoCompletado(this.TxtMy.TextArea, this.Errores);
-            this.AutoCompletado.Analizar();
+            //this.AutoCompletado = new AutoCompletado(this.TxtMy.TextArea, this.Errores);
+            //this.AutoCompletado.Analizar();
 
 
             //TxtMy.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("My8086");
@@ -131,12 +131,13 @@ namespace Gui.Views
             {
                 return;
             }
+            if(this.AutoCompletado is null) { return; }
             this.AutoCompletado.AutoCompletar();
             AutoCompletado.DeberiaAnalizar = true;
         }
         void TextEditor_TextArea_TextEntering(object sender, TextCompositionEventArgs e)
         {
-            if (e.Text.Length > 0 && AutoCompletado.CompletionWindow != null)
+            if (e.Text.Length > 0 && AutoCompletado?.CompletionWindow != null)
             {
                 if (!char.IsLetterOrDigit(e.Text[0]))
                 {
@@ -152,6 +153,7 @@ namespace Gui.Views
         {
             if (TxtMy.Document != null)
             {
+                if(this.AutoCompletado is null) { return; }
                 if (!this.AutoCompletado.Analizando && this.AutoCompletado.DeberiaAnalizar)
                 {
                     await this.AutoCompletado.Analizar();

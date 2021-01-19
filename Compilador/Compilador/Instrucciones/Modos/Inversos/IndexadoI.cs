@@ -13,17 +13,17 @@ using System.Threading.Tasks;
 
 namespace Gui.Compilador.Instrucciones.Modos
 {
-    public class Indexado : Direccionamiento
+    public class IndexadoI : Indexado
     {
-        protected string NombreRegistroD;
-        protected string NombreRegistroDesplazamiento;
-        protected override Regex ExpresionRegular => new Regex($@"^({ExpresionesRegulares.Registros},\[BX((\s*)\+(\s*)(SI|DI))?\])$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        public Indexado()
+        protected override Regex ExpresionRegular => new Regex($@"^(\[BX((\s*)\+(\s*)(SI|DI))?\],{ExpresionesRegulares.Registros})$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        public IndexadoI()
         {
 
         }
-        public Indexado(string NombreRegistroD, string NombreRegistroDesplazamiento,
-            ResultadosCompilacion resultados, LineaLexica cs, TipoInstruccion tipo) : base(cs, tipo)
+
+        public IndexadoI(string NombreRegistroD, string NombreRegistroDesplazamiento,
+            ResultadosCompilacion resultados, LineaLexica cs, TipoInstruccion tipo)
+            : base(NombreRegistroD, NombreRegistroDesplazamiento, resultados, cs, tipo)
         {
             this.NombreRegistroDesplazamiento = NombreRegistroDesplazamiento;
 
@@ -33,16 +33,8 @@ namespace Gui.Compilador.Instrucciones.Modos
             TamañoDestino = TamañoRegistro(NombreRegistroD);
 
         }
-
-        protected override StringBuilder Traducir(CodeSegment segment)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine(Registros.OpCode(NombreRegistroD));
-            sb.AppendLine(Registros.OpCode(NombreRegistroDesplazamiento));
-            return sb;
-        }
         /// <summary>
-        /// Modo indexado MOV AX,[BX + SI/DI ]
+        /// Modo indexado-inverso MOV [BX + SI/DI],AX
         /// </summary>
         /// <param name="linea"></param>
         /// <param name="Errores"></param>
@@ -52,9 +44,17 @@ namespace Gui.Compilador.Instrucciones.Modos
         {
             if (linea.Elementos >= 8)
             {
-                return new Indexado(linea[1].Lexema, linea[6].Lexema, Errores, linea, tipo);
+                return new IndexadoI(linea[7].Lexema, linea[4].Lexema, Errores, linea, tipo);
             }
-            return new Indexado(linea[1].Lexema, linea[4].Lexema, Errores, linea, tipo);
+            return new IndexadoI(linea[6].Lexema, linea[4].Lexema, Errores, linea, tipo);
+
+        }
+        protected override StringBuilder Traducir(CodeSegment segment)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(Registros.OpCode(NombreRegistroD));
+            sb.AppendLine(Registros.OpCode(NombreRegistroDesplazamiento));
+            return sb;
         }
     }
 }

@@ -55,6 +55,7 @@
 
     <Keywords fontWeight="bold" foreground="Green">
       <Word>JMP</Word>
+      <Word>LOOP</Word>
       <Word>JZ</Word>
       <Word>JE</Word>
       <Word>JNZ</Word>

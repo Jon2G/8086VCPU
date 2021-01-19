@@ -1,20 +1,29 @@
 ﻿using _8086VCPU.Alu;
 using _8086VCPU.Registros;
 using Gui.Advertencias;
+using Gui.Compilador.Fases;
+using Gui.Compilador.Fases._1._Analisis_Lexico;
 using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static _8086VCPU.Registros.Localidad;
 namespace Gui.Compilador.Instrucciones.Modos
 {
-    public class Inmediato : Direccionado
+    public class Inmediato : Direccionamiento
     {
         public readonly string NombreRegistroD;
+        protected override Regex ExpresionRegular => new Regex($"^{ExpresionesRegulares.Registros},{ExpresionesRegulares.Numeros}$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        public Inmediato()
+        {
+
+        }
+ 
         public Inmediato(string NombreRegistroD, Numero Fuente,
-            ResultadosCompilacion resultados, DocumentLine cs, TipoInstruccion tipo) : base(cs, tipo)
+            ResultadosCompilacion resultados, LineaLexica cs, TipoInstruccion tipo) : base(cs, tipo)
         {
             this.NombreRegistroD = NombreRegistroD.ToUpper();
             Destino = Registros.PorNombre(this.NombreRegistroD);
@@ -31,21 +40,29 @@ namespace Gui.Compilador.Instrucciones.Modos
             }
         }
 
-        protected override StringBuilder Traduccion(CodeSegment segment)
+        protected override StringBuilder Traducir(CodeSegment segment)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"011 ;{this.Tipo}");
-            sb.AppendLine(Registros.OpCode(NombreRegistroD));
-
-            string fuente = this.Fuente.ToString();
-            for (int i = 0; i < Alu.Palabra - fuente.Length; i++)
-            {
-                sb.Append("0");
-            }
-
-            sb.AppendLine(fuente);
+            sb.AppendLine(Registros.OpCode(NombreRegistroD))
+                .AppendLine(Convert.ToString(this.Fuente.Decimal, 2)
+                .PadLeft(Alu.Palabra, '0'));       
             return sb;
-
+        }
+        /// <summary>
+        /// Modo inmediato MOV AX,09h
+        /// </summary>
+        /// <param name="linea"></param>
+        /// <param name="Errores"></param>
+        /// <param name="tipo"></param>
+        /// <returns></returns>
+        protected override Instruccion EsValida(LineaLexica linea, ResultadosCompilacion Errores, TipoInstruccion tipo)
+        {
+            Numero numero = new Numero(linea[3]);
+            if (numero.Tamaño == Tamaños.Invalido)
+            {
+                Errores.ResultadoCompilacion($"Valor númerico incorrecto", linea.LineaDocumento);
+            }
+            return new Inmediato(linea[1].Lexema, numero, Errores, linea, tipo);
         }
     }
 }
