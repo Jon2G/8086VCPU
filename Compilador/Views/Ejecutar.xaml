@@ -58,7 +58,7 @@
                 </Grid>
                 <DockPanel>
                     <TextBlock Text="{Binding Interval.TotalMilliseconds,StringFormat='Tiempo entre instrucciones:{0:N2}'}" DataContext="{Binding Timer,ElementName=Me}"/>
-                    <Slider ValueChanged="Slider_ValueChanged" Minimum="0" Maximum="3"/>
+                    <Slider ValueChanged="Slider_ValueChanged" Value="0" Minimum="0" Maximum="3"/>
                 </DockPanel>
             </StackPanel>
 
@@ -282,7 +282,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="Código Operacion (IR)"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        <Label Content="Código Operacion"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                    Margin="0"/>
                         <Label Content="{Binding OpCode,Mode=OneWay}" Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                    Margin="0" HorizontalContentAlignment="Center" Foreground="#4295E5" FontSize="18"/>

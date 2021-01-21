@@ -64,14 +64,14 @@ namespace _8086VCPU.Auxiliares
             }
             this.InstruccionSiguiente = InstruccionEjecucion.Fetch().Decode();
 
-            Registros.Registros.IA.EnableEscritura(true);
-            Registros.Registros.IP.EnableLectura(true);
-            Registros.Registros.IA.Set(Registros.Registros.IP.Get());
-            Registros.Registros.IP.EnableLectura(false);
-            Registros.Registros.IA.EnableEscritura(false);
+            //Registros.Registros.IA.EnableEscritura(true);
+            //Registros.Registros.IP.EnableLectura(true);
+            //Registros.Registros.IA.Set(Registros.Registros.IP.Get());
+            //Registros.Registros.IP.EnableLectura(false);
+            //Registros.Registros.IA.EnableEscritura(false);
 
             Registros.Registros.IR.EnableEscritura(true);
-            Registros.Registros.IR.Set(ConversorBinario.Decimal(this.InstruccionSiguiente.OpCode));
+            Registros.Registros.IR.Set(this.InstruccionSiguiente.Instruccion);
             Registros.Registros.IR.EnableEscritura(false);
 
             if (this.InstruccionSiguiente.EsFin())

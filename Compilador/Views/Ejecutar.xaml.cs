@@ -40,7 +40,7 @@ namespace Gui.Views
         {
             InitializeComponent();
             Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromSeconds(1);
+            Timer.Interval = TimeSpan.FromSeconds(0);
             Timer.Tick += Timer_Tick;
 
         }

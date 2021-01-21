@@ -15,7 +15,7 @@ namespace _8086VCPU.Auxiliares
         private bool[] Modificador;
         public bool[] Operador1 { get; private set; }
         private bool[] Operador2;
-        private bool[] Instruccion;
+        public bool[] Instruccion { get; private set; }
         public int LongitudOperacion { get;  set; }
 
         private InstruccionEjecucion(bool[] Instruccion)
@@ -103,29 +103,29 @@ namespace _8086VCPU.Auxiliares
 
         private void GetOperadores()
         {
-            int ip_actual = IP.Decimal;
+            //int ip_actual = IP.Decimal;
 
-            IP.EnableEscritura(true);
-            IP.Set(ConversorBinario.Palabra(IP.Decimal + 1));
-            IP.EnableEscritura(false);
+            IA.EnableEscritura(true);
+            IA.Set(ConversorBinario.Palabra(IP.Decimal + 1));
+            IA.EnableEscritura(false);
 
-            IP.EnableLectura(true);
-            Operador1 = CPU.Memoria.Leer(IP.Get());
-            IP.EnableLectura(false);
+            IA.EnableLectura(true);
+            Operador1 = CPU.Memoria.Leer(IA.Get());
+            IA.EnableLectura(false);
 
             if (this.LongitudOperacion == 3)
             {
-                IP.EnableEscritura(true);
-                IP.Set(ConversorBinario.Palabra(IP.Decimal + 1));
-                IP.EnableEscritura(false);
+                IA.EnableEscritura(true);
+                IA.Set(ConversorBinario.Palabra(IA.Decimal + 1));
+                IA.EnableEscritura(false);
 
-                IP.EnableLectura(true);
-                Operador2 = CPU.Memoria.Leer(IP.Get());
-                IP.EnableLectura(false);
+                IA.EnableLectura(true);
+                Operador2 = CPU.Memoria.Leer(IA.Get());
+                IA.EnableLectura(false);
             }
-            IP.EnableEscritura(true);
-            IP.Set(ConversorBinario.Palabra(ip_actual));
-            IP.EnableEscritura(false);
+            //IA.EnableEscritura(true);
+            //IA.Set(ConversorBinario.Palabra(ip_actual));
+            //IA.EnableEscritura(false);
 
             SetOperadores(Operador1, Operador2);
         }
