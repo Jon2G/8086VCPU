@@ -85,6 +85,7 @@ namespace Gui.Views
         void OpenFileClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog { CheckFileExists = true };
+            dlg.Filter = "Archivos de código (*.my86)|*.my86";
             if (dlg.ShowDialog() ?? false)
             {
                 this.Compilador.Compilado = false;
