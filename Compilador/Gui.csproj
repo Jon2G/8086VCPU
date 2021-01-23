@@ -43,6 +43,9 @@
     <PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Kit.Sql">
+      <HintPath>..\..\..\Kit\SQLHelper\bin\Debug\netstandard2.0\Kit.Sql.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>

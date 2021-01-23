@@ -1,4 +1,5 @@
-﻿using SQLHelper.Reflection;
+﻿
+using Kit.Sql.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

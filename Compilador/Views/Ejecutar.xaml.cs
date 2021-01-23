@@ -9,7 +9,7 @@ using ICSharpCode.AvalonEdit.Folding;
 using Kit;
 using Microsoft.Win32;
 using Prism.Regions;
-using SQLHelper;
+using Kit.Sql;
 using System;
 using System.Collections.Generic;
 using System.Linq;

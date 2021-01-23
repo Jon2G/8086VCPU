@@ -3,6 +3,7 @@ using Gui.Views;
 using HandyControl.Data;
 using HandyControl.Themes;
 using HandyControl.Tools;
+using Kit.Sql.Helpers;
 using Prism.Ioc;
 using System;
 using System.Diagnostics;
@@ -22,7 +23,7 @@ namespace Compilador
         protected override void OnStartup(StartupEventArgs e)
         {
             Kit.WPF.Tools.Init();
-            SQLHelper.SQLHelper.Init(Kit.Tools.Instance.LibraryPath, Debugger.IsAttached);
+            SQLHelper.Init(Kit.Tools.Instance.LibraryPath, Debugger.IsAttached);
             Highlighting.Init();
             base.OnStartup(e);
             //var boot = new Bootstrapper();

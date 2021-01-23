@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using _8086VCPU.Alu;
 using _8086VCPU.Auxiliares;
 using Kit;
-using System.Collections.ObjectModel;
 using _8086VCPU.Registros;
 using System.Text.RegularExpressions;
 
@@ -28,7 +27,6 @@ namespace _8086VCPU
         {
             Clear();
         }
-
         public void Cargar(string CodigoMaquina)
         {
             Regex regex = new Regex(";.*");
@@ -53,22 +51,11 @@ namespace _8086VCPU
         {
             return string.Join(string.Empty, ConversorBinario.Palabra(Numero).Select(x => x ? "1" : "0"));
         }
-        private static bool[] CalcularDireccion(string direccion)
-        {
-            return direccion.Select(x => x == '1').ToArray();
-        }
-
         internal void Clear()
         {
             this.Real = new ObservableCollection<Celda>();
             OnPropertyChanged(nameof(Real));
-            //for (int i = 0; i <= 0xFFFF; i++)
-            //{
-            //    string direccion = CalcularDireccion(i);
-            //    this.Real.Add(direccion, new bool[Alu.Alu.Palabra]);
-            //}
         }
-
         public bool[] Leer(bool[] direccion)
         {
             int dir = ConversorBinario.BinarioToDec(direccion);

@@ -1,6 +1,6 @@
 ﻿using Gui.Views;
 using ICSharpCode.AvalonEdit.Highlighting;
-using SQLHelper.Reflection;
+using Kit.Sql.Reflection;
 using System;
 using System.Collections.Generic;
 using System.IO;

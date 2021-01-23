@@ -13,21 +13,16 @@ using System.Threading.Tasks;
 
 namespace Gui.Compilador.Instrucciones.Modos
 {
-    public class IndirectoI : Direccionamiento
+    public class IndirectoI : Indirecto
     {
-        public readonly string NombreRegistroD;
-        public readonly string NombreRegistroF;
         protected override Regex ExpresionRegular => new Regex($@"^(\[(SI|DI)\],{ExpresionesRegulares.Registros})$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         public IndirectoI()
         {
 
         }
 
-        public IndirectoI(string NombreRegistroD, string NombreRegistroF, ResultadosCompilacion resultados,
-            LineaLexica cs, TipoInstruccion tipo) : base(cs, tipo)
+        public IndirectoI(string NombreRegistroD, string NombreRegistroF, ResultadosCompilacion resultados) : base()
         {
-            this.NombreRegistroF = NombreRegistroF;
-            this.NombreRegistroD = NombreRegistroD;
 
             Destino = Registros.PorNombre(NombreRegistroD);
             TamañoDestino = TamañoRegistro(NombreRegistroD);

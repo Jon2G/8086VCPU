@@ -1,0 +1,53 @@
+PWD c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico
+INPUT C:\Users\jonyj\AppData\Local\MiKTeX\2.9\miktex\data\le\xetex\xelatex.fmt
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\codigo.tex
+OUTPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\codigo.log
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrartcl.cls
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrartcl.cls
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrkbase.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrkbase.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrbase.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrbase.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrlfile.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrlfile.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\tocbasic.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\tocbasic.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrsize11pt.clo
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\scrsize11pt.clo
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\typearea.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\koma-script\typearea.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.cfg
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.cfg
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\color.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\color.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-def\xetex.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-def\xetex.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\caption\caption.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\caption\caption.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\caption\caption3.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\caption\caption3.sty
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\codigo.aux
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\codigo.aux
+OUTPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\codigo.aux
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr9.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr6.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi9.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi6.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmsy9.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmsy6.tfm
+OUTPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\codigo.xdv
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\codigo.aux

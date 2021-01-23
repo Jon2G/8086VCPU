@@ -3,6 +3,8 @@ using Gui.Compilador.Fases._1._Analisis_Lexico;
 using Gui.Compilador.Instrucciones;
 using Gui.Compilador.Instrucciones.Modos;
 using ICSharpCode.AvalonEdit.Document;
+using Kit.Sql.Helpers;
+using Kit.Sql.Reflection;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -21,7 +23,7 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
         private static readonly string[] Instrucciones;
         static AnalizadorSintactico()
         {
-            using (var reflex = new SQLHelper.Reflection.ReflectionCaller())
+            using (var reflex = new ReflectionCaller())
             {
                 Direccionamientos = reflex.GetInheritedClasses<Direccionamiento>().Where(x => !(x is Simple)).ToArray();
             }

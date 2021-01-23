@@ -66,9 +66,6 @@ namespace _8086VCPU.Registros
             this.High.Clear();
             this.Low.Clear();
         }
-
-
-
         protected override void _Set(bool[] Valor)
         {
             if (Valor.Length != Alu.Alu.Palabra)
@@ -120,7 +117,6 @@ namespace _8086VCPU.Registros
 
             return unido.ToArray();
         }
-
         public bool[] GetLow()
         {
             if (!Lecctura)

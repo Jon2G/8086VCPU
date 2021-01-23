@@ -11,9 +11,6 @@ namespace _8086VCPU
 {
     public static class CPU
     {
-        public const int LocgitudOpCode = 6;
-        public const int LongitudDireccion = 20;
-        //public Banderas Banderas { get; set; }
         public static Alu.Alu Alu { get; private set; }
         public static Banderas Banderas { get; private set; }
         public static Memoria Memoria { get; private set; }
