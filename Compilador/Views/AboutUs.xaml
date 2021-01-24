@@ -4,10 +4,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Gui.Views" ResizeMode="NoResize"
+        xmlns:local="clr-namespace:Gui.Views"  ResizeMode="NoResize"
         mc:Ignorable="d" ActiveGlowColor="DodgerBlue" WindowStartupLocation="CenterOwner"
         Title="Acerca de ..." FontSize="16" Height="300" Width="350" WindowStyle="ToolWindow" >
     <StackPanel>
+        <Image Height="35" Source="/Gui;component/Images/circuitboard.png"/>
         <TextBlock Margin="10" TextWrapping="Wrap" HorizontalAlignment="Center" Text="Intel 8086 VCPU Ensamblador y simulador"/>
         <Label Padding="10" Margin="3">
             <StackPanel Margin="5">

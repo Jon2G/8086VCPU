@@ -38,7 +38,7 @@ namespace Gui.Views
 
             InitializeComponent();
             this.CmbxEjemplos.ItemsSource = Ejemplos.Ejemplo.ListarEjemplos();
-            this.CmbxEjemplos.SelectedItem = this.CmbxEjemplos.ItemsSource.OfType<Ejemplos.Ejemplo>().Last();
+            //this.CmbxEjemplos.SelectedItem = this.CmbxEjemplos.ItemsSource.OfType<Ejemplos.Ejemplo>().Last();
 
 
 
@@ -51,9 +51,9 @@ namespace Gui.Views
             //TxtAsm.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("ASM");
 
 
-            //TxtMy.Load($@"{Tools.Instance.LibraryPath}\..\..\Ejemplos\Movimientos.asm");
-            TxtMy.Load($@"{Tools.Instance.LibraryPath}\..\..\Ejemplos\Burbuja.asm");
-            TxtArchivo.Text = TxtMy.Document.FileName;
+            ////TxtMy.Load($@"{Tools.Instance.LibraryPath}\..\..\Ejemplos\Movimientos.asm");
+            //TxtMy.Load($@"{Tools.Instance.LibraryPath}\..\..\Ejemplos\Burbuja.asm");
+            //TxtArchivo.Text = TxtMy.Document.FileName;
 
 
             // initial highlighting now set by XAML

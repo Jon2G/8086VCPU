@@ -9,7 +9,7 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 
-namespace Compilador
+namespace Gui
 {
     public partial class App 
     {
