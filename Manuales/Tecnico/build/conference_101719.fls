@@ -1,0 +1,174 @@
+PWD c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico
+INPUT C:\Users\jonyj\AppData\Local\MiKTeX\2.9\miktex\data\le\xetex\xelatex.fmt
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\conference_101719.tex
+OUTPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.log
+INPUT IEEEtran.cls
+INPUT IEEEtran.cls
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\cite\cite.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\cite\cite.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amstext.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amstext.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\algorithms\algorithmic.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\algorithms\algorithmic.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ifthen.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ifthen.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphicx.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphicx.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphics.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphics.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\trig.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\trig.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\graphics.cfg
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\graphics.cfg
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-def\xetex.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-def\xetex.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\textcomp.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\textcomp.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ts1enc.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ts1enc.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\xcolor\xcolor.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\xcolor\xcolor.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\iftex\iftex.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\iftex\iftex.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\pdftexcmds\pdftexcmds.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\pdftexcmds\pdftexcmds.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\kvsetkeys.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\kvsetkeys.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\etexcmds.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\etexcmds.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\iftex\ifluatex.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\iftex\ifluatex.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\kvdefinekeys.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\kvdefinekeys.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\pdfescape.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\pdfescape.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\hycolor.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\hycolor.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\xcolor-patch.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\xcolor-patch.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\hopatch.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\hopatch.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\letltxmacro.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\letltxmacro.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\auxhook.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\auxhook.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\intcalc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\intcalc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\adobe\zapfding\pzdr.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\bitset.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\bitset.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\bigintcalc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\bigintcalc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\atbegshi.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\atbegshi.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\iftex\ifpdf.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\iftex\ifpdf.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hxetex.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hxetex.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\puenc.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\puenc.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\stringenc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\stringenc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\atveryend.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\atveryend.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\uniquecounter.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\uniquecounter.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\multicol.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\multicol.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.cfg
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.cfg
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\caption\caption.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\caption\caption.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\caption\caption3.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\caption\caption3.sty
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.aux
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.aux
+OUTPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.aux
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ts1cmr.fd
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ts1cmr.fd
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\nameref.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\nameref.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\refcount.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\refcount.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.out
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.out
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.out
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.out
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.out
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.out
+OUTPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.out
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\se-ascii-print.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\se-ascii-print.def
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\se-ascii-print.def
+OUTPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.xdv
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msam7.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msam5.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr8.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmr6.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi8.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmmi6.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmsy8.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\cm\cmsy6.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msam7.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
+INPUT C:\Users\jonyj\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.sty
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.aux
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.out
+INPUT c:\Users\jonyj\Desktop\Git\8086VCPU\Manuales\Tecnico\build\conference_101719.out

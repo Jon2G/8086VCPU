@@ -82,6 +82,14 @@ namespace Gui.Views
                 this.TxtMy.ScrollToLine(linea);
             }
         }
+        void InfoClick(object sender, RoutedEventArgs e)
+        {
+            AboutUs aboutUs = new AboutUs()
+            {
+                Owner = Window.GetWindow(this)
+            };
+            aboutUs.ShowDialog();
+        }
         void OpenFileClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog { CheckFileExists = true };

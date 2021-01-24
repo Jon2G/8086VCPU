@@ -10,7 +10,65 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{multicol}
+\usepackage{listings}
+\usepackage{color}
+\lstloadlanguages{C,C++,csh,Java}
 
+\definecolor{red}{rgb}{0.6,0,0} 
+\definecolor{blue}{rgb}{0,0,0.6}
+\definecolor{green}{rgb}{0,0.8,0}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\lstset{
+language=csh,
+basicstyle=\footnotesize\ttfamily,
+numbers=left,
+numberstyle=\tiny,
+numbersep=5pt,
+tabsize=2,
+extendedchars=true,
+breaklines=true,
+frame=b,
+stringstyle=\color{blue}\ttfamily,
+showspaces=false,
+showtabs=false,
+xleftmargin=17pt,
+framexleftmargin=17pt,
+framexrightmargin=5pt,
+framexbottommargin=4pt,
+commentstyle=\color{green},
+morecomment=[l]{//}, %use comment-line-style!
+morecomment=[s]{/*}{*/}, %for multiline comments
+showstringspaces=false,
+morekeywords={ abstract, event, new, struct,
+as, explicit, null, switch,
+base, extern, object, this,
+bool, false, operator, throw,
+break, finally, out, true,
+byte, fixed, override, try,
+case, float, params, typeof,
+catch, for, private, uint,
+char, foreach, protected, ulong,
+checked, goto, public, unchecked,
+class, if, readonly, unsafe,
+const, implicit, ref, ushort,
+continue, in, return, using,
+decimal, int, sbyte, virtual,
+default, interface, sealed, volatile,
+delegate, internal, short, void,
+do, is, sizeof, while,
+double, lock, stackalloc,
+else, long, static,
+enum, namespace, string},
+keywordstyle=\color{cyan},
+identifierstyle=\color{red},
+backgroundcolor=\color{cloudwhite},
+}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{blue}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+\definecolor{cloudwhite}{rgb}{0.9412, 0.9608, 0.8471} 
 
 
 
@@ -43,7 +101,7 @@ Este documento es el reporte técnico, explicativo de la estructura interna de e
 \end{abstract}
 
 \begin{IEEEkeywords}
-component, formatting, style, styling, insert
+Instrucciones, unidad, código, datos, registros,simulador,Microprocesador,unidad,control
 \end{IEEEkeywords}
 
 \section{Introducción}
@@ -358,8 +416,169 @@ con la función.
     En esta clase se guarda el estado de las banderas durante la ejecución del código 
 \end{itemize}
 
+\newpage
 
 
 
+
+
+\begin{figure*}[t]
+    \section{Código de las clases principales}
+\subsection{CPU}    
+\begin{lstlisting}[language={[Sharp]C}, title={CPU}]
+    public static class CPU
+    {
+        public static Alu.Alu Alu { get; private set; }
+        public static Banderas Banderas { get; private set; }
+        public static Memoria Memoria { get; private set; }
+        static CPU()
+        {
+            CPU.Alu = new Alu.Alu();
+            CPU.Banderas = new Banderas();
+            CPU.Memoria = new Memoria();
+            Reset();
+        }
+        public static void Reset()
+        {
+            CPU.Banderas.Clear();
+            CPU.Memoria.Clear();
+            Registros.Registros.Reset();
+        }
+        public static void Ejecutar(bool[] Operacion, bool[] Modificador,
+         bool[] Operador1, bool[] Operador2){...}
+    }
+\end{lstlisting}
+\end{figure*}
+\newpage
+
+\begin{figure*}[t]
+\subsection{ALU}   
+\begin{lstlisting}[language={[Sharp]C}, title={ALU}]
+    public class Alu
+    {   public const int Byte = 16;
+        public bool[] Resultado = new bool[Byte * 2 + 1];
+        public void ADD(bool[] Operador1, bool[] Operador2){ ... }  
+        private bool HALF_ADD(bool A, bool B){ ... }  
+        private bool FULL_ADD(bool A, bool B){ ... }  
+        public void SUB(bool[] Operador1, bool[] Operador2){ ... }  
+        public bool[] COMPLEMENTO_2(bool[] Operador1){ ... }  
+        private bool AND(bool A, bool B){ ... }  
+        public void AND(bool[] Operador1, bool[] Operador2){ ... }  
+        public void OR(bool[] Operador1, bool[] Operador2){ ... }  
+        public void NAND(bool[] Operador1, bool[] Operador2){ ... }  
+        public void NOR(bool[] Operador1, bool[] Operador2){ ... }  
+        public void MUL(bool[] Operador2){ ... }  
+        public void NOT(bool[] Operador1){ ... }  
+        private bool XOR(bool Operador1, bool Operador2){ ... }  
+        public void XOR(bool[] Operador1, bool[] Operador2){ ... }  
+        public void XNOR(bool[] Operador1, bool[] Operador2){ ... }  
+        public void DIV(bool[] Divisor){ ... }         
+    }
+\end{lstlisting}
+\end{figure*}
+
+\newpage
+\begin{figure*}[t]
+    \subsection{Registros}
+    \begin{lstlisting}[language={[Sharp]C}, title={Registros}]
+    public static class Registros
+    {
+        public static Registro AX { get; private set; }
+        public static Registro BX { get; private set; }
+        public static Registro CX { get; private set; }
+        public static Registro DX { get; private set; }
+        public static Registro SI { get; private set; }
+        public static Registro DI { get; private set; }
+        public static Registro IP { get; private set; }
+        public static Registro IA { get; private set; }
+        public static Registro IR { get; private set; }
+        static Registros()
+        {
+            Registros.AX = new Registro("AX");
+            Registros.BX = new Registro("BX");
+            Registros.CX = new Registro("CX");
+            Registros.DX = new Registro("DX");
+            Registros.SI = new Registro("SI");
+            Registros.DI = new Registro("DI");
+            Registros.IP = new Registro("IP");
+            Registros.IA = new Registro("IA");
+            Registros.IR = new Registro("IR");
+        }
+        internal static void Reset()
+        {
+            Registros.AX.Clear();
+            Registros.BX.Clear();
+            Registros.CX.Clear();
+            Registros.DX.Clear();
+            Registros.SI.Clear();
+            Registros.DI.Clear();
+            Registros.IP.Clear();
+        }
+    }
+\end{lstlisting}
+\end{figure*}
+\newpage
+
+\begin{figure*}[t]
+    \subsection{Registro}
+\begin{lstlisting}[language={[Sharp]C}, title={Registro}]
+    public class Registro : Localidad
+    {
+        public string Nombre { get; private set; }
+        private ParteRegistro High;
+        public ParteRegistro Low;
+        public void SetHigh(bool[] High){ ... }
+        public void SetLow(bool[] Low){ ... }
+    }
+\end{lstlisting}
+\end{figure*}
+
+\newpage
+
+
+\begin{figure*}[t]
+    \subsection{Memoria}
+\begin{lstlisting}[language={[Sharp]C}, title={Memoria}]
+    public class Memoria 
+    {
+        public bool[] this[bool[] direccion]
+        {
+            set
+            {
+                Escribir(direccion, value);
+            }
+        }
+        private ObservableCollection<Celda> Real;
+
+        public void Cargar(string CodigoMaquina) { ... }
+        public void Cargar(bool[][] programa) { ... }
+        public static bool[] CalcularDireccion(bool[] Numero) { ... }
+        internal void Clear() { ... }
+        public bool[] Leer(bool[] direccion) { ... }
+        public void Escribir(bool[] direccion, bool[] Valor){ ... }
+    }
+\end{lstlisting}
+\end{figure*}
+\newpage
+
+\begin{figure*}[t]
+    \subsection{Banderas}
+\begin{lstlisting}[language={[Sharp]C}, title={Banderas}]
+    public class Banderas :
+    {
+        private bool Carry;    
+        private bool Signo;   
+        private bool Zero;
+        private bool OverFlow;
+        internal void Clear()
+        {
+            Carry = false;
+            Signo = false;
+            Zero = false;
+            OverFlow = false;
+        }
+    }
+\end{lstlisting}
+\end{figure*}
 
 \end{document}

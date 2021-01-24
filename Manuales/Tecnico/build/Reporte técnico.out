@@ -1,0 +1,31 @@
+\BOOKMARK [1][-]{section.1}{Introducción}{}% 1
+\BOOKMARK [1][-]{section.2}{Marco teórico}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Microprocesador}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Instrucciones}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Unidad\040de\040Control}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Unidad Lógico Aritmética ALU}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{Registros\040de\040datos}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.6}{Banderas\040de\040estado}{section.2}% 8
+\BOOKMARK [2][-]{subsection.2.7}{Assembler}{section.2}% 9
+\BOOKMARK [1][-]{section.3}{Desarrollo}{}% 10
+\BOOKMARK [2][-]{subsection.3.1}{Llevando\040la\040escala\040de\040instrucciones\040a\040nivel\040de\040bits\040en\040alto\040nivel.}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.2}{Generalidades}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.3}{Set\040de\040instrucciones}{section.3}% 13
+\BOOKMARK [2][-]{subsection.3.4}{Registros\040de\040proposito\040general}{section.3}% 14
+\BOOKMARK [2][-]{subsection.3.5}{Banderas\040de\040estado}{section.3}% 15
+\BOOKMARK [1][-]{section.4}{Ensamblador\040\(Compilador\)}{}% 16
+\BOOKMARK [2][-]{subsection.4.1}{Analizador\040sintactico}{section.4}% 17
+\BOOKMARK [2][-]{subsection.4.2}{Token}{section.4}% 18
+\BOOKMARK [2][-]{subsection.4.3}{Analizador léxico}{section.4}% 19
+\BOOKMARK [2][-]{subsection.4.4}{Linea léxica}{section.4}% 20
+\BOOKMARK [2][-]{subsection.4.5}{Sintesís}{section.4}% 21
+\BOOKMARK [2][-]{subsection.4.6}{Código máquina}{section.4}% 22
+\BOOKMARK [1][-]{section.5}{Proceso de Ejecución}{}% 23
+\BOOKMARK [2][-]{subsection.5.1}{Clases\040del\040Programa}{section.5}% 24
+\BOOKMARK [1][-]{section.6}{Código de las clases principales}{}% 25
+\BOOKMARK [2][-]{subsection.6.1}{CPU}{section.6}% 26
+\BOOKMARK [2][-]{subsection.6.2}{ALU}{section.6}% 27
+\BOOKMARK [2][-]{subsection.6.3}{Registros}{section.6}% 28
+\BOOKMARK [2][-]{subsection.6.4}{Registro}{section.6}% 29
+\BOOKMARK [2][-]{subsection.6.5}{Memoria}{section.6}% 30
+\BOOKMARK [2][-]{subsection.6.6}{Banderas}{section.6}% 31

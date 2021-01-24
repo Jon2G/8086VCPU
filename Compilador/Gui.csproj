@@ -101,6 +101,9 @@
     <Compile Include="Resources\TextMarkerService.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Views\AboutUs.xaml.cs">
+      <DependentUpon>AboutUs.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NavigationUserControl.cs" />
     <Compile Include="Views\VistaRegistro.xaml.cs">
       <DependentUpon>VistaRegistro.xaml</DependentUpon>
@@ -108,6 +111,10 @@
     <Page Include="Advertencias\WarningError.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AboutUs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Ejecutar.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -270,6 +277,8 @@
   <ItemGroup>
     <Resource Include="Images\pause.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\info.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
