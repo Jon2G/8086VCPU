@@ -1,13 +1,8 @@
-﻿using Kit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Kit.Model;
 
 namespace _8086VCPU.Alu
 {
-    public class Banderas : ViewModelBase<Banderas>
+    public class Banderas : ModelBase
     {
         private bool _Carry;
         public bool Carry { get => _Carry; set { _Carry = value; OnPropertyChanged(); } }

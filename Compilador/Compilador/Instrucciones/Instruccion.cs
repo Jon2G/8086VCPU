@@ -1,17 +1,11 @@
-﻿using _8086VCPU.Alu;
-using Gui.Advertencias;
-using Gui.Compilador.Fases;
-using Gui.Compilador.Fases._1._Analisis_Lexico;
+﻿using Gui.Compilador.Fases._1._Analisis_Lexico;
 using Gui.Compilador.Instrucciones.Modos;
 using Gui.Compilador.Instrucciones.Modos.Inversos;
 using ICSharpCode.AvalonEdit.Document;
+using Kit;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using static _8086VCPU.Registros.Localidad;
-using static Kit.Extensions.Helpers;
 
 namespace Gui.Compilador.Instrucciones
 {
@@ -113,7 +107,7 @@ namespace Gui.Compilador.Instrucciones
             StringBuilder sb = new StringBuilder();
             sb.Append(Convert.ToString((int)this.Tipo, 2).PadLeft(28, '0'))
                 .Append(Modificador()).AppendLine();
-                //.Append("; ").Append(this.Tipo.ToString()).Append(" - ").AppendLine(this.GetType().Name);
+            //.Append("; ").Append(this.Tipo.ToString()).Append(" - ").AppendLine(this.GetType().Name);
 
 
             StringBuilder complemento = Traducir(code).TrimEnd();

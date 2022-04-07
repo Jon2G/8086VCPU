@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ICSharpCode.AvalonEdit.Document;
+using Kit.Model;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
-using ICSharpCode.AvalonEdit.Document;
-using Kit;
 
 namespace Gui.Advertencias
 {
-    public class ResultadosCompilacion:ViewModelBase<ResultadosCompilacion>
+    public class ResultadosCompilacion : ModelBase
     {
         private ObservableCollection<ErrorCompilacion> _Resultados;
         public ObservableCollection<ErrorCompilacion> Resultados

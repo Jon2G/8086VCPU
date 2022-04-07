@@ -1,14 +1,11 @@
-﻿using Kit;
+﻿using Kit.Model;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace _8086VCPU.Auxiliares
 {
-    public class VistaPrevia : ViewModelBase<VistaPrevia>
+    public class VistaPrevia : ModelBase
     {
         private int _OpCode;
         public int OpCode
@@ -40,11 +37,11 @@ namespace _8086VCPU.Auxiliares
         }
         protected void GetOpCode(bool[] Operacion)
         {
-            OpCode =Convert.ToInt32(string.Concat(Operacion.Select(x => x ? "1" : "0")),2);
+            OpCode = Convert.ToInt32(string.Concat(Operacion.Select(x => x ? "1" : "0")), 2);
         }
         protected void GetModCode(bool[] Modificador)
         {
-            ModCode = Convert.ToInt32(string.Concat(Modificador.Select(x => x ? "1" : "0")),2);
+            ModCode = Convert.ToInt32(string.Concat(Modificador.Select(x => x ? "1" : "0")), 2);
         }
         protected void SetOperadores(bool[] operador1, bool[] operador2)
         {
@@ -54,7 +51,7 @@ namespace _8086VCPU.Auxiliares
             }
             _Operador1 = string.Join("", operador1.Select(x => x ? "1" : "0"));
             _Operador2 = string.Join("", operador2.Select(x => x ? "1" : "0"));
-            
+
         }
         protected void CalcularVistaPrevia()
         {

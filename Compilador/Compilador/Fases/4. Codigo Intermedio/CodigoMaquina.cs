@@ -1,14 +1,10 @@
 ﻿using _8086VCPU;
-using _8086VCPU.Alu;
 using Gui.Compilador.Fases._3._Sintetizador;
 using Gui.Compilador.Instrucciones;
+using Kit;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using static Kit.Extensions.Helpers;
 namespace Gui.Compilador.Fases._4._Codigo_Intermedio
 {
     public class CodigoMaquina

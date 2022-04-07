@@ -35,6 +35,12 @@
                 <TextBlock Text="Prof. Bautista Arias José Luis"/>
                 <TextBlock Text="Grupo: 6CV14"/>
                 <TextBlock Text="Fecha: 21/01/2021"/>
+
+                <TextBlock>           
+            <Hyperlink  Foreground="{DynamicResource PrimaryTextBrush}" NavigateUri="https://github.com/Jouna77/8086VCPU" RequestNavigate="Hyperlink_RequestNavigate">
+                Link del proyecto en GitHub
+            </Hyperlink>
+                </TextBlock>
             </StackPanel>
 
 

@@ -3,15 +3,13 @@ using Gui.Views;
 using HandyControl.Data;
 using HandyControl.Themes;
 using HandyControl.Tools;
-using Kit.Sql.Helpers;
 using Prism.Ioc;
 using System;
-using System.Diagnostics;
 using System.Windows;
 
 namespace Gui
 {
-    public partial class App 
+    public partial class App
     {
 
 
@@ -23,7 +21,6 @@ namespace Gui
         protected override void OnStartup(StartupEventArgs e)
         {
             Kit.WPF.Tools.Init();
-            SQLHelper.Init(Kit.Tools.Instance.LibraryPath, Debugger.IsAttached);
             Highlighting.Init();
             base.OnStartup(e);
             //var boot = new Bootstrapper();

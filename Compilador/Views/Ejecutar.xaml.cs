@@ -1,29 +1,11 @@
-﻿using _8086VCPU.Alu;
-using _8086VCPU.Auxiliares;
+﻿using _8086VCPU.Auxiliares;
 using _8086VCPU.Registros;
-using Compilador;
-using Gui.Advertencias;
-using Gui.Resources;
-using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Folding;
 using Kit;
-using Microsoft.Win32;
 using Prism.Regions;
-using Kit.Sql;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace Gui.Views
@@ -124,7 +106,7 @@ namespace Gui.Views
             }
             catch (Exception ex)
             {
-                Log.LogMe(ex);
+                Log.Logger.Error(ex, "Seleccionar");
             }
         }
 
@@ -155,7 +137,7 @@ namespace Gui.Views
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if(this.Timer is null)
+            if (this.Timer is null)
             {
                 return;
             }

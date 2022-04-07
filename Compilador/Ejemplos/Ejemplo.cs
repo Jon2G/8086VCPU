@@ -1,11 +1,6 @@
-﻿
-using Kit.Sql.Reflection;
-using System;
-using System.Collections.Generic;
+﻿using Kit;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Gui.Ejemplos
 {
@@ -41,7 +36,7 @@ namespace Gui.Ejemplos
         {
             using (ReflectionCaller reflection = new ReflectionCaller().GetAssembly(typeof(Ejemplo)))
             {
-                return ReflectionCaller.ToText(reflection.GetResource(this.NombreRecurso),Encoding.UTF8);
+                return ReflectionCaller.ToText(reflection.GetResource(this.NombreRecurso), Encoding.UTF8);
             }
         }
     }

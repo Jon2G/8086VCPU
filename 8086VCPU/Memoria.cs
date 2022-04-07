@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using _8086VCPU.Auxiliares;
+using _8086VCPU.Registros;
+using Kit.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using _8086VCPU.Alu;
-using _8086VCPU.Auxiliares;
-using Kit;
-using _8086VCPU.Registros;
 using System.Text.RegularExpressions;
 
 namespace _8086VCPU
 {
-    public class Memoria : ViewModelBase<Memoria>
+    public class Memoria : ModelBase
     {
         public bool[] this[bool[] direccion]
         {
@@ -30,7 +26,7 @@ namespace _8086VCPU
         public void Cargar(string CodigoMaquina)
         {
             Regex regex = new Regex(";.*");
-            CodigoMaquina = regex.Replace(CodigoMaquina,"\r");
+            CodigoMaquina = regex.Replace(CodigoMaquina, "\r");
 
             Cargar(string.Concat(CodigoMaquina.Where(x => x == '1' || x == '0' || x == '\r' || x == '\n'))
                 .Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)

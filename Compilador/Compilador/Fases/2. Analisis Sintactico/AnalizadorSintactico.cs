@@ -3,12 +3,9 @@ using Gui.Compilador.Fases._1._Analisis_Lexico;
 using Gui.Compilador.Instrucciones;
 using Gui.Compilador.Instrucciones.Modos;
 using ICSharpCode.AvalonEdit.Document;
-using Kit.Sql.Helpers;
-using Kit.Sql.Reflection;
+using Kit;
 using System;
 using System.Linq;
-using System.Reflection;
-using System.Text.RegularExpressions;
 using static _8086VCPU.Registros.Localidad;
 using static Gui.Compilador.Instrucciones.Instruccion;
 
@@ -23,7 +20,7 @@ namespace Gui.Compilador.Fases._2._Analisis_Sintactico
         private static readonly string[] Instrucciones;
         static AnalizadorSintactico()
         {
-            using (var reflex = new ReflectionCaller())
+            using (var reflex = ReflectionCaller.FromAssembly<AnalizadorSintactico>())
             {
                 Direccionamientos = reflex.GetInheritedClasses<Direccionamiento>().Where(x => !(x is Simple)).ToArray();
             }

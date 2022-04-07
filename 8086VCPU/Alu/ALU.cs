@@ -1,10 +1,6 @@
-﻿using _8086VCPU.Registros;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace _8086VCPU.Alu
 {
@@ -151,7 +147,7 @@ namespace _8086VCPU.Alu
                 for (int j = Operador2.Length - 1; j > 0; j--)
                 {
                     bool op2 = Operador1[j];
-                    TResultado[Operador2.Length * 2 - 1 - offset] += AND(op1, op2) ? 1 : 0;
+                    TResultado[Operador2.Length * 2 - 1 - offset] += (byte)(AND(op1, op2) ? 1 : 0);
                     offset++;
                 }
 

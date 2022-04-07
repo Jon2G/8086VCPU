@@ -1,10 +1,6 @@
-﻿using _8086VCPU.Alu;
-using _8086VCPU.Auxiliares;
+﻿using _8086VCPU.Auxiliares;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _8086VCPU.Registros
 {
@@ -46,7 +42,7 @@ namespace _8086VCPU.Registros
                     }
                     else
                     {
-                        SetHighLow(Valor,parte);
+                        SetHighLow(Valor, parte);
                         return;
                     }
                 }

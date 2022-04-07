@@ -1,25 +1,15 @@
 ﻿using Gui.Advertencias;
 using Gui.Resources;
 using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Folding;
 using Kit;
 using Microsoft.Win32;
 using Prism.Regions;
-using Kit.Sql;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace Gui.Views
@@ -130,7 +120,7 @@ namespace Gui.Views
             }
             catch (Exception ex)
             {
-                Log.LogMe(ex);
+                Log.Logger.Error(ex, "SaveFileClick");
             }
         }
         void TextEditor_TextArea_TextEntered(object sender, TextCompositionEventArgs e)
@@ -140,7 +130,7 @@ namespace Gui.Views
             {
                 return;
             }
-            if(this.AutoCompletado is null) { return; }
+            if (this.AutoCompletado is null) { return; }
             this.AutoCompletado.AutoCompletar();
             AutoCompletado.DeberiaAnalizar = true;
         }
@@ -162,7 +152,7 @@ namespace Gui.Views
         {
             if (TxtMy.Document != null)
             {
-                if(this.AutoCompletado is null) { return; }
+                if (this.AutoCompletado is null) { return; }
                 if (!this.AutoCompletado.Analizando && this.AutoCompletado.DeberiaAnalizar)
                 {
                     await this.AutoCompletado.Analizar();
@@ -244,7 +234,7 @@ namespace Gui.Views
             }
             catch (Exception ex)
             {
-                Log.LogMe(ex);
+                Log.Logger.Error(ex, "SelectText");
             }
         }
 

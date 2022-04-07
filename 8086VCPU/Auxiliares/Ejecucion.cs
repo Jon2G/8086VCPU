@@ -1,18 +1,10 @@
-﻿using _8086VCPU;
-using Kit;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Kit.Model;
 using System.Windows;
-using static _8086VCPU.Alu.Alu;
 using static _8086VCPU.Registros.Registros;
 
 namespace _8086VCPU.Auxiliares
 {
-    public class Ejecucion : ViewModelBase<Ejecucion>
+    public class Ejecucion : ModelBase
     {
         public string CodigoMaquina { get; private set; }
         public bool Reiniciar { get; private set; }
@@ -76,8 +68,8 @@ namespace _8086VCPU.Auxiliares
 
             if (this.InstruccionSiguiente.EsFin())
             {
-                MessageBox.Show("Fin de programa","Alerta",MessageBoxButton.OK,MessageBoxImage.Warning);
-               Reiniciar = false;
+                MessageBox.Show("Fin de programa", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Reiniciar = false;
                 return false;
             }
             return true;
@@ -87,7 +79,7 @@ namespace _8086VCPU.Auxiliares
             IP.EnableEscritura(true);
             IP.Set(this.InstruccionSiguiente.Operador1);
             IP.EnableEscritura(false);
-            Linea = IP.Decimal+1;
+            Linea = IP.Decimal + 1;
 
         }
         public void Redo()
@@ -104,13 +96,13 @@ namespace _8086VCPU.Auxiliares
             do
             {
                 this.InstruccionSiguiente = InstruccionEjecucion.Fetch().Decode();
-                this.InstruccionSiguiente.LongitudOperacion = 1;              
+                this.InstruccionSiguiente.LongitudOperacion = 1;
                 IncrementarIP(0);
                 MoverLinea();
             } while (!this.InstruccionSiguiente.IsBegin());
             DecrementarIP(this.InstruccionSiguiente.LongitudOperacion);
             this.InstruccionSiguiente = InstruccionEjecucion.Fetch();
-            this.Linea = IP.Decimal-1;
+            this.Linea = IP.Decimal - 1;
         }
         private void MoverLinea()
         {

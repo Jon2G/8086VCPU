@@ -1,14 +1,10 @@
 ﻿using _8086VCPU.Auxiliares;
-using Kit;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _8086VCPU.Registros
 {
-    public abstract class Localidad : ViewModelBase<Localidad>
+    public abstract class Localidad : Kit.Model.StaticModel<Localidad>
     {
         public enum Tamaños
         {
@@ -17,7 +13,7 @@ namespace _8086VCPU.Registros
             Palabra = 2,
         }
         public Tamaños Tamaño { get; protected set; }
-        public bool Lecctura { get;protected set; }
+        public bool Lecctura { get; protected set; }
         public bool Escritura { get; protected set; }
         public string Hex => Decimal.ToString("X");
         public int Decimal => ConversorBinario.Binario(ToString());

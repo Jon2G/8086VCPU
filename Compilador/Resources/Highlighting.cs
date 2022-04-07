@@ -1,12 +1,8 @@
 ﻿using Gui.Views;
 using ICSharpCode.AvalonEdit.Highlighting;
-using Kit.Sql.Reflection;
+using Kit;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace Gui.Resources
