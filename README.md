@@ -9,4 +9,4 @@ EMULADOR 8086
 ![](https://raw.githubusercontent.com/Jon2G/8086VCPU/main/8086VCPU/Imgs/main2.jpg)
 
 ## Class diagram
-![](https://raw.githubusercontent.com/Jon2G/8086VCPU/main/Manuales/Tecnico/Imgs/Compilador.png)
+![](https://raw.githubusercontent.com/Jon2G/8086VCPU/main/ClassDiagram1.png)
